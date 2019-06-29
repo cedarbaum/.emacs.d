@@ -1,0 +1,56 @@
+# .DS_Store (folder metadata on macOS)
+.DS_Store
+
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# Org Id locations
+.org-id-locations
+
+# Cache
+.cache
+
+# ELPA
+elpa
+
+# History
+history
+
+# Tag files
+tags
+
+# Recent files
+recentf
+
+# Transient files
+transient
+
+# Known projects
+projectile-bookmarks.eld
+
+# Auto saves
+auto-save-list
+
+# Diary
+diary
+
+# Games
+games
+
+# Url
+url
+
+# Bookmarks
+bookmarks
+
+# config.el (generated from config.org on load)
+config.el
