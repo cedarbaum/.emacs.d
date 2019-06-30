@@ -9,6 +9,12 @@
 
 ;;; Code:
 
+;; Helper function to reload init file
+(defun reload-init-file ()
+  "Reload init.el."
+  (interactive)
+  (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
+
 ;; Initialize package manager
 (require 'package)
 
