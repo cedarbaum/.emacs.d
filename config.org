@@ -207,13 +207,13 @@
        :if window-system
        :ensure t
        :commands (helm-mode helm-autoresize-mode)
-       :bind (("M-x" . helm-M-x)
-              ("M-y" . helm-show-kill-ring)
-              ("C-x b" . helm-mini)
+       :bind (("M-x"     . helm-M-x)
+              ("M-y"     . helm-show-kill-ring)
+              ("C-x b"   . helm-mini)
               ("C-x C-b" . helm-buffers-list)
               ("C-x C-f" . helm-find-files)
               ("C-c h o" . helm-occur)
-              ("C-h a" . helm-apropos)
+              ("C-h a"   . helm-apropos)
               ("C-c C-g" . helm-grep-do-git-grep-with-prefix-arg))
        :init
        (defun helm-grep-do-git-grep-with-prefix-arg ()
