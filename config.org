@@ -100,7 +100,8 @@
     Place all backups in a single directory.
 
     #+BEGIN_SRC emacs-lisp
-    (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+    (setq backup-directory-alist
+      '((".*" . "~/.emacs.d/backups")))
     #+END_SRC
 
     Save the minibuffer history between sessions. Also save the kill-ring and search rings.
