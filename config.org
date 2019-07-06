@@ -4,8 +4,11 @@
 #+DESCRIPTION: An org-babel based Emacs configuration
 #+LANGUAGE: en
 #+PROPERTY: results silent
+#+STARTUP: inlineimages
 
 * About
+
+  [[file:photos/emacs-logo.png][Emacs Logo]]
 
   This is my Emacs configuration! It is largely based around Evil mode.
 
