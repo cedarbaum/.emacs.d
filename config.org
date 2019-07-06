@@ -281,16 +281,6 @@
        (projectile-mode +1))
      #+END_SRC
 
-**** Org mode extensions
-
-     Use UTF-8 bullet points in org-mode.
-
-     #+BEGIN_SRC emacs-lisp
-     (use-package org-bullets
-       :ensure t
-       :hook (org-mode . org-bullets-mode))
-     #+END_SRC
-
 **** company-mode
 
      Text completion framework.
@@ -345,6 +335,16 @@
      #+END_SRC
 
 *** File and language specific modes
+**** Org mode extensions
+
+     Use UTF-8 bullet points in org-mode.
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t
+       :hook (org-mode . org-bullets-mode))
+     #+END_SRC
+
 **** Markdown
 
      A major mode for Markdown (.md) files.
