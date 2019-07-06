@@ -10,9 +10,7 @@
   This is my Emacs configuration! It is largely based around Evil mode.
 
 * Configuration
-
 ** General configuration
-
 *** Personal information
 
     #+BEGIN_SRC emacs-lisp
