@@ -8,7 +8,7 @@
 
 * About
 
-  [[file:photos/emacs-logo.png][Emacs Logo]]
+  [[file:photos/emacs-logo.png]]
 
   This is my Emacs configuration! It is largely based around Evil mode.
 
