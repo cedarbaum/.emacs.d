@@ -281,7 +281,7 @@
        (projectile-mode +1))
      #+END_SRC
 
-**** org-mode extensions
+**** Org mode extensions
 
      Use UTF-8 bullet points in org-mode.
 
@@ -310,6 +310,14 @@
        :ensure t
        :init
        (global-flycheck-mode))
+     #+END_SRC
+
+**** ripgrep
+
+     Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package rg :ensure t)
      #+END_SRC
 
 **** exec-path-from-shell
