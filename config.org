@@ -347,6 +347,12 @@
        :hook (org-mode . org-bullets-mode))
      #+END_SRC
 
+     HTML export.
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package htmlize :ensure t)
+     #+END_SRC
+
 **** Markdown
 
      A major mode for Markdown (.md) files.
