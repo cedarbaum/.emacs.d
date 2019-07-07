@@ -8,6 +8,7 @@
 
 * About
 
+  #+ATTR_HTML: :style margin-left: auto; margin-right: auto;
   [[file:photos/emacs-logo.png]]
 
   This is my Emacs configuration! It is largely based around Evil mode.
