@@ -304,6 +304,35 @@
        (global-flycheck-mode))
      #+END_SRC
 
+**** LSP mode
+
+     Install extension that integrates with [[https://langserver.org/][language servers]].
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package lsp-mode
+       :ensure t
+       :hook (python-mode . lsp)
+       :commands lsp)
+     #+END_SRC
+
+     Add company-mode backend.
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package company-lsp
+       :ensure t
+       :after (lsp-mode company)
+       :config
+       (push 'company-lsp company-backends))
+     #+END_SRC
+
+     Add Helm integration for xref-appropos.
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package helm-lsp
+       :ensure t
+       :after (lsp-mode helm))
+     #+END_SRC
+
 **** ripgrep
 
      Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
