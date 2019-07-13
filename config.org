@@ -336,6 +336,20 @@
        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
      #+END_SRC
 
+**** doom-modeline
+
+     #+BEGIN_SRC emacs-lisp
+     (use-package all-the-icons :ensure t)
+
+     (use-package doom-modeline
+       :ensure t
+       :after all-the-icons
+       :hook (after-init . doom-modeline-mode)
+       :config
+       ;; Don’t compact font caches during GC.
+       (setq inhibit-compacting-font-caches t))
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
