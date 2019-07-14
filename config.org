@@ -18,8 +18,8 @@
 *** Personal information
 
     #+BEGIN_SRC emacs-lisp
-    (setq user-full-name "Sam Cedarbaum"
-          user-mail-address "scedarbaum@gmail.com")
+      (setq user-full-name "Sam Cedarbaum"
+            user-mail-address "scedarbaum@gmail.com")
     #+END_SRC
 
 *** Startup window
@@ -27,7 +27,7 @@
     Disable startup screen.
 
     #+BEGIN_SRC emacs-lisp
-    (setq inhibit-startup-screen t)
+      (setq inhibit-startup-screen t)
     #+END_SRC
 
 *** GUI configuration
@@ -35,26 +35,26 @@
     This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
 
     #+BEGIN_SRC emacs-lisp
-    (defun configure-frame (&optional frame)
-      "Customize the FRAME and load theme."
-      (use-package snazzy-theme
-        :if window-system
-        :ensure t
-        :config
-        (unless custom-enabled-themes
-          (load-theme 'snazzy t)))
-      (unless frame
-        (setq frame (selected-frame)))
-      (when frame
-        (with-selected-frame frame
-          (when (display-graphic-p)
-            (menu-bar-mode -1)
-            (toggle-scroll-bar -1)
-            (tool-bar-mode -1)))))
+      (defun configure-frame (&optional frame)
+        "Customize the FRAME and load theme."
+        (use-package snazzy-theme
+          :if window-system
+          :ensure t
+          :config
+          (unless custom-enabled-themes
+            (load-theme 'snazzy t)))
+        (unless frame
+          (setq frame (selected-frame)))
+        (when frame
+          (with-selected-frame frame
+            (when (display-graphic-p)
+              (menu-bar-mode -1)
+              (toggle-scroll-bar -1)
+              (tool-bar-mode -1)))))
 
-    ;; Configure frame and also ensure each new frame will be configured
-    (configure-frame)
-    (add-hook 'after-make-frame-functions #'configure-frame t)
+      ;; Configure frame and also ensure each new frame will be configured
+      (configure-frame)
+      (add-hook 'after-make-frame-functions #'configure-frame t)
     #+END_SRC
 
 *** Help system
@@ -62,7 +62,7 @@
     Select the help window when opened.
 
     #+BEGIN_SRC emacs-lisp
-    (setq help-window-select t)
+      (setq help-window-select t)
     #+END_SRC
 
 *** Sounds
@@ -70,7 +70,7 @@
     Disable bell function.
 
     #+BEGIN_SRC emacs-lisp
-    (setq ring-bell-function 'ignore)
+      (setq ring-bell-function 'ignore)
     #+END_SRC
 
 *** History
@@ -78,45 +78,45 @@
     Don't delete any backups.
 
     #+BEGIN_SRC emacs-lisp
-    (setq delete-old-versions -1)
+      (setq delete-old-versions -1)
     #+END_SRC
 
     Unconditionally make numeric backups for files.
 
     #+BEGIN_SRC emacs-lisp
-    (setq version-control t)
+      (setq version-control t)
     #+END_SRC
 
     Backup files even if they're under version control.
 
     #+BEGIN_SRC emacs-lisp
-    (setq vc-make-backup-files t)
+      (setq vc-make-backup-files t)
     #+END_SRC
 
     Place automatically saved files in a single directory.
 
     #+BEGIN_SRC emacs-lisp
-    (setq auto-save-file-name-transforms
-      '((".*" "~/.emacs.d/auto-save-list/" t)))
+      (setq auto-save-file-name-transforms
+        '((".*" "~/.emacs.d/auto-save-list/" t)))
     #+END_SRC
 
     Place all backups in a single directory.
 
     #+BEGIN_SRC emacs-lisp
-    (setq backup-directory-alist
-      '((".*" . "~/.emacs.d/backups")))
+      (setq backup-directory-alist
+        '((".*" . "~/.emacs.d/backups")))
     #+END_SRC
 
     Save the minibuffer history between sessions. Also save the kill-ring and search rings.
 
     #+BEGIN_SRC emacs-lisp
-    (require 'savehist)
-    (savehist-mode 1)
-    (setq savehist-save-minibuffer-history 1)
-    (setq savehist-additional-variables
+      (require 'savehist)
+      (savehist-mode 1)
+      (setq savehist-save-minibuffer-history 1)
+      (setq savehist-additional-variables
             '(kill-ring
-            search-ring
-            regexp-search-ring))
+              search-ring
+              regexp-search-ring))
     #+END_SRC
 
 *** Customize
@@ -124,8 +124,8 @@
     Put all automatic configurations in a separate file.
 
     #+BEGIN_SRC emacs-lisp
-    (setq custom-file "~/.emacs.d/custom.el")
-    (load custom-file 'noerror)
+      (setq custom-file "~/.emacs.d/custom.el")
+      (load custom-file 'noerror)
     #+END_SRC
 
 *** Text encoding
@@ -133,9 +133,9 @@
     Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
 
     #+BEGIN_SRC emacs-lisp
-    (prefer-coding-system 'utf-8)
-    (when (display-graphic-p)
-      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+      (prefer-coding-system 'utf-8)
+      (when (display-graphic-p)
+        (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
     #+END_SRC
 
 *** Font
@@ -143,8 +143,8 @@
     Use the [[https://sourcefoundry.org/hack/][Hack]] font.
 
     #+BEGIN_SRC emacs-lisp
-    (when (member "Hack" (font-family-list))
-      (set-face-attribute 'default nil :font "Hack-11"))
+      (when (member "Hack" (font-family-list))
+        (set-face-attribute 'default nil :font "Hack-11"))
     #+END_SRC
 
 *** Spaces/tabs
@@ -152,8 +152,8 @@
     Use spaces instead of tabs.
 
     #+BEGIN_SRC emacs-lisp
-    (setq-default indent-tabs-mode nil)
-    (setq-default tab-width 4)
+      (setq-default indent-tabs-mode nil)
+      (setq-default tab-width 4)
     #+END_SRC
 
 ** OS specific setting
@@ -162,8 +162,8 @@
     Bind the command key to meta.
 
     #+BEGIN_SRC emacs-lisp
-    (when (eq system-type 'darwin)
-        (setq mac-command-modifier 'meta))
+      (when (eq system-type 'darwin)
+          (setq mac-command-modifier 'meta))
     #+END_SRC
 
 ** Packages
@@ -173,43 +173,42 @@
      Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
 
      #+BEGIN_SRC emacs-lisp
-     (use-package evil
-       :ensure t
-       :init
-       (setq evil-ex-complete-emacs-commands nil)
-       (setq evil-vsplit-window-right t)
-       (setq evil-split-window-below t)
-       (setq evil-want-C-u-scroll t)
-       (setq evil-want-keybinding nil)
-       :config
-       (evil-mode))
+       (use-package evil
+         :ensure t
+         :init
+         (setq evil-ex-complete-emacs-commands nil)
+         (setq evil-vsplit-window-right t)
+         (setq evil-split-window-below t)
+         (setq evil-want-C-u-scroll t)
+         (setq evil-want-keybinding nil)
+         :config
+         (evil-mode))
      #+END_SRC
 
      Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode/blob/master/README.org][GitHub]]).
 
      #+BEGIN_SRC emacs-lisp
-     (use-package evil-org
-       :ensure t
-       :after org
-       :config
-       (add-hook 'org-mode-hook 'evil-org-mode))
+       (use-package evil-org
+         :ensure t
+         :after org
+         :config
+         (add-hook 'org-mode-hook 'evil-org-mode))
      #+END_SRC
 
      Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
 
      #+BEGIN_SRC emacs-lisp
-     (use-package evil-magit
-       :ensure t)
+       (use-package evil-magit :ensure t)
      #+END_SRC
 
      Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
 
      #+BEGIN_SRC emacs-lisp
-     (use-package evil-collection
-       :after evil
-       :ensure t
-       :config
-       (evil-collection-init))
+       (use-package evil-collection
+         :after evil
+         :ensure t
+         :config
+         (evil-collection-init))
      #+END_SRC
 
 **** Helm
@@ -217,50 +216,49 @@
      Incremental search/narrowing framework.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package helm
-       :if window-system
-       :ensure t
-       :commands (helm-mode helm-autoresize-mode)
-       :bind (("M-x"     . helm-M-x)
-              ("M-y"     . helm-show-kill-ring)
-              ("C-x b"   . helm-mini)
-              ("C-x C-b" . helm-buffers-list)
-              ("C-x C-f" . helm-find-files)
-              ("C-c h o" . helm-occur)
-              ("C-h a"   . helm-apropos)
-              ("C-c C-g" . helm-grep-do-git-grep-with-prefix-arg))
-       :init
-       (defun helm-grep-do-git-grep-with-prefix-arg ()
-         "Helper function to call helm-grep-do-git-grep with a prefix argument.
-       This performs the search on the whole repository."
-         (interactive)
-         (setq current-prefix-arg '(4)) ; C-u
-         (call-interactively 'helm-grep-do-git-grep))
-       (require 'helm-config)
-       (setq helm-echo-input-in-header-line     t)
-       (setq helm-move-to-line-cycle-in-source  t)
-       (setq helm-scroll-amount                 8)
-       (setq helm-split-window-inside-p         t)
-       (setq helm-autoresize-max-height         0)
-       (setq helm-autoresize-min-height        30)
-       :config
-       (helm-mode 1)
-       (helm-autoresize-mode 1))
+       (use-package helm
+         :if window-system
+         :ensure t
+         :commands (helm-mode helm-autoresize-mode)
+         :bind (("M-x"     . helm-M-x)
+                ("M-y"     . helm-show-kill-ring)
+                ("C-x b"   . helm-mini)
+                ("C-x C-b" . helm-buffers-list)
+                ("C-x C-f" . helm-find-files)
+                ("C-c h o" . helm-occur)
+                ("C-h a"   . helm-apropos)
+                ("C-c C-g" . helm-grep-do-git-grep-with-prefix-arg))
+         :init
+         (defun helm-grep-do-git-grep-with-prefix-arg ()
+           "Helper function to call helm-grep-do-git-grep with a prefix argument.
+         This performs the search on the whole repository."
+           (interactive)
+           (setq current-prefix-arg '(4)) ; C-u
+           (call-interactively 'helm-grep-do-git-grep))
+         (require 'helm-config)
+         (setq helm-echo-input-in-header-line     t)
+         (setq helm-move-to-line-cycle-in-source  t)
+         (setq helm-scroll-amount                 8)
+         (setq helm-split-window-inside-p         t)
+         (setq helm-autoresize-max-height         0)
+         (setq helm-autoresize-min-height        30)
+         :config
+         (helm-mode 1)
+         (helm-autoresize-mode 1))
      #+END_SRC
 
      Find files in a Git repository.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package helm-ls-git
-       :ensure t
-       :bind (("C-c g" . 'helm-ls-git-ls)))
+       (use-package helm-ls-git
+         :ensure t
+         :bind (("C-c g" . 'helm-ls-git-ls)))
      #+END_SRC
 
      Helm integration with [[*Projectile][Projectile]].
 
      #+BEGIN_SRC emacs-lisp
-     (use-package helm-projectile
-       :ensure t)
+       (use-package helm-projectile :ensure t)
      #+END_SRC
 
 **** Magit
@@ -268,9 +266,9 @@
      Git integration.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :ensure t
-       :defer t)
+       (use-package magit
+         :ensure t
+         :defer t)
      #+END_SRC
 
 **** Projectile
@@ -278,10 +276,10 @@
      Project (e.g., Git) management and navigation.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :ensure t
-       :init
-       (projectile-mode +1))
+       (use-package projectile
+         :ensure t
+         :init
+         (projectile-mode +1))
      #+END_SRC
 
 **** company-mode
@@ -289,9 +287,9 @@
      Text completion framework.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :ensure t
-       :init (global-company-mode))
+       (use-package company
+         :ensure t
+         :init (global-company-mode))
      #+END_SRC
 
 **** Flycheck
@@ -299,10 +297,10 @@
      Syntax checker.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package flycheck
-       :ensure t
-       :init
-       (global-flycheck-mode))
+       (use-package flycheck
+         :ensure t
+         :init
+         (global-flycheck-mode))
      #+END_SRC
 
 **** LSP mode
@@ -310,28 +308,28 @@
      Install extension that integrates with [[https://langserver.org/][language servers]].
 
      #+BEGIN_SRC emacs-lisp
-     (use-package lsp-mode
-       :ensure t
-       :hook (python-mode . lsp)
-       :commands lsp)
+       (use-package lsp-mode
+         :ensure t
+         :hook (python-mode . lsp)
+         :commands lsp)
      #+END_SRC
 
      Add company-mode backend.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package company-lsp
-       :ensure t
-       :after (lsp-mode company)
-       :config
-       (push 'company-lsp company-backends))
+       (use-package company-lsp
+         :ensure t
+         :after (lsp-mode company)
+         :config
+         (push 'company-lsp company-backends))
      #+END_SRC
 
      Add Helm integration for xref-appropos.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package helm-lsp
-       :ensure t
-       :after (lsp-mode helm))
+       (use-package helm-lsp
+         :ensure t
+         :after (lsp-mode helm))
      #+END_SRC
 
 **** ripgrep
@@ -339,7 +337,7 @@
      Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
 
      #+BEGIN_SRC emacs-lisp
-     (use-package rg :ensure t)
+       (use-package rg :ensure t)
      #+END_SRC
 
 **** exec-path-from-shell
@@ -347,12 +345,12 @@
      This package ensures that environment variables (e.g., $PATH) are observed by Emacs.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package exec-path-from-shell
-       :ensure t
-       :init
-       (when (memq window-system '(mac ns x))
-         (setq exec-path-from-shell-check-startup-files nil)
-         (exec-path-from-shell-initialize)))
+       (use-package exec-path-from-shell
+         :ensure t
+         :init
+         (when (memq window-system '(mac ns x))
+           (setq exec-path-from-shell-check-startup-files nil)
+           (exec-path-from-shell-initialize)))
      #+END_SRC
 
 **** rainbow-delimiters
@@ -360,24 +358,24 @@
      Make corresponding delimiters the same color (e.g., {, (, ")
 
      #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-delimiters
-       :ensure t
-       :config
-       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+       (use-package rainbow-delimiters
+         :ensure t
+         :config
+         (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
      #+END_SRC
 
 **** doom-modeline
 
      #+BEGIN_SRC emacs-lisp
-     (use-package all-the-icons :ensure t)
+       (use-package all-the-icons :ensure t)
 
-     (use-package doom-modeline
-       :ensure t
-       :after all-the-icons
-       :hook (after-init . doom-modeline-mode)
-       :config
-       ;; Don’t compact font caches during GC.
-       (setq inhibit-compacting-font-caches t))
+       (use-package doom-modeline
+         :ensure t
+         :after all-the-icons
+         :hook (after-init . doom-modeline-mode)
+         :config
+         ;; Don’t compact font caches during GC.
+         (setq inhibit-compacting-font-caches t))
      #+END_SRC
 
 *** File and language specific modes
@@ -386,15 +384,15 @@
      Use UTF-8 bullet points in org-mode.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package org-bullets
-       :ensure t
-       :hook (org-mode . org-bullets-mode))
+       (use-package org-bullets
+         :ensure t
+         :hook (org-mode . org-bullets-mode))
      #+END_SRC
 
      HTML export.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package htmlize :ensure t)
+       (use-package htmlize :ensure t)
      #+END_SRC
 
 **** Markdown
@@ -402,9 +400,9 @@
      A major mode for Markdown (.md) files.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package markdown-mode
-       :ensure t
-       :defer t)
+       (use-package markdown-mode
+         :ensure t
+         :defer t)
      #+END_SRC
 
 **** C#
@@ -412,13 +410,13 @@
      Integration with OmniSharp server for .NET development. This package will also install [[https://github.com/josteink/csharp-mode][csharp-mode]] as a dependency.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package omnisharp
-       :ensure t
-       :after (company flycheck)
-       :config
-       (add-hook 'csharp-mode-hook 'omnisharp-mode)
-       (add-to-list 'company-backends 'company-omnisharp)
-       (add-hook 'csharp-mode-hook 'flycheck-mode))
+       (use-package omnisharp
+         :ensure t
+         :after (company flycheck)
+         :config
+         (add-hook 'csharp-mode-hook 'omnisharp-mode)
+         (add-to-list 'company-backends 'company-omnisharp)
+         (add-hook 'csharp-mode-hook 'flycheck-mode))
      #+END_SRC
 
 **** TypeScript
@@ -426,12 +424,12 @@
      Integration with the TypeScript server for IDE-like capabilities. This package will also install [[https://github.com/emacs-typescript/typescript.el][typescript.el]] as a dependency.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package tide
-       :ensure t
-       :after (typescript-mode company flycheck)
-       :hook ((typescript-mode . tide-setup)
-              (typescript-mode . tide-hl-identifier-mode)
-              (before-save     . tide-format-before-save)))
+       (use-package tide
+         :ensure t
+         :after (typescript-mode company flycheck)
+         :hook ((typescript-mode . tide-setup)
+                (typescript-mode . tide-hl-identifier-mode)
+                (before-save     . tide-format-before-save)))
      #+END_SRC
 
 **** LaTeX
@@ -439,14 +437,14 @@
      Utility for writing and exporting TeX files.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package auctex
-       :defer t
-       :ensure t
-       :config
-       (require 'auctex)
-       (setq TeX-parse-self t) ; Enable parse on load.
-       (setq TeX-auto-save t) ; Enable parse on save.
-       (add-to-list 'exec-path "/Library/TeX/texbin/"))
+       (use-package auctex
+         :defer t
+         :ensure t
+         :config
+         (require 'auctex)
+         (setq TeX-parse-self t) ; Enable parse on load.
+         (setq TeX-auto-save t) ; Enable parse on save.
+         (add-to-list 'exec-path "/Library/TeX/texbin/"))
      #+END_SRC
 
 **** ledger
@@ -454,15 +452,15 @@
      Integration with [[https://www.ledger-cli.org/][ledger]], a text-based accounting system.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package ledger-mode
-       :ensure t
-       :mode ("\\.dat\\'"
-              "\\.ledger\\'")
-       :custom (ledger-clear-whole-transactions t))
+       (use-package ledger-mode
+         :ensure t
+         :mode ("\\.dat\\'"
+                "\\.ledger\\'")
+         :custom (ledger-clear-whole-transactions t))
 
-     (use-package flycheck-ledger
-       :after ledger-mode
-       :ensure t)
+       (use-package flycheck-ledger
+         :after ledger-mode
+         :ensure t)
      #+END_SRC
 
 **** Hugo
@@ -470,7 +468,7 @@
      Org-mode integration with [[https://gohugo.io/][Hugo]], a Markdown-based static web-site generator.
 
      #+BEGIN_SRC emacs-lisp
-     (use-package ox-hugo
-       :ensure t
-       :after ox)
+       (use-package ox-hugo
+         :ensure t
+         :after ox)
      #+END_SRC
