@@ -41,7 +41,8 @@
         :if window-system
         :ensure t
         :config
-        (load-theme 'snazzy t))
+        (unless custom-enabled-themes
+          (load-theme 'snazzy t)))
       (unless frame
         (setq frame (selected-frame)))
       (when frame
