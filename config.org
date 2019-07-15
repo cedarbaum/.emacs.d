@@ -156,6 +156,19 @@
       (setq-default tab-width 4)
     #+END_SRC
 
+*** Ad hoc scripts
+
+    Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
+
+    #+BEGIN_SRC emacs-lisp
+      (defun load-directory (dir)
+        (let ((load-it (lambda (f)
+                         (load-file (concat (file-name-as-directory dir) f)))
+                       ))
+          (mapc load-it (directory-files dir nil "\\.el$"))))
+      (load-directory "~/.emacs.d/adhoc/")
+    #+END_SRC
+
 ** OS specific setting
 *** macOS
 
