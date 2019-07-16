@@ -162,11 +162,14 @@
 
     #+BEGIN_SRC emacs-lisp
       (defun load-directory (dir)
+        "Load all elisp files within DIR."
         (let ((load-it (lambda (f)
                          (load-file (concat (file-name-as-directory dir) f)))
                        ))
           (mapc load-it (directory-files dir nil "\\.el$"))))
-      (load-directory "~/.emacs.d/adhoc/")
+      (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
+        (when (file-directory-p adhoc-dir)
+          (load-directory adhoc-dir)))
     #+END_SRC
 
 ** OS specific setting
