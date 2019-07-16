@@ -60,3 +60,6 @@ custom.el
 
 # Ad hoc scripts
 adhoc/
+
+# Ignore server directory
+server/
