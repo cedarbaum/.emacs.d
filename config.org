@@ -184,6 +184,14 @@
 
 ** Packages
 *** General packages
+**** General
+
+     Use [[https://github.com/noctuid/general.el][General]] for keybindings.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package general :ensure t)
+     #+END_SRC
+
 **** Evil mode
 
      Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
@@ -236,14 +244,15 @@
          :if window-system
          :ensure t
          :commands (helm-mode helm-autoresize-mode)
-         :bind (("M-x"     . helm-M-x)
-                ("M-y"     . helm-show-kill-ring)
-                ("C-x b"   . helm-mini)
-                ("C-x C-b" . helm-buffers-list)
-                ("C-x C-f" . helm-find-files)
-                ("C-c h o" . helm-occur)
-                ("C-h a"   . helm-apropos)
-                ("C-c C-g" . helm-grep-do-git-grep-with-prefix-arg))
+         :general
+         ("M-x"     'helm-M-x)
+         ("M-y"     'helm-show-kill-ring)
+         ("C-x b"   'helm-mini)
+         ("C-x C-b" 'helm-buffers-list)
+         ("C-x C-f" 'helm-find-files)
+         ("C-c h o" 'helm-occur)
+         ("C-h a"   'helm-apropos)
+         ("C-c C-g" 'helm-grep-do-git-grep-with-prefix-arg)
          :init
          (defun helm-grep-do-git-grep-with-prefix-arg ()
            "Helper function to call helm-grep-do-git-grep with a prefix argument.
@@ -268,7 +277,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package helm-ls-git
          :ensure t
-         :bind (("C-c g" . 'helm-ls-git-ls)))
+         :general ("C-c g" 'helm-ls-git-ls))
      #+END_SRC
 
      Helm integration with [[*Projectile][Projectile]].
