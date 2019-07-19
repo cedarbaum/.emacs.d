@@ -396,7 +396,7 @@
 
 **** Hydra
 
-     Install [[https://gitlab.com/to1ne/use-package-hydra][Hydra]].
+     Install [[https://github.com/abo-abo/hydra][Hydra]].
 
      #+BEGIN_SRC emacs-lisp
        (use-package hydra
