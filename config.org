@@ -394,6 +394,27 @@
          (setq inhibit-compacting-font-caches t))
      #+END_SRC
 
+**** Hydra
+
+     Install [[https://gitlab.com/to1ne/use-package-hydra][Hydra]].
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package hydra
+         :ensure t
+         :config
+         (defhydra hydra-zoom (global-map "<f2>")
+           "zoom"
+           ("g" text-scale-increase "in")
+           ("l" text-scale-decrease "out")
+           ("r" (text-scale-set 0)  "reset")))
+     #+END_SRC
+
+     Add =:hydra= keyword to =use-package=.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package use-package-hydra :ensure t)
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
