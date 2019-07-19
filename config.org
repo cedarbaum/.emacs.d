@@ -277,6 +277,16 @@
        (use-package helm-projectile :ensure t)
      #+END_SRC
 
+     Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package helm-ag
+         :ensure t
+         :config
+         (custom-set-variables
+          '(helm-ag-base-command "rg --no-heading")))
+     #+END_SRC
+
 **** Magit
 
      Git integration.
