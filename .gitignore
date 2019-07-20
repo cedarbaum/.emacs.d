@@ -63,3 +63,6 @@ adhoc/
 
 # Ignore server directory
 server/
+
+# Ignore LSP sessions
+.lsp-session*
