@@ -165,6 +165,12 @@
       (setq-default tab-width 4)
     #+END_SRC
 
+    Cleanup whitespace on save.
+
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'before-save-hook 'whitespace-cleanup)
+    #+END_SRC
+
 *** Ad hoc scripts
 
     Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
