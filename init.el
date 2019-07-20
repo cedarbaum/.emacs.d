@@ -23,7 +23,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 ;; Workaround for bug #34341 (https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341A)
-(when (eq system-type 'windows-nt)
+(unless (eq system-type 'windows-nt)
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 (setq package-enable-at-startup nil)
