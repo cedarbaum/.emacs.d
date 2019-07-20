@@ -375,19 +375,6 @@
        (use-package rg :ensure t)
      #+END_SRC
 
-**** exec-path-from-shell
-
-     This package ensures that environment variables (e.g., $PATH) are observed by Emacs.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package exec-path-from-shell
-         :ensure t
-         :init
-         (when (memq window-system '(mac ns x))
-           (setq exec-path-from-shell-check-startup-files nil)
-           (exec-path-from-shell-initialize)))
-     #+END_SRC
-
 **** rainbow-delimiters
 
      Make corresponding delimiters the same color (e.g., {, (, ")
@@ -499,8 +486,7 @@
          :config
          (require 'auctex)
          (setq TeX-parse-self t) ; Enable parse on load.
-         (setq TeX-auto-save t) ; Enable parse on save.
-         (add-to-list 'exec-path "/Library/TeX/texbin/"))
+         (setq TeX-auto-save t)) ; Enable parse on save.
      #+END_SRC
 
 **** ledger
