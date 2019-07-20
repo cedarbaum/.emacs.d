@@ -65,6 +65,15 @@
       (setq help-window-select t)
     #+END_SRC
 
+*** Line numbers
+
+    Enable line numbers in text and prog modes.
+
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'text-mode-hook 'linum-mode)
+      (add-hook 'prog-mode-hook 'linum-mode)
+    #+END_SRC
+
 *** Sounds
 
     Disable bell function.
@@ -346,7 +355,9 @@
        (use-package lsp-mode
          :ensure t
          :hook (python-mode . lsp)
-         :commands lsp)
+         :commands lsp
+         :config
+         (setq lsp-enable-snippet nil))
      #+END_SRC
 
      Add company-mode backend.
