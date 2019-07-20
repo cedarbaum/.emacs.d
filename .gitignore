@@ -66,3 +66,6 @@ server/
 
 # Ignore LSP sessions
 .lsp-session*
+
+# Ignore DAP mode breakpoints
+.dap-breakpoints

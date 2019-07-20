@@ -360,6 +360,20 @@
          (setq lsp-enable-snippet nil))
      #+END_SRC
 
+     Enable DAP mode. Currently only configured for Python.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package dap-mode
+         :ensure t
+         :config
+         (defun enable-dap-mode-and-ui ()
+           "Enable dap-mode and dap-ui-mode."
+           (dap-mode 1)
+           (dap-ui-mode 1))
+         (require 'dap-python)
+         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui))
+     #+END_SRC
+
      Add company-mode backend.
 
      #+BEGIN_SRC emacs-lisp
