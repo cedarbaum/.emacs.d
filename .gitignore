@@ -69,3 +69,7 @@ server/
 
 # Ignore DAP mode breakpoints
 .dap-breakpoints
+
+# Ignore Java LSP folders
+eclipse.jdt.ls/
+workspace/

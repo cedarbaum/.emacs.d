@@ -364,19 +364,26 @@
          :commands lsp
          :config
          (setq lsp-enable-snippet nil))
+
+       (use-package lsp-java
+         :ensure t
+         :after lsp-mode
+         :config (add-hook 'java-mode-hook 'lsp))
      #+END_SRC
 
-     Enable DAP mode. Currently only configured for Python.
+     Enable DAP mode. Currently configured for Python and Java.
 
      #+BEGIN_SRC emacs-lisp
        (use-package dap-mode
          :ensure t
+         :after lsp-mode
          :config
          (defun enable-dap-mode-and-ui ()
            "Enable dap-mode and dap-ui-mode."
            (dap-mode 1)
            (dap-ui-mode 1))
          (require 'dap-python)
+         (require 'dap-java)
          (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui))
      #+END_SRC
 
