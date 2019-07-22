@@ -339,7 +339,11 @@
      #+BEGIN_SRC emacs-lisp
        (use-package company
          :ensure t
-         :init (global-company-mode))
+         :init (global-company-mode)
+         :config
+         (add-to-list 'company-backends 'company-elisp)
+         :general
+         (:keymaps 'company-active-map "RET" 'company-complete))
      #+END_SRC
 
 **** Flycheck
