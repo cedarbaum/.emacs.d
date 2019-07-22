@@ -405,6 +405,16 @@
          :after (lsp-mode helm))
      #+END_SRC
 
+**** yasnippet
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package yasnippet
+         :ensure t
+         :config
+         (require 'yasnippet)
+         (yas-global-mode 1))
+     #+END_SRC
+
 **** ripgrep
 
      Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
