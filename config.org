@@ -360,15 +360,15 @@
      #+BEGIN_SRC emacs-lisp
        (use-package lsp-mode
          :ensure t
-         :hook (python-mode . lsp)
-         :commands lsp
-         :config
-         (setq lsp-enable-snippet nil))
+         :after yasnippet
+         :hook
+         (python-mode . lsp)
+         (java-mode   . lsp)
+         :commands lsp)
 
        (use-package lsp-java
          :ensure t
-         :after lsp-mode
-         :config (add-hook 'java-mode-hook 'lsp))
+         :after lsp-mode)
      #+END_SRC
 
      Enable DAP mode. Currently configured for Python and Java.
@@ -394,7 +394,7 @@
          :ensure t
          :after (lsp-mode company)
          :config
-         (push 'company-lsp company-backends))
+         (add-to-list 'company-backends 'company-lsp))
      #+END_SRC
 
      Add Helm integration for xref-appropos.
