@@ -469,8 +469,10 @@
      #+BEGIN_SRC emacs-lisp
        (use-package hydra
          :ensure t
-         :config
-         (defhydra hydra-zoom (global-map "<f2>")
+         :general
+         ("<f2>" 'hydra-zoom/body)
+         :init
+         (defhydra hydra-zoom ()
            "zoom"
            ("g" text-scale-increase "in")
            ("l" text-scale-decrease "out")
