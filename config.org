@@ -493,7 +493,18 @@
          :if (memq window-system '(mac ns))
          :config
          (exec-path-from-shell-initialize))
-    #+END_SRC
+     #+END_SRC
+
+**** which-key
+
+     Display possible keybindings after an incomplete prefix.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package which-key
+         :ensure t
+         :init
+         (which-key-mode))
+     #+END_SRC
 
 *** File and language specific modes
 **** Org mode extensions
