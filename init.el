@@ -31,7 +31,6 @@
 
 (setq package-enable-at-startup nil)
 (package-initialize)
-(package-refresh-contents)
 
 ;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
