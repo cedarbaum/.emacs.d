@@ -15,6 +15,9 @@
   (interactive)
   (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
 
+;; Prefer UTF-8 encoding
+(prefer-coding-system 'utf-8)
+
 ;; Initialize package manager
 (require 'package)
 
