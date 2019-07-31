@@ -241,7 +241,12 @@
          :ensure t
          :after org
          :config
-         (add-hook 'org-mode-hook 'evil-org-mode))
+         (add-hook 'org-mode-hook 'evil-org-mode)
+         (add-hook 'evil-org-mode-hook
+                   (lambda ()
+                     (evil-org-set-key-theme)))
+         (require 'evil-org-agenda)
+         (evil-org-agenda-set-keys))
      #+END_SRC
 
      Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
