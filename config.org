@@ -405,7 +405,9 @@
            (dap-ui-mode 1))
          (require 'dap-python)
          (require 'dap-java)
-         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui))
+         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
+         :general
+         (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
      #+END_SRC
 
      Add company-mode backend.
