@@ -22,6 +22,14 @@
             user-mail-address "scedarbaum@gmail.com")
     #+END_SRC
 
+*** GPG
+
+    Enable pin entry within the Emacs minibuffer.
+
+    #+BEGIN_SRC emacs-lisp
+    (setq epa-pinentry-mode 'loopback)
+    #+END_SRC
+
 *** Startup window
 
     Disable startup screen.
