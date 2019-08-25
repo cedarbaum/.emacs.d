@@ -291,6 +291,9 @@
          ("C-c h o" 'helm-occur)
          ("C-h a"   'helm-apropos)
          ("C-c C-g" 'helm-grep-do-git-grep-with-prefix-arg)
+         (:keymaps 'helm-map "TAB" #'helm-execute-persistent-action)
+         (:keymaps 'helm-map "<tab>" #'helm-execute-persistent-action)
+         (:keymaps 'helm-map "C-z" #'helm-select-action)
          :init
          (defun helm-grep-do-git-grep-with-prefix-arg ()
            "Helper function to call helm-grep-do-git-grep with a prefix argument.
