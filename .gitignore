@@ -73,3 +73,6 @@ server/
 # Ignore Java LSP folders
 eclipse.jdt.ls/
 workspace/
+
+# Ignore NSM connection details file
+network-security.data
