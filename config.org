@@ -542,6 +542,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package erc
+         :ensure t
          :custom
          (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
          (erc-autojoin-timing 'ident)
