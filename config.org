@@ -527,6 +527,7 @@
          :init
          (which-key-mode))
      #+END_SRC
+
 **** git-timemachine
 
      Travel through Git history.
@@ -534,6 +535,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package git-timemachine :ensure t)
      #+END_SRC
+
 **** ERC
 
      IRC chat within Emacs.
@@ -553,14 +555,6 @@
          (erc-server-reconnect-timeout 3)
          (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
                                     "324" "329" "332" "333" "353" "477"))
-         :init
-         (defun my/erc-start-or-switch ()
-           "Connects to ERC, or switch to last active buffer."
-           (interactive)
-           (if (get-buffer "irc.freenode.net:6667")
-               (erc-track-switch-buffer 1)
-             (when (y-or-n-p "Start ERC? ")
-               (erc :server "irc.freenode.net" :port 6667 :nick "x64Toaster"))))
          :config
          (add-to-list 'erc-modules 'notifications)
          (add-to-list 'erc-modules 'spelling)
