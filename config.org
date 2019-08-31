@@ -534,6 +534,56 @@
      #+BEGIN_SRC emacs-lisp
        (use-package git-timemachine :ensure t)
      #+END_SRC
+**** ERC
+
+     IRC chat within Emacs.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package erc
+         :custom
+         (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+         (erc-autojoin-timing 'ident)
+         (erc-fill-function 'erc-fill-static)
+         (erc-fill-static-center 22)
+         (erc-hide-list '("JOIN" "PART" "QUIT"))
+         (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+         (erc-lurker-threshold-time 43200)
+         (erc-prompt-for-nickserv-password nil)
+         (erc-server-reconnect-attempts 5)
+         (erc-server-reconnect-timeout 3)
+         (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                                    "324" "329" "332" "333" "353" "477"))
+         :init
+         (defun my/erc-start-or-switch ()
+           "Connects to ERC, or switch to last active buffer."
+           (interactive)
+           (if (get-buffer "irc.freenode.net:6667")
+               (erc-track-switch-buffer 1)
+             (when (y-or-n-p "Start ERC? ")
+               (erc :server "irc.freenode.net" :port 6667 :nick "x64Toaster"))))
+         :config
+         (add-to-list 'erc-modules 'notifications)
+         (add-to-list 'erc-modules 'spelling)
+         (erc-services-mode 1)
+         (erc-update-modules))
+     #+END_SRC
+
+**** eyebrowse
+
+     Window manager.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package eyebrowse
+         :ensure t
+         :general
+         (:keymaps 'eyebrowse-mode-map "M-1" 'eyebrowse-switch-to-window-config-1)
+         (:keymaps 'eyebrowse-mode-map "M-2" 'eyebrowse-switch-to-window-config-2)
+         (:keymaps 'eyebrowse-mode-map "M-3" 'eyebrowse-switch-to-window-config-3)
+         (:keymaps 'eyebrowse-mode-map "M-4" 'eyebrowse-switch-to-window-config-4)
+         :config
+         (eyebrowse-mode t)
+         (setq eyebrowse-new-workspace t))
+     #+END_SRC
 
 *** File and language specific modes
 **** Org mode extensions
