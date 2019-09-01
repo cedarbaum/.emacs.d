@@ -641,7 +641,7 @@
          (setq eyebrowse-new-workspace t))
      #+END_SRC
 
-**** Dashboard.
+**** Dashboard
 
      Dashboard shown on startup.
 
@@ -656,6 +656,17 @@
                                  (agenda    . 5)
                                  (registers . 5)))
          (dashboard-setup-startup-hook))
+     #+END_SRC
+
+**** goto-line-preview
+
+     Preview line before jumping to it.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package goto-line-preview
+         :ensure t
+         :general
+         ("M-g g" 'goto-line-preview))
      #+END_SRC
 
 *** File and language specific modes
