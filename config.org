@@ -344,6 +344,15 @@
           '(helm-ag-base-command "rg --no-heading")))
      #+END_SRC
 
+     Search lines within buffer.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package helm-swoop
+         :ensure t
+         :general
+         ("C-c s" 'helm-swoop))
+     #+END_SRC
+
 **** Magit
 
      Git integration.
