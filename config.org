@@ -669,26 +669,6 @@
          ("M-g g" 'goto-line-preview))
      #+END_SRC
 
-*** Fun
-**** emacs-fireplace
-
-     Fireplace in Emacs.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package fireplace :ensure t)
-     #+END_SRC
-
-**** wttrin.el
-
-     Display the weather.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package wttrin
-         :ensure t
-         :config
-         (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
-     #+END_SRC
-
 *** File and language specific modes
 **** Org mode extensions
 
@@ -781,4 +761,24 @@
        (use-package ox-hugo
          :ensure t
          :after ox)
+     #+END_SRC
+
+*** Fun
+**** emacs-fireplace
+
+     Fireplace in Emacs.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package fireplace :ensure t)
+     #+END_SRC
+
+**** wttrin.el
+
+     Display the weather.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package wttrin
+         :ensure t
+         :config
+         (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
      #+END_SRC
