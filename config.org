@@ -571,10 +571,10 @@
        (use-package eyebrowse
          :ensure t
          :general
-         (:keymaps 'eyebrowse-mode-map "M-1" 'eyebrowse-switch-to-window-config-1)
-         (:keymaps 'eyebrowse-mode-map "M-2" 'eyebrowse-switch-to-window-config-2)
-         (:keymaps 'eyebrowse-mode-map "M-3" 'eyebrowse-switch-to-window-config-3)
-         (:keymaps 'eyebrowse-mode-map "M-4" 'eyebrowse-switch-to-window-config-4)
+         (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
+         (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
+         (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
+         (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
          :config
          (eyebrowse-mode t)
          (setq eyebrowse-new-workspace t))
