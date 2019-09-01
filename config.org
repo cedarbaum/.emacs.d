@@ -587,6 +587,17 @@
          (setq eyebrowse-new-workspace t))
      #+END_SRC
 
+**** Dashboard.
+
+     Dashboard shown on startup.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package dashboard
+         :ensure t
+         :config
+         (dashboard-setup-startup-hook))
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
