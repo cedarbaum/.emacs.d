@@ -76,3 +76,6 @@ workspace/
 
 # Ignore NSM connection details file
 network-security.data
+
+# Ignore XKCD cache
+xkcd

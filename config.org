@@ -782,3 +782,18 @@
          :config
          (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
      #+END_SRC
+**** xkcd
+
+     View XKCD comics.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package xkcd
+         :ensure t
+         :init
+         (add-hook 'after-change-major-mode-hook
+                   '(lambda ()
+                      (blink-cursor-mode (if (equal major-mode 'xkcd-mode) 0 1))))
+         :general
+         (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
+         (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
+     #+END_SRC
