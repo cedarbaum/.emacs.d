@@ -65,6 +65,13 @@
       (add-hook 'after-make-frame-functions #'configure-frame t)
     #+END_SRC
 
+    Enable winner-mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (when (fboundp 'winner-mode)
+        (winner-mode 1))
+    #+END_SRC
+
 *** Help system
 
     Select the help window when opened.
