@@ -669,6 +669,18 @@
                                             (smerge-hydra/body)))))
      #+END_SRC
 
+**** alert
+
+     Alert system.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package alert
+         :ensure t
+         :config
+         (when (eq system-type 'darwin)
+           (setq alert-default-style 'osx-notifier)))
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
