@@ -79,3 +79,6 @@ network-security.data
 
 # Ignore XKCD cache
 xkcd
+
+# Ignore org-gcal files
+org-gcal/
