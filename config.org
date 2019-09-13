@@ -831,6 +831,7 @@
          :config
          (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
      #+END_SRC
+
 **** XKCD
 
      View XKCD comics.
