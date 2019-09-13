@@ -372,6 +372,18 @@
          :defer t)
      #+END_SRC
 
+**** git-link
+
+     Open files in remote Git portals.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package git-link
+         :ensure t
+         :defer t
+         :config
+         (setq git-link-open-in-browser t))
+     #+END_SRC
+
 **** Projectile
 
      Project (e.g., Git) management and navigation.
