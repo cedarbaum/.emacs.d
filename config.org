@@ -647,7 +647,7 @@
 
 **** smerge
 
-     Git merge tool. From: https://github.com/alphapapa/unpackaged.el#smerge-mode.
+     Git merge tool. Hydra from: https://github.com/alphapapa/unpackaged.el#smerge-mode.
 
      #+BEGIN_SRC emacs-lisp
        (use-package smerge-mode
