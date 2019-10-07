@@ -348,6 +348,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package helm-ag
          :ensure t
+         :general ("C-c a" 'helm-do-ag)
          :config
          (custom-set-variables
           '(helm-ag-base-command "rg --no-heading")))
