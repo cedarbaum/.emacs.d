@@ -82,3 +82,6 @@ xkcd
 
 # Ignore org-gcal files
 org-gcal/
+
+# Ignore request directory
+request/
