@@ -517,7 +517,8 @@
          :hook (after-init . doom-modeline-mode)
          :config
          ;; Don’t compact font caches during GC.
-         (setq inhibit-compacting-font-caches t))
+         (setq inhibit-compacting-font-caches t)
+         (setq doom-modeline-vcs-max-length 25))
      #+END_SRC
 
 **** Hydra
