@@ -351,7 +351,7 @@
          :general ("C-c a" 'helm-do-ag)
          :config
          (custom-set-variables
-          '(helm-ag-base-command "rg --no-heading")))
+          '(helm-ag-base-command "rg --no-heading --line-number")))
      #+END_SRC
 
      Search lines within buffer.
