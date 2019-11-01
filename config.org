@@ -289,6 +289,15 @@
          (evil-collection-init))
      #+END_SRC
 
+     Evil surround support similar to [[https://github.com/tpope/vim-surround][surround.vim]].
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package evil-surround
+         :ensure t
+         :config
+         (global-evil-surround-mode 1))
+     #+END_SRC
+
 **** Helm
 
      Incremental search/narrowing framework.
