@@ -315,7 +315,7 @@
          ("C-x C-f" 'helm-find-files)
          ("C-c h o" 'helm-occur)
          ("C-h a"   'helm-apropos)
-         ("C-c C-g" 'helm-grep-do-git-grep-with-prefix-arg)
+         ("C-c g g" 'helm-grep-do-git-grep-with-prefix-arg)
          (:keymaps 'helm-map "TAB" #'helm-execute-persistent-action)
          (:keymaps 'helm-map "<tab>" #'helm-execute-persistent-action)
          (:keymaps 'helm-map "C-z" #'helm-select-action)
@@ -343,7 +343,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package helm-ls-git
          :ensure t
-         :general ("C-c g" 'helm-ls-git-ls))
+         :general ("C-c l g" 'helm-ls-git-ls))
      #+END_SRC
 
      Helm integration with [[*Projectile][Projectile]].
@@ -357,7 +357,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package helm-ag
          :ensure t
-         :general ("C-c a" 'helm-do-ag)
+         :general ("C-c g a" 'helm-do-ag)
          :config
          (custom-set-variables
           '(helm-ag-base-command "rg --no-heading --line-number")))
