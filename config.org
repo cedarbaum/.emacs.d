@@ -372,7 +372,7 @@
          ("C-c s" 'helm-swoop))
      #+END_SRC
 
-**** Magit
+**** Git
 
      Git integration.
 
@@ -382,8 +382,6 @@
          :defer t)
      #+END_SRC
 
-**** git-link
-
      Open files in remote Git portals.
 
      #+BEGIN_SRC emacs-lisp
@@ -392,6 +390,12 @@
          :defer t
          :config
          (setq git-link-open-in-browser t))
+     #+END_SRC
+
+     Travel through Git history.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package git-timemachine :ensure t)
      #+END_SRC
 
 **** Projectile
@@ -574,14 +578,6 @@
          :ensure t
          :init
          (which-key-mode))
-     #+END_SRC
-
-**** git-timemachine
-
-     Travel through Git history.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package git-timemachine :ensure t)
      #+END_SRC
 
 **** ERC
