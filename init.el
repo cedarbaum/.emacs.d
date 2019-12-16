@@ -36,7 +36,6 @@
 ;; Ensure org is installed in order to load config.org
 (use-package org
   :ensure t
-  :defer t
   :init
   (setq org-confirm-babel-evaluate nil))
 
