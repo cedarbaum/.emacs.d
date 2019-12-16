@@ -47,7 +47,7 @@
         "Customize the FRAME and load theme."
         (use-package snazzy-theme
           :if window-system
-          :ensure t
+
           :config
           (unless custom-enabled-themes
             (load-theme 'snazzy t)))
@@ -229,7 +229,7 @@
      Install packages directly from source (e.g., from GitHub repositories).
 
      #+BEGIN_SRC emacs-lisp
-       (use-package quelpa :ensure t)
+       (use-package quelpa)
      #+END_SRC
 
 *** General packages
@@ -238,7 +238,7 @@
      Use [[https://github.com/noctuid/general.el][General]] for keybindings.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package general :ensure t)
+       (use-package general)
      #+END_SRC
 
 **** Evil mode
@@ -247,7 +247,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package evil
-         :ensure t
          :init
          (setq evil-ex-complete-emacs-commands nil)
          (setq evil-vsplit-window-right t)
@@ -262,7 +261,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package evil-org
-         :ensure t
          :after org
          :config
          (add-hook 'org-mode-hook 'evil-org-mode)
@@ -276,7 +274,7 @@
      Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
 
      #+BEGIN_SRC emacs-lisp
-       (use-package evil-magit :ensure t)
+       (use-package evil-magit)
      #+END_SRC
 
      Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
@@ -284,7 +282,6 @@
      #+BEGIN_SRC emacs-lisp
        (use-package evil-collection
          :after evil
-         :ensure t
          :config
          (evil-collection-init))
      #+END_SRC
@@ -293,7 +290,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package evil-surround
-         :ensure t
          :config
          (global-evil-surround-mode 1))
      #+END_SRC
@@ -305,7 +301,6 @@
      #+BEGIN_SRC emacs-lisp
        (use-package helm
          :if window-system
-         :ensure t
          :commands (helm-mode helm-autoresize-mode)
          :general
          ("M-x"     'helm-M-x)
@@ -341,22 +336,19 @@
      Find files in a Git repository.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package helm-ls-git
-         :ensure t
-         :general ("C-c l g" 'helm-ls-git-ls))
+       (use-package helm-ls-git :general ("C-c l g" 'helm-ls-git-ls))
      #+END_SRC
 
      Helm integration with [[*Projectile][Projectile]].
 
      #+BEGIN_SRC emacs-lisp
-       (use-package helm-projectile :ensure t)
+       (use-package helm-projectile)
      #+END_SRC
 
      Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
 
      #+BEGIN_SRC emacs-lisp
        (use-package helm-ag
-         :ensure t
          :general ("C-c g a" 'helm-do-ag)
          :config
          (custom-set-variables
@@ -366,10 +358,7 @@
      Search lines within buffer.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package helm-swoop
-         :ensure t
-         :general
-         ("C-c s" 'helm-swoop))
+       (use-package helm-swoop :general ("C-c s" 'helm-swoop))
      #+END_SRC
 
 **** Git
@@ -377,16 +366,13 @@
      Git integration.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package magit
-         :ensure t
-         :defer t)
+       (use-package magit :defer t)
      #+END_SRC
 
      Open files in remote Git portals.
 
      #+BEGIN_SRC emacs-lisp
        (use-package git-link
-         :ensure t
          :defer t
          :config
          (setq git-link-open-in-browser t))
@@ -395,13 +381,13 @@
      Travel through Git history.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package git-timemachine :ensure t)
+       (use-package git-timemachine)
      #+END_SRC
 
      Major modes for Git configuration files.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package gitconfig-mode :ensure t)
+       (use-package gitconfig-mode)
      #+END_SRC
 
 **** Projectile
@@ -409,10 +395,7 @@
      Project (e.g., Git) management and navigation.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package projectile
-         :ensure t
-         :init
-         (projectile-mode +1))
+       (use-package projectile :init (projectile-mode +1))
      #+END_SRC
 
 **** company-mode
@@ -421,7 +404,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package company
-         :ensure t
          :init (global-company-mode)
          :config
          (add-to-list 'company-backends 'company-elisp)
@@ -436,10 +418,7 @@
      Syntax checker.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package flycheck
-         :ensure t
-         :init
-         (global-flycheck-mode))
+       (use-package flycheck :init (global-flycheck-mode))
      #+END_SRC
 
 **** LSP mode
@@ -448,23 +427,19 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package lsp-mode
-         :ensure t
          :after yasnippet
          :hook
          (python-mode . lsp)
          (java-mode   . lsp)
          :commands lsp)
 
-       (use-package lsp-java
-         :ensure t
-         :after lsp-mode)
+       (use-package lsp-java :after lsp-mode)
      #+END_SRC
 
      Enable DAP mode. Currently configured for Python and Java.
 
      #+BEGIN_SRC emacs-lisp
        (use-package dap-mode
-         :ensure t
          :after lsp-mode
          :config
          (defun enable-dap-mode-and-ui ()
@@ -482,7 +457,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package company-lsp
-         :ensure t
          :after (lsp-mode company)
          :config
          (add-to-list 'company-backends 'company-lsp))
@@ -491,16 +465,13 @@
      Add Helm integration for xref-appropos.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package helm-lsp
-         :ensure t
-         :after (lsp-mode helm))
+       (use-package helm-lsp :after (lsp-mode helm))
      #+END_SRC
 
 **** yasnippet
 
      #+BEGIN_SRC emacs-lisp
        (use-package yasnippet
-         :ensure t
          :config
          (require 'yasnippet)
          (yas-global-mode 1))
@@ -511,7 +482,7 @@
      Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
 
      #+BEGIN_SRC emacs-lisp
-       (use-package rg :ensure t)
+       (use-package rg)
      #+END_SRC
 
 **** rainbow-delimiters
@@ -520,7 +491,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package rainbow-delimiters
-         :ensure t
          :config
          (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
      #+END_SRC
@@ -528,10 +498,9 @@
 **** doom-modeline
 
      #+BEGIN_SRC emacs-lisp
-       (use-package all-the-icons :ensure t)
+       (use-package all-the-icons)
 
        (use-package doom-modeline
-         :ensure t
          :after all-the-icons
          :hook (after-init . doom-modeline-mode)
          :config
@@ -546,7 +515,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package hydra
-         :ensure t
          :general
          ("<f2>" 'hydra-zoom/body)
          :init
@@ -560,7 +528,7 @@
      Add =:hydra= keyword to =use-package=.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package use-package-hydra :ensure t)
+       (use-package use-package-hydra)
      #+END_SRC
 
 **** exec-path-from-shell
@@ -569,7 +537,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package exec-path-from-shell
-         :ensure t
          :if (memq window-system '(mac ns))
          :config
          (exec-path-from-shell-initialize))
@@ -580,10 +547,7 @@
      Display possible keybindings after an incomplete prefix.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package which-key
-         :ensure t
-         :init
-         (which-key-mode))
+       (use-package which-key :init (which-key-mode))
      #+END_SRC
 
 **** ERC
@@ -592,7 +556,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package erc
-         :ensure t
          :custom
          (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
          (erc-autojoin-timing 'ident)
@@ -619,7 +582,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package eyebrowse
-         :ensure t
          :general
          (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
          (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
@@ -636,7 +598,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package dashboard
-         :ensure t
          :after projectile
          :config
          (setq dashboard-items '((recents   . 5)
@@ -653,7 +614,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package goto-line-preview
-         :ensure t
          :general
          ("M-g g" 'goto-line-preview))
      #+END_SRC
@@ -664,7 +624,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package smerge-mode
-         :ensure t
          :after (hydra use-package-hydra)
          :hydra (smerge-hydra (:color pink :hint nil :post (smerge-auto-leave))
                               "
@@ -709,7 +668,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package alert
-         :ensure t
          :config
          (when (eq system-type 'darwin)
            (setq alert-default-style 'osx-notifier)))
@@ -720,7 +678,7 @@
      Emacs startup profiler.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package esup :ensure t)
+       (use-package esup)
      #+END_SRC
 
 **** restclient
@@ -728,9 +686,7 @@
      Major mode for debugging REST API calls.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package restclient
-         :ensure t
-         :mode (("\\.http\\'" . restclient-mode)))
+       (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
      #+END_SRC
 
 **** Lorem Ipsum
@@ -738,7 +694,7 @@
      Insert filler (lorem ipsum) text.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package lorem-ipsum :ensure t)
+       (use-package lorem-ipsum)
      #+END_SRC
 
 *** File and language specific modes
@@ -747,15 +703,13 @@
      Use UTF-8 bullet points in org-mode.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package org-bullets
-         :ensure t
-         :hook (org-mode . org-bullets-mode))
+       (use-package org-bullets :hook (org-mode . org-bullets-mode))
      #+END_SRC
 
      HTML export.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package htmlize :ensure t)
+       (use-package htmlize)
      #+END_SRC
 
 **** Markdown
@@ -763,9 +717,7 @@
      A major mode for Markdown (.md) files.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package markdown-mode
-         :ensure t
-         :defer t)
+       (use-package markdown-mode :defer t)
      #+END_SRC
 
 **** C#
@@ -773,7 +725,7 @@
      Language support for C#.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package csharp-mode :ensure t)
+       (use-package csharp-mode)
      #+END_SRC
 
 **** TypeScript
@@ -782,7 +734,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package tide
-         :ensure t
          :after (typescript-mode company flycheck)
          :hook ((typescript-mode . tide-setup)
                 (typescript-mode . tide-hl-identifier-mode)
@@ -796,7 +747,6 @@
      #+BEGIN_SRC emacs-lisp
        (use-package auctex
          :defer t
-         :ensure t
          :config
          (require 'auctex)
          (setq TeX-parse-self t) ; Enable parse on load.
@@ -809,14 +759,11 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package ledger-mode
-         :ensure t
          :mode ("\\.dat\\'"
                 "\\.ledger\\'")
          :custom (ledger-clear-whole-transactions t))
 
-       (use-package flycheck-ledger
-         :after ledger-mode
-         :ensure t)
+       (use-package flycheck-ledger :after ledger-mode)
      #+END_SRC
 
 **** Hugo
@@ -824,9 +771,7 @@
      Org-mode integration with [[https://gohugo.io/][Hugo]], a Markdown-based static web-site generator.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package ox-hugo
-         :ensure t
-         :after ox)
+       (use-package ox-hugo :after ox)
      #+END_SRC
 
 **** JSON
@@ -834,7 +779,7 @@
      Mode for editing JSON files.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package json-mode :ensure t)
+       (use-package json-mode)
      #+END_SRC
 
 *** Fun
@@ -843,7 +788,7 @@
      Fireplace in Emacs.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package fireplace :ensure t)
+       (use-package fireplace)
      #+END_SRC
 
 **** wttrin.el
@@ -852,7 +797,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package wttrin
-         :ensure t
          :config
          (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
      #+END_SRC
@@ -863,7 +807,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package xkcd
-         :ensure t
          :general
          (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
          (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))

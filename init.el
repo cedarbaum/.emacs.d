@@ -33,6 +33,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Always ensure packages are installed
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
 ;; Ensure org is installed in order to load config.org
 (use-package org
   :ensure t
