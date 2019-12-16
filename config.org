@@ -367,6 +367,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package magit :defer t)
+       (use-package magit-libgit :defer t)
      #+END_SRC
 
      Open files in remote Git portals.
