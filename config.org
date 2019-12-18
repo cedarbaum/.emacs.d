@@ -408,7 +408,7 @@
          :init (global-company-mode)
          :config
          (add-to-list 'company-backends 'company-elisp)
-         (setq company-dabbrev-downcase 0)
+         (setq company-dabbrev-downcase nil)
          (setq company-idle-delay 0)
          :general
          (:keymaps 'company-active-map "RET" 'company-complete))
