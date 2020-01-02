@@ -261,7 +261,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package evil-org
-         :after org
+         :after (org evil)
          :config
          (add-hook 'org-mode-hook 'evil-org-mode)
          (add-hook 'evil-org-mode-hook
@@ -290,6 +290,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package evil-surround
+         :after evil
          :config
          (global-evil-surround-mode 1))
      #+END_SRC
