@@ -121,14 +121,14 @@
 
     #+BEGIN_SRC emacs-lisp
       (setq auto-save-file-name-transforms
-        '((".*" "~/.emacs.d/auto-save-list/" t)))
+        `((".*" ,(concat user-emacs-directory "auto-save-list/") t)))
     #+END_SRC
 
     Place all backups in a single directory.
 
     #+BEGIN_SRC emacs-lisp
       (setq backup-directory-alist
-        '((".*" . "~/.emacs.d/backups")))
+        `((".*" . ,(concat user-emacs-directory "backups"))))
     #+END_SRC
 
     Save the minibuffer history between sessions. Also save the kill-ring and search rings.
@@ -148,7 +148,7 @@
     Put all automatic configurations in a separate file.
 
     #+BEGIN_SRC emacs-lisp
-      (setq custom-file "~/.emacs.d/custom.el")
+      (setq custom-file (concat user-emacs-directory "custom.el"))
       (load custom-file 'noerror)
     #+END_SRC
 
