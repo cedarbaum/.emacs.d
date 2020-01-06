@@ -97,7 +97,7 @@
       (setq ring-bell-function 'ignore)
     #+END_SRC
 
-*** History
+*** File management
 
     Don't delete any backups.
 
@@ -141,6 +141,12 @@
             '(kill-ring
               search-ring
               regexp-search-ring))
+    #+END_SRC
+
+    Don't create lock files.
+
+    #+BEGIN_SRC emacs-lisp
+      (setq create-lockfiles nil)
     #+END_SRC
 
 *** Customize
