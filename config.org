@@ -170,11 +170,11 @@
 
 *** Font
 
-    Use the [[https://sourcefoundry.org/hack/][Hack]] font.
+    Try to use either [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]] or [[https://sourcefoundry.org/hack/][Hack]] font.
 
     #+BEGIN_SRC emacs-lisp
-      (when (member "Hack" (font-family-list))
-        (set-face-attribute 'default nil :font "Hack-11"))
+      (cond ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-12"))
+            ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-12")))
     #+END_SRC
 
 *** Spaces/tabs
