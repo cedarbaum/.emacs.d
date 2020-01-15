@@ -37,6 +37,9 @@ transient
 # Known projects
 projectile-bookmarks.eld
 
+# Projectile cache
+projectile.cache
+
 # Auto saves
 auto-save-list
 
