@@ -819,3 +819,10 @@
          (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
          (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
      #+END_SRC
+**** Emoji
+
+     Display emoji.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package emojify)
+     #+END_SRC

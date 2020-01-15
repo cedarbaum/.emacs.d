@@ -88,3 +88,6 @@ org-gcal/
 
 # Ignore request directory
 request/
+
+# Ignore downloaded emoji
+emojis/
