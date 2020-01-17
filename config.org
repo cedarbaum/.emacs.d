@@ -706,6 +706,17 @@
        (use-package lorem-ipsum)
      #+END_SRC
 
+**** EditorConfig
+
+     [[https://editorconfig.org/][EditorConfig]] plugin.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package editorconfig
+         :ensure t
+         :config
+         (editorconfig-mode 1))
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
