@@ -750,14 +750,12 @@
 
 **** TypeScript
 
-     Integration with the TypeScript server for IDE-like capabilities. This package will also install [[https://github.com/emacs-typescript/typescript.el][typescript.el]] as a dependency.
+     Simple major mode for TypeScript.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package tide
-         :after (typescript-mode company flycheck)
-         :hook ((typescript-mode . tide-setup)
-                (typescript-mode . tide-hl-identifier-mode)
-                (before-save     . tide-format-before-save)))
+       (use-package typescript-mode
+         :mode (("\\.ts\\'"  . typescript-mode)
+                ("\\.tsx\\'" . typescript-mode)))
      #+END_SRC
 
 **** LaTeX
