@@ -800,6 +800,14 @@
        (use-package json-mode)
      #+END_SRC
 
+**** Lua
+
+     Mode for editing Lua files.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package lua-mode)
+     #+END_SRC
+
 *** Fun
 **** emacs-fireplace
 
