@@ -440,6 +440,7 @@
          :hook
          (python-mode . lsp)
          (java-mode   . lsp)
+         (csharp-mode . lsp)
          :commands lsp)
 
        (use-package lsp-java :after lsp-mode)
