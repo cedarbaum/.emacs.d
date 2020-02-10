@@ -397,6 +397,8 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package gitconfig-mode)
+       (use-package gitattributes-mode)
+       (use-package gitignore-mode)
      #+END_SRC
 
 **** Projectile
