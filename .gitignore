@@ -91,3 +91,6 @@ request/
 
 # Ignore downloaded emoji
 emojis/
+
+# Ignore extensions
+.extension/
