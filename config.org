@@ -47,7 +47,6 @@
         "Customize the FRAME and load theme."
         (use-package snazzy-theme
           :if window-system
-
           :config
           (unless custom-enabled-themes
             (load-theme 'snazzy t)))
@@ -715,9 +714,19 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package editorconfig
-         :ensure t
          :config
          (editorconfig-mode 1))
+     #+END_SRC
+
+**** persistent-scratch
+
+     Save and backup the \*scratch\* buffer.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package persistent-scratch
+         :config
+         (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
+         (persistent-scratch-autosave-mode))
      #+END_SRC
 
 *** File and language specific modes

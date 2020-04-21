@@ -94,3 +94,6 @@ emojis/
 
 # Ignore extensions
 .extension/
+
+# *scratch* buffer backup directory
+scratch/
