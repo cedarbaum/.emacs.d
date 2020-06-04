@@ -315,6 +315,15 @@
          (global-evil-surround-mode 1))
      #+END_SRC
 
+     Evil comment support similar to [[https://github.com/tpope/vim-commentary][commentary.vim]].
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package evil-commentary
+         :after evil
+         :config
+         (evil-commentary-mode))
+     #+END_SRC
+
 **** Helm
 
      Incremental search/narrowing framework.
