@@ -431,6 +431,7 @@
          :init (global-company-mode)
          :config
          (add-to-list 'company-backends 'company-elisp)
+         (add-to-list 'company-backends 'company-capf)
          (setq company-dabbrev-downcase nil)
          (setq company-idle-delay 0)
          :general
@@ -476,15 +477,6 @@
          (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
          :general
          (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
-     #+END_SRC
-
-     Add company-mode backend.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package company-lsp
-         :after (lsp-mode company)
-         :config
-         (add-to-list 'company-backends 'company-lsp))
      #+END_SRC
 
      Add Helm integration for xref-appropos.
