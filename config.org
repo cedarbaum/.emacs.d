@@ -744,6 +744,36 @@
          (persistent-scratch-autosave-mode))
      #+END_SRC
 
+**** Treemacs
+
+     Treemacs - a tree layout file explorer for Emacs.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package treemacs
+         :defer t
+         :config
+         (treemacs-git-mode 'simple)
+         (treemacs-follow-mode t)
+         (treemacs-filewatch-mode t)
+         (treemacs-fringe-indicator-mode t))
+
+       (use-package treemacs-evil
+         :after treemacs evil)
+
+       (use-package treemacs-projectile
+         :after treemacs projectile)
+
+       (use-package treemacs-icons-dired
+         :after treemacs dired
+         :config (treemacs-icons-dired-mode))
+
+       (use-package treemacs-magit
+         :after treemacs magit)
+
+       (use-package treemacs-all-the-icons
+         :after treemacs all-the-icons)
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
