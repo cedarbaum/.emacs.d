@@ -330,6 +330,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package helm
+         :after helm-icons
          :if window-system
          :commands (helm-mode helm-autoresize-mode)
          :general
@@ -750,7 +751,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package treemacs
-         :defer t
          :config
          (treemacs-git-mode 'simple)
          (treemacs-follow-mode t)
@@ -772,6 +772,10 @@
 
        (use-package treemacs-all-the-icons
          :after treemacs all-the-icons)
+
+       (use-package helm-icons
+         :after treemacs
+         :init (helm-icons-enable))
      #+END_SRC
 
 *** File and language specific modes
