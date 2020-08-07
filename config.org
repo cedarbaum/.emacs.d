@@ -778,6 +778,13 @@
          :init (helm-icons-enable))
      #+END_SRC
 
+**** Org mode
+
+     Enable better mouse support for org mode.
+
+     #+BEGIN_SRC emacs-lisp
+       (require 'org-mouse)
+     #+END_SRC
 
 *** File and language specific modes
 **** Org mode extensions
