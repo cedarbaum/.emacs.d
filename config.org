@@ -755,7 +755,9 @@
          (treemacs-git-mode 'simple)
          (treemacs-follow-mode t)
          (treemacs-filewatch-mode t)
-         (treemacs-fringe-indicator-mode t))
+         (treemacs-fringe-indicator-mode t)
+         :general
+         ("C-c t" 'treemacs))
 
        (use-package treemacs-evil
          :after treemacs evil)
