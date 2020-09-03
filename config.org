@@ -135,6 +135,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'savehist)
       (savehist-mode 1)
+      (setq history-length 10000)
       (setq savehist-save-minibuffer-history 1)
       (setq savehist-additional-variables
             '(kill-ring
@@ -314,12 +315,22 @@
          (global-evil-surround-mode 1))
      #+END_SRC
 
+     Evil comment support similar to [[https://github.com/tpope/vim-commentary][commentary.vim]].
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package evil-commentary
+         :after evil
+         :config
+         (evil-commentary-mode))
+     #+END_SRC
+
 **** Helm
 
      Incremental search/narrowing framework.
 
      #+BEGIN_SRC emacs-lisp
        (use-package helm
+         :after helm-icons
          :if window-system
          :commands (helm-mode helm-autoresize-mode)
          :general
@@ -430,6 +441,7 @@
          :init (global-company-mode)
          :config
          (add-to-list 'company-backends 'company-elisp)
+         (add-to-list 'company-backends 'company-capf)
          (setq company-dabbrev-downcase nil)
          (setq company-idle-delay 0)
          :general
@@ -475,15 +487,6 @@
          (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
          :general
          (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
-     #+END_SRC
-
-     Add company-mode backend.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package company-lsp
-         :after (lsp-mode company)
-         :config
-         (add-to-list 'company-backends 'company-lsp))
      #+END_SRC
 
      Add Helm integration for xref-appropos.
@@ -742,6 +745,41 @@
          (persistent-scratch-autosave-mode))
      #+END_SRC
 
+**** Treemacs
+
+     Treemacs - a tree layout file explorer for Emacs.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package treemacs
+         :config
+         (treemacs-git-mode 'simple)
+         (treemacs-follow-mode t)
+         (treemacs-filewatch-mode t)
+         (treemacs-fringe-indicator-mode t)
+         :general
+         ("C-c t" 'treemacs))
+
+       (use-package treemacs-evil
+         :after treemacs evil)
+
+       (use-package treemacs-projectile
+         :after treemacs projectile)
+
+       (use-package treemacs-icons-dired
+         :after treemacs dired
+         :config (treemacs-icons-dired-mode))
+
+       (use-package treemacs-magit
+         :after treemacs magit)
+
+       (use-package treemacs-all-the-icons
+         :after treemacs all-the-icons)
+
+       (use-package helm-icons
+         :after treemacs
+         :init (helm-icons-enable))
+     #+END_SRC
+
 **** libvterm
 
      Emacs libvterm integration.
@@ -772,6 +810,12 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package markdown-mode :defer t)
+     #+END_SRC
+
+     Enable better mouse support for org mode.
+
+     #+BEGIN_SRC emacs-lisp
+       (require 'org-mouse)
      #+END_SRC
 
 **** C#

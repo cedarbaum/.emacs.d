@@ -97,3 +97,6 @@ emojis/
 
 # *scratch* buffer backup directory
 scratch/
+
+# Persistent *scratch*
+.persistent-scratch
