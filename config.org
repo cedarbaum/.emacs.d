@@ -805,18 +805,18 @@
        (use-package htmlize)
      #+END_SRC
 
+     Enable better mouse support for org mode.
+
+     #+BEGIN_SRC emacs-lisp
+       (require 'org-mouse)
+     #+END_SRC
+
 **** Markdown
 
      A major mode for Markdown (.md) files.
 
      #+BEGIN_SRC emacs-lisp
        (use-package markdown-mode :defer t)
-     #+END_SRC
-
-     Enable better mouse support for org mode.
-
-     #+BEGIN_SRC emacs-lisp
-       (require 'org-mouse)
      #+END_SRC
 
 **** C#
