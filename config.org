@@ -751,6 +751,7 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package treemacs
+         :demand
          :config
          (treemacs-git-mode 'simple)
          (treemacs-follow-mode t)
