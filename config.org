@@ -751,11 +751,14 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package treemacs
+         :demand
          :config
          (treemacs-git-mode 'simple)
          (treemacs-follow-mode t)
          (treemacs-filewatch-mode t)
-         (treemacs-fringe-indicator-mode t))
+         (treemacs-fringe-indicator-mode t)
+         :general
+         ("C-c t" 'treemacs))
 
        (use-package treemacs-evil
          :after treemacs evil)
@@ -778,12 +781,13 @@
          :init (helm-icons-enable))
      #+END_SRC
 
-**** Org mode
+**** libvterm
 
-     Enable better mouse support for org mode.
+     Emacs libvterm integration.
 
      #+BEGIN_SRC emacs-lisp
-       (require 'org-mouse)
+       (use-package vterm
+         :if (eq system-type 'gnu/linux))
      #+END_SRC
 
 *** File and language specific modes
@@ -799,6 +803,12 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package htmlize)
+     #+END_SRC
+
+     Enable better mouse support for org mode.
+
+     #+BEGIN_SRC emacs-lisp
+       (require 'org-mouse)
      #+END_SRC
 
 **** Markdown
