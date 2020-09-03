@@ -100,3 +100,6 @@ scratch/
 
 # Persistent *scratch*
 .persistent-scratch
+
+# Cache for eln files in native compilation branch
+eln-cache/
