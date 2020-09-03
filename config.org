@@ -742,6 +742,15 @@
          (persistent-scratch-autosave-mode))
      #+END_SRC
 
+**** libvterm
+
+     Emacs libvterm integration.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package vterm
+         :if (eq system-type 'gnu/linux))
+     #+END_SRC
+
 *** File and language specific modes
 **** Org mode extensions
 
