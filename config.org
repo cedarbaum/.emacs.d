@@ -811,6 +811,12 @@
        (require 'org-mouse)
      #+END_SRC
 
+     Flash cards in org mode.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package org-drill)
+     #+END_SRC
+
 **** Markdown
 
      A major mode for Markdown (.md) files.
