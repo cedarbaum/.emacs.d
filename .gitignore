@@ -103,3 +103,6 @@ scratch/
 
 # Cache for eln files in native compilation branch
 eln-cache/
+
+# Persisted data (used for org-drill).
+persist/
