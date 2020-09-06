@@ -825,6 +825,17 @@
        (use-package org-drill)
      #+END_SRC
 
+     Configure IPython for Org Babel.
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package ob-ipython
+         :config
+         (org-babel-do-load-languages
+           'org-babel-load-languages
+           '((ipython . t)))
+         (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append))
+     #+END_SRC
+
 **** Markdown
 
      A major mode for Markdown (.md) files.
