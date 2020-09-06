@@ -14,6 +14,38 @@
   This is my Emacs configuration! It is largely based around Evil mode.
 
 * Configuration
+** Package management
+
+   Initialize package manager.
+
+   #+BEGIN_SRC emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("org"          . "https://orgmode.org/elpa/"))
+     (add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
+     (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+   #+END_SRC
+
+   Bootstrap use-package.
+
+   #+BEGIN_SRC emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+   #+END_SRC
+
+   Always ensure packages are installed.
+
+   #+BEGIN_SRC emacs-lisp
+     (require 'use-package-ensure)
+     (setq use-package-always-ensure t)
+   #+END_SRC
+
+   Install packages directly from source (e.g., from GitHub repositories).
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package quelpa)
+   #+END_SRC
+
 ** General configuration
 *** Personal information
 
@@ -27,7 +59,7 @@
     Enable pin entry within the Emacs minibuffer.
 
     #+BEGIN_SRC emacs-lisp
-    (setq epa-pinentry-mode 'loopback)
+      (setq epa-pinentry-mode 'loopback)
     #+END_SRC
 
 *** Startup window
@@ -240,7 +272,7 @@
           (load-directory adhoc-dir)))
     #+END_SRC
 
-** OS specific setting
+** OS specific settings
 *** macOS
 
     Bind the command key to meta.
@@ -250,17 +282,8 @@
           (setq mac-command-modifier 'meta))
     #+END_SRC
 
-** Packages
-*** Package management
-**** Quelpa
-
-     Install packages directly from source (e.g., from GitHub repositories).
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package quelpa)
-     #+END_SRC
-
-*** General packages
+** Modes and packages
+*** Ubiquitous modes
 **** General
 
      Use [[https://github.com/noctuid/general.el][General]] for keybindings.
@@ -956,3 +979,13 @@
      #+BEGIN_SRC emacs-lisp
        (use-package emojify)
      #+END_SRC
+** Adhoc Elisp functions.
+
+   Helper function to reload init file.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun reload-init-file ()
+       "Reload init.el."
+       (interactive)
+       (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
+   #+END_SRC
