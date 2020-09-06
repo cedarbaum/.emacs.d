@@ -43,13 +43,21 @@
     This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
 
     #+BEGIN_SRC emacs-lisp
+      (use-package kaolin-themes)
+
+      (defun load-light-theme()
+        (interactive)
+        (load-theme 'kaolin-breeze t)
+        (kaolin-treemacs-theme))
+
+      (defun load-dark-theme()
+        (interactive)
+        (load-theme 'kaolin-ocean t)
+        (kaolin-treemacs-theme))
+
       (defun configure-frame (&optional frame)
         "Customize the FRAME and load theme."
-        (use-package snazzy-theme
-          :if window-system
-          :config
-          (unless custom-enabled-themes
-            (load-theme 'snazzy t)))
+        (load-dark-theme)
         (unless frame
           (setq frame (selected-frame)))
         (when frame
