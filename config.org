@@ -11,979 +11,978 @@
 
 This is my Emacs configuration! It is largely based around Evil mode.
 
-* Configuration
-** Package management
+* Package management
 
-   Initialize package manager.
+  Initialize package manager.
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (add-to-list 'package-archives '("org"          . "https://orgmode.org/elpa/"))
+    (add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
+    (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+  #+END_SRC
+
+  Bootstrap use-package.
+
+  #+BEGIN_SRC emacs-lisp
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+  #+END_SRC
+
+  Always ensure packages are installed.
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'use-package-ensure)
+    (setq use-package-always-ensure t)
+  #+END_SRC
+
+  Install packages directly from source (e.g., from GitHub repositories).
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package quelpa)
+  #+END_SRC
+
+* General configuration
+** Personal information
 
    #+BEGIN_SRC emacs-lisp
-     (require 'package)
-     (add-to-list 'package-archives '("org"          . "https://orgmode.org/elpa/"))
-     (add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
-     (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+     (setq user-full-name "Sam Cedarbaum"
+           user-mail-address "scedarbaum@gmail.com")
    #+END_SRC
 
-   Bootstrap use-package.
+** GPG
+
+   Enable pin entry within the Emacs minibuffer.
 
    #+BEGIN_SRC emacs-lisp
-     (unless (package-installed-p 'use-package)
-       (package-refresh-contents)
-       (package-install 'use-package))
+     (setq epa-pinentry-mode 'loopback)
    #+END_SRC
 
-   Always ensure packages are installed.
+** Startup window
+
+   Disable startup screen.
 
    #+BEGIN_SRC emacs-lisp
-     (require 'use-package-ensure)
-     (setq use-package-always-ensure t)
+     (setq inhibit-startup-screen t)
    #+END_SRC
 
-   Install packages directly from source (e.g., from GitHub repositories).
+** GUI configuration
+
+   This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
 
    #+BEGIN_SRC emacs-lisp
-     (use-package quelpa)
-   #+END_SRC
+     (use-package kaolin-themes)
 
-** General configuration
-*** Personal information
-
-    #+BEGIN_SRC emacs-lisp
-      (setq user-full-name "Sam Cedarbaum"
-            user-mail-address "scedarbaum@gmail.com")
-    #+END_SRC
-
-*** GPG
-
-    Enable pin entry within the Emacs minibuffer.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq epa-pinentry-mode 'loopback)
-    #+END_SRC
-
-*** Startup window
-
-    Disable startup screen.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq inhibit-startup-screen t)
-    #+END_SRC
-
-*** GUI configuration
-
-    This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package kaolin-themes)
-
-      (defun load-light-theme()
-        (interactive)
-        (load-theme 'kaolin-breeze t)
-        (kaolin-treemacs-theme))
-
-      (defun load-dark-theme()
-        (interactive)
-        (load-theme 'kaolin-ocean t)
-        (kaolin-treemacs-theme))
-
-      (defun configure-frame (&optional frame)
-        "Customize the FRAME and load theme."
-        (load-dark-theme)
-        (unless frame
-          (setq frame (selected-frame)))
-        (when frame
-          (with-selected-frame frame
-            (when (display-graphic-p)
-              (menu-bar-mode -1)
-              (toggle-scroll-bar -1)
-              (tool-bar-mode -1)))))
-
-      ;; Configure frame and also ensure each new frame will be configured
-      (configure-frame)
-      (add-hook 'after-make-frame-functions #'configure-frame t)
-    #+END_SRC
-
-    Enable winner-mode.
-
-    #+BEGIN_SRC emacs-lisp
-      (when (fboundp 'winner-mode)
-        (winner-mode 1))
-    #+END_SRC
-
-*** Help system
-
-    Select the help window when opened.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq help-window-select t)
-    #+END_SRC
-
-*** Line numbers
-
-    Enable line numbers in text and prog modes.
-
-    #+BEGIN_SRC emacs-lisp
-      (add-hook 'text-mode-hook 'display-line-numbers-mode)
-      (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-    #+END_SRC
-
-*** Sounds
-
-    Disable bell function.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq ring-bell-function 'ignore)
-    #+END_SRC
-
-*** File management
-
-    Don't delete any backups.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq delete-old-versions -1)
-    #+END_SRC
-
-    Unconditionally make numeric backups for files.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq version-control t)
-    #+END_SRC
-
-    Backup files even if they're under version control.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq vc-make-backup-files t)
-    #+END_SRC
-
-    Place automatically saved files in a single directory.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq auto-save-file-name-transforms
-        `((".*" ,(concat user-emacs-directory "auto-save-list/") t)))
-    #+END_SRC
-
-    Place all backups in a single directory.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq backup-directory-alist
-        `((".*" . ,(concat user-emacs-directory "backups"))))
-    #+END_SRC
-
-    Save the minibuffer history between sessions. Also save the kill-ring and search rings.
-
-    #+BEGIN_SRC emacs-lisp
-      (require 'savehist)
-      (savehist-mode 1)
-      (setq history-length 10000)
-      (setq savehist-save-minibuffer-history 1)
-      (setq savehist-additional-variables
-            '(kill-ring
-              search-ring
-              regexp-search-ring))
-    #+END_SRC
-
-    Don't create lock files.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq create-lockfiles nil)
-    #+END_SRC
-
-*** Customize
-
-    Put all automatic configurations in a separate file.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq custom-file (concat user-emacs-directory "custom.el"))
-      (load custom-file 'noerror)
-    #+END_SRC
-
-*** Text encoding
-
-    Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
-
-    #+BEGIN_SRC emacs-lisp
-      (prefer-coding-system 'utf-8)
-      (when (display-graphic-p)
-        (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-    #+END_SRC
-
-*** Font
-
-    Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
-
-    #+BEGIN_SRC emacs-lisp
-      (cond ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-12"))
-            ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-12"))
-            ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-12")))
-    #+END_SRC
-
-*** Spaces/tabs
-
-    Use spaces instead of tabs.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq-default indent-tabs-mode nil)
-      (setq-default tab-width 4)
-    #+END_SRC
-
-    Cleanup whitespace on save.
-
-    #+BEGIN_SRC emacs-lisp
-      (add-hook 'before-save-hook 'whitespace-cleanup)
-    #+END_SRC
-
-*** Recent files
-
-    Enable recentf-mode and save lots of items.
-
-    #+BEGIN_SRC emacs-lisp
-      (recentf-mode 1)
-      (setq recentf-max-menu-items 50)
-      (setq recentf-max-saved-items 1000)
-    #+END_SRC
-
-*** World clock
-
-    Configure world clock display.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq display-time-world-time-format "%FT%T%z") ;; ISO 8601
-      (setq display-time-world-timer-second 1)
-      (setq display-time-world-list '(("UTC"     "UTC")
-                                      ("PST8PDT" "Seattle")
-                                      ("CST6CDT" "Chicago")
-                                      ("EST5EDT" "New York")))
-    #+END_SRC
-
-*** ad hoc scripts
-
-    Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
-
-    #+BEGIN_SRC emacs-lisp
-      (defun load-directory (dir)
-        "Load all elisp files within DIR."
-        (let ((load-it (lambda (f)
-                         (load-file (concat (file-name-as-directory dir) f)))
-                       ))
-          (mapc load-it (directory-files dir nil "\\.el$"))))
-      (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
-        (when (file-directory-p adhoc-dir)
-          (load-directory adhoc-dir)))
-    #+END_SRC
-
-** OS specific settings
-*** macOS
-
-    Bind the command key to meta.
-
-    #+BEGIN_SRC emacs-lisp
-      (when (eq system-type 'darwin)
-          (setq mac-command-modifier 'meta))
-    #+END_SRC
-
-** Modes and packages
-*** Ubiquitous modes
-**** General
-
-     Use [[https://github.com/noctuid/general.el][General]] for keybindings.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package general)
-     #+END_SRC
-
-**** Evil mode
-
-     Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil
-         :init
-         (setq evil-ex-complete-emacs-commands nil)
-         (setq evil-vsplit-window-right t)
-         (setq evil-split-window-below t)
-         (setq evil-want-C-u-scroll t)
-         (setq evil-want-keybinding nil)
-         :config
-         (evil-mode))
-     #+END_SRC
-
-     Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode/blob/master/README.org][GitHub]]).
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil-org
-         :after (org evil)
-         :config
-         (add-hook 'org-mode-hook 'evil-org-mode)
-         (add-hook 'evil-org-mode-hook
-                   (lambda ()
-                     (evil-org-set-key-theme)))
-         (require 'evil-org-agenda)
-         (evil-org-agenda-set-keys))
-     #+END_SRC
-
-     Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil-magit)
-     #+END_SRC
-
-     Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil-collection
-         :after evil
-         :config
-         (evil-collection-init))
-     #+END_SRC
-
-     Evil surround support similar to [[https://github.com/tpope/vim-surround][surround.vim]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil-surround
-         :after evil
-         :config
-         (global-evil-surround-mode 1))
-     #+END_SRC
-
-     Evil comment support similar to [[https://github.com/tpope/vim-commentary][commentary.vim]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package evil-commentary
-         :after evil
-         :config
-         (evil-commentary-mode))
-     #+END_SRC
-
-**** Helm
-
-     Incremental search/narrowing framework.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm
-         :after helm-icons
-         :if window-system
-         :commands (helm-mode helm-autoresize-mode)
-         :general
-         ("M-x"     'helm-M-x)
-         ("M-y"     'helm-show-kill-ring)
-         ("C-x b"   'helm-mini)
-         ("C-x C-b" 'helm-buffers-list)
-         ("C-x C-f" 'helm-find-files)
-         ("C-c h o" 'helm-occur)
-         ("C-h a"   'helm-apropos)
-         ("C-c g g" 'helm-grep-do-git-grep-with-prefix-arg)
-         (:keymaps 'helm-map "TAB" #'helm-execute-persistent-action)
-         (:keymaps 'helm-map "<tab>" #'helm-execute-persistent-action)
-         (:keymaps 'helm-map "C-z" #'helm-select-action)
-         :init
-         (defun helm-grep-do-git-grep-with-prefix-arg ()
-           "Helper function to call helm-grep-do-git-grep with a prefix argument.
-         This performs the search on the whole repository."
-           (interactive)
-           (setq current-prefix-arg '(4)) ; C-u
-           (call-interactively 'helm-grep-do-git-grep))
-         (require 'helm-config)
-         (setq helm-echo-input-in-header-line     t)
-         (setq helm-move-to-line-cycle-in-source  t)
-         (setq helm-scroll-amount                 8)
-         (setq helm-split-window-inside-p         t)
-         (setq helm-autoresize-max-height         0)
-         (setq helm-autoresize-min-height        30)
-         :config
-         (helm-mode 1)
-         (helm-autoresize-mode 1))
-     #+END_SRC
-
-     Find files in a Git repository.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm-ls-git :general ("C-c l g" 'helm-ls-git-ls))
-     #+END_SRC
-
-     Helm integration with [[*Projectile][Projectile]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm-projectile)
-     #+END_SRC
-
-     Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm-ag
-         :general ("C-c g a" 'helm-do-ag)
-         :config
-         (custom-set-variables
-          '(helm-ag-base-command "rg --no-heading --line-number")))
-     #+END_SRC
-
-     Search lines within buffer.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm-swoop :general ("C-c s" 'helm-swoop))
-     #+END_SRC
-
-**** Git
-
-     Git integration.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package magit :defer t)
-       (use-package magit-libgit :defer t)
-     #+END_SRC
-
-     Open files in remote Git portals.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package git-link
-         :defer t
-         :config
-         (setq git-link-open-in-browser t))
-     #+END_SRC
-
-     Travel through Git history.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package git-timemachine)
-     #+END_SRC
-
-     Major modes for Git configuration files.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package gitconfig-mode)
-       (use-package gitattributes-mode)
-       (use-package gitignore-mode)
-     #+END_SRC
-
-**** Projectile
-
-     Project (e.g., Git) management and navigation.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package projectile :init (projectile-mode +1))
-     #+END_SRC
-
-**** company-mode
-
-     Text completion framework.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package company
-         :init (global-company-mode)
-         :config
-         (add-to-list 'company-backends 'company-elisp)
-         (add-to-list 'company-backends 'company-capf)
-         (setq company-dabbrev-downcase nil)
-         (setq company-idle-delay 0)
-         :general
-         (:keymaps 'company-active-map "RET" 'company-complete))
-     #+END_SRC
-
-**** Flycheck
-
-     Syntax checker.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package flycheck :init (global-flycheck-mode))
-     #+END_SRC
-
-**** LSP mode
-
-     Install extension that integrates with [[https://langserver.org/][language servers]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package lsp-mode
-         :after yasnippet
-         :hook
-         (python-mode . lsp)
-         (java-mode   . lsp)
-         (csharp-mode . lsp)
-         :commands lsp)
-
-       (use-package lsp-java :after lsp-mode)
-     #+END_SRC
-
-     Enable DAP mode. Currently configured for Python and Java.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package dap-mode
-         :after lsp-mode
-         :config
-         (defun enable-dap-mode-and-ui ()
-           "Enable dap-mode and dap-ui-mode."
-           (dap-mode 1)
-           (dap-ui-mode 1))
-         (require 'dap-python)
-         (require 'dap-java)
-         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
-         :general
-         (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
-     #+END_SRC
-
-     Add Helm integration for xref-appropos.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package helm-lsp :after (lsp-mode helm))
-     #+END_SRC
-
-**** yasnippet
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package yasnippet
-         :config
-         (require 'yasnippet)
-         (yas-global-mode 1))
-     #+END_SRC
-
-**** ripgrep
-
-     Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package rg)
-     #+END_SRC
-
-**** rainbow-delimiters
-
-     Make corresponding delimiters the same color (e.g., {, (, ")
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package rainbow-delimiters
-         :config
-         (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-     #+END_SRC
-
-**** doom-modeline
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package all-the-icons)
-
-       (use-package doom-modeline
-         :after all-the-icons
-         :hook (after-init . doom-modeline-mode)
-         :config
-         ;; Don’t compact font caches during GC.
-         (setq inhibit-compacting-font-caches t)
-         (setq doom-modeline-vcs-max-length 25))
-     #+END_SRC
-
-**** Hydra
-
-     Install [[https://github.com/abo-abo/hydra][Hydra]].
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package hydra
-         :general
-         ("<f2>" 'hydra-zoom/body)
-         :init
-         (defhydra hydra-zoom ()
-           "zoom"
-           ("g" text-scale-increase "in")
-           ("l" text-scale-decrease "out")
-           ("r" (text-scale-set 0)  "reset")))
-     #+END_SRC
-
-     Add =:hydra= keyword to =use-package=.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package use-package-hydra)
-     #+END_SRC
-
-**** exec-path-from-shell
-
-     Inherit environment variables from SHELL.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package exec-path-from-shell
-         :if (memq window-system '(mac ns))
-         :config
-         (exec-path-from-shell-initialize))
-     #+END_SRC
-
-**** which-key
-
-     Display possible keybindings after an incomplete prefix.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package which-key :init (which-key-mode))
-     #+END_SRC
-
-**** ERC
-
-     IRC chat within Emacs.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package erc
-         :custom
-         (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-         (erc-autojoin-timing 'ident)
-         (erc-fill-function 'erc-fill-static)
-         (erc-fill-static-center 22)
-         (erc-hide-list '("JOIN" "PART" "QUIT"))
-         (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-         (erc-lurker-threshold-time 43200)
-         (erc-prompt-for-nickserv-password nil)
-         (erc-server-reconnect-attempts 5)
-         (erc-server-reconnect-timeout 3)
-         (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
-                                    "324" "329" "332" "333" "353" "477"))
-         :config
-         (add-to-list 'erc-modules 'notifications)
-         (add-to-list 'erc-modules 'spelling)
-         (erc-services-mode 1)
-         (erc-update-modules))
-     #+END_SRC
-
-**** eyebrowse
-
-     Window manager.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package eyebrowse
-         :general
-         (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
-         (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
-         (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
-         (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
-         :init
-         (eyebrowse-mode t)
-         (setq eyebrowse-new-workspace t))
-     #+END_SRC
-
-**** Dashboard
-
-     Dashboard shown on startup.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package dashboard
-         :after projectile
-         :config
-         (setq dashboard-items '((recents   . 5)
-                                 (bookmarks . 5)
-                                 (projects  . 5)
-                                 (agenda    . 5)
-                                 (registers . 5)))
-         (dashboard-setup-startup-hook))
-     #+END_SRC
-
-**** goto-line-preview
-
-     Preview line before jumping to it.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package goto-line-preview
-         :general
-         ("M-g g" 'goto-line-preview))
-     #+END_SRC
-
-**** smerge
-
-     Git merge tool. Hydra from: https://github.com/alphapapa/unpackaged.el#smerge-mode.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package smerge-mode
-         :after (hydra use-package-hydra)
-         :hydra (smerge-hydra (:color pink :hint nil :post (smerge-auto-leave))
-                              "
-       ^Move^       ^Keep^               ^Diff^                 ^Other^
-       ^^-----------^^-------------------^^---------------------^^-------
-       _n_ext       _b_ase               _<_: upper/base        _C_ombine
-       _p_rev       _u_pper              _=_: upper/lower       _r_esolve
-       ^^           _l_ower              _>_: base/lower        _k_ill current
-       ^^           _a_ll                _R_efine
-       ^^           _RET_: current       _E_diff
-       "
-                              ("n" smerge-next)
-                              ("p" smerge-prev)
-                              ("b" smerge-keep-base)
-                              ("u" smerge-keep-upper)
-                              ("l" smerge-keep-lower)
-                              ("a" smerge-keep-all)
-                              ("RET" smerge-keep-current)
-                              ("\C-m" smerge-keep-current)
-                              ("<" smerge-diff-base-upper)
-                              ("=" smerge-diff-upper-lower)
-                              (">" smerge-diff-base-lower)
-                              ("R" smerge-refine)
-                              ("E" smerge-ediff)
-                              ("C" smerge-combine-with-next)
-                              ("r" smerge-resolve)
-                              ("k" smerge-kill-current)
-                              ("ZZ" (lambda ()
-                                      (interactive)
-                                      (save-buffer)
-                                      (bury-buffer))
-                               "Save and bury buffer" :color blue)
-                              ("q" nil "cancel" :color blue))
-         :hook (magit-diff-visit-file . (lambda ()
-                                          (when smerge-mode
-                                            (smerge-hydra/body)))))
-     #+END_SRC
-
-**** alert
-
-     Alert system.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package alert
-         :config
-         (when (eq system-type 'darwin)
-           (setq alert-default-style 'osx-notifier)))
-     #+END_SRC
-
-**** ESUP - Emacs Start Up Profiler
-
-     Emacs startup profiler.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package esup)
-     #+END_SRC
-
-**** restclient
-
-     Major mode for debugging REST API calls.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
-     #+END_SRC
-
-**** Lorem Ipsum
-
-     Insert filler (lorem ipsum) text.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package lorem-ipsum)
-     #+END_SRC
-
-**** EditorConfig
-
-     [[https://editorconfig.org/][EditorConfig]] plugin.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package editorconfig
-         :config
-         (editorconfig-mode 1))
-     #+END_SRC
-
-**** persistent-scratch
-
-     Save and backup the \*scratch\* buffer.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package persistent-scratch
-         :config
-         (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
-         (persistent-scratch-autosave-mode))
-     #+END_SRC
-
-**** Treemacs
-
-     Treemacs - a tree layout file explorer for Emacs.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package treemacs
-         :demand
-         :config
-         (treemacs-git-mode 'simple)
-         (treemacs-follow-mode t)
-         (treemacs-filewatch-mode t)
-         (treemacs-fringe-indicator-mode t)
-         :general
-         ("C-c t" 'treemacs))
-
-       (use-package treemacs-evil
-         :after treemacs evil)
-
-       (use-package treemacs-projectile
-         :after treemacs projectile)
-
-       (use-package treemacs-icons-dired
-         :after treemacs dired
-         :config (treemacs-icons-dired-mode))
-
-       (use-package treemacs-magit
-         :after treemacs magit)
-
-       (use-package treemacs-all-the-icons
-         :after treemacs all-the-icons)
-
-       (use-package helm-icons
-         :after treemacs
-         :init (helm-icons-enable))
-     #+END_SRC
-
-**** libvterm
-
-     Emacs libvterm integration.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package vterm
-         :if (eq system-type 'gnu/linux))
-     #+END_SRC
-
-*** File and language specific modes
-**** Org mode extensions
-
-     Use UTF-8 bullet points in org-mode.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package org-bullets :hook (org-mode . org-bullets-mode))
-     #+END_SRC
-
-     HTML export.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package htmlize)
-     #+END_SRC
-
-     Enable better mouse support for org mode.
-
-     #+BEGIN_SRC emacs-lisp
-       (require 'org-mouse)
-     #+END_SRC
-
-     Flash cards in org mode.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package org-drill)
-     #+END_SRC
-
-     Configure IPython for Org Babel.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package ob-ipython
-         :config
-         (org-babel-do-load-languages
-           'org-babel-load-languages
-           '((ipython . t)))
-         (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append))
-     #+END_SRC
-
-**** Markdown
-
-     A major mode for Markdown (.md) files.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package markdown-mode :defer t)
-     #+END_SRC
-
-**** C#
-
-     Language support for C#.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package csharp-mode)
-     #+END_SRC
-
-**** TypeScript
-
-     Simple major mode for TypeScript.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package typescript-mode
-         :mode (("\\.ts\\'"  . typescript-mode)
-                ("\\.tsx\\'" . typescript-mode)))
-     #+END_SRC
-
-**** LaTeX
-
-     Utility for writing and exporting TeX files.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package auctex
-         :defer t
-         :config
-         (require 'auctex)
-         (setq TeX-parse-self t) ; Enable parse on load.
-         (setq TeX-auto-save t)) ; Enable parse on save.
-     #+END_SRC
-
-**** ledger
-
-     Integration with [[https://www.ledger-cli.org/][ledger]], a text-based accounting system.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package ledger-mode
-         :mode ("\\.dat\\'"
-                "\\.ledger\\'")
-         :custom (ledger-clear-whole-transactions t))
-
-       (use-package flycheck-ledger :after ledger-mode)
-     #+END_SRC
-
-**** Hugo
-
-     Org-mode integration with [[https://gohugo.io/][Hugo]], a Markdown-based static web-site generator.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package ox-hugo :after ox)
-     #+END_SRC
-
-**** JSON
-
-     Mode for editing JSON files.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package json-mode)
-     #+END_SRC
-
-**** Lua
-
-     Mode for editing Lua files.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package lua-mode)
-     #+END_SRC
-
-**** Python
-
-     Always use Python 3.
-
-    #+BEGIN_SRC emacs-lisp
-      (setq python-shell-interpreter "python3")
-    #+END_SRC
-
-*** Fun
-**** emacs-fireplace
-
-     Fireplace in Emacs.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package fireplace)
-     #+END_SRC
-
-**** wttrin.el
-
-     Display the weather.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package wttrin
-         :config
-         (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
-     #+END_SRC
-
-**** XKCD
-
-     View XKCD comics.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package xkcd
-         :general
-         (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
-         (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
-     #+END_SRC
-**** Emoji
-
-     Display emoji.
-
-     #+BEGIN_SRC emacs-lisp
-       (use-package emojify)
-     #+END_SRC
-** Adhoc Elisp functions
-
-   Helper function to reload init file.
-
-   #+BEGIN_SRC emacs-lisp
-     (defun reload-init-file ()
-       "Reload init.el."
+     (defun load-light-theme()
        (interactive)
-       (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
+       (load-theme 'kaolin-breeze t)
+       (kaolin-treemacs-theme))
+
+     (defun load-dark-theme()
+       (interactive)
+       (load-theme 'kaolin-ocean t)
+       (kaolin-treemacs-theme))
+
+     (defun configure-frame (&optional frame)
+       "Customize the FRAME and load theme."
+       (load-dark-theme)
+       (unless frame
+         (setq frame (selected-frame)))
+       (when frame
+         (with-selected-frame frame
+           (when (display-graphic-p)
+             (menu-bar-mode -1)
+             (toggle-scroll-bar -1)
+             (tool-bar-mode -1)))))
+
+     ;; Configure frame and also ensure each new frame will be configured
+     (configure-frame)
+     (add-hook 'after-make-frame-functions #'configure-frame t)
    #+END_SRC
+
+   Enable winner-mode.
+
+   #+BEGIN_SRC emacs-lisp
+     (when (fboundp 'winner-mode)
+       (winner-mode 1))
+   #+END_SRC
+
+** Help system
+
+   Select the help window when opened.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq help-window-select t)
+   #+END_SRC
+
+** Line numbers
+
+   Enable line numbers in text and prog modes.
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'text-mode-hook 'display-line-numbers-mode)
+     (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+   #+END_SRC
+
+** Sounds
+
+   Disable bell function.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq ring-bell-function 'ignore)
+   #+END_SRC
+
+** File management
+
+   Don't delete any backups.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq delete-old-versions -1)
+   #+END_SRC
+
+   Unconditionally make numeric backups for files.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq version-control t)
+   #+END_SRC
+
+   Backup files even if they're under version control.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq vc-make-backup-files t)
+   #+END_SRC
+
+   Place automatically saved files in a single directory.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq auto-save-file-name-transforms
+       `((".*" ,(concat user-emacs-directory "auto-save-list/") t)))
+   #+END_SRC
+
+   Place all backups in a single directory.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq backup-directory-alist
+       `((".*" . ,(concat user-emacs-directory "backups"))))
+   #+END_SRC
+
+   Save the minibuffer history between sessions. Also save the kill-ring and search rings.
+
+   #+BEGIN_SRC emacs-lisp
+     (require 'savehist)
+     (savehist-mode 1)
+     (setq history-length 10000)
+     (setq savehist-save-minibuffer-history 1)
+     (setq savehist-additional-variables
+           '(kill-ring
+             search-ring
+             regexp-search-ring))
+   #+END_SRC
+
+   Don't create lock files.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq create-lockfiles nil)
+   #+END_SRC
+
+** Customize
+
+   Put all automatic configurations in a separate file.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-file (concat user-emacs-directory "custom.el"))
+     (load custom-file 'noerror)
+   #+END_SRC
+
+** Text encoding
+
+   Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
+
+   #+BEGIN_SRC emacs-lisp
+     (prefer-coding-system 'utf-8)
+     (when (display-graphic-p)
+       (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+   #+END_SRC
+
+** Font
+
+   Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
+
+   #+BEGIN_SRC emacs-lisp
+     (cond ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-12"))
+           ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-12"))
+           ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-12")))
+   #+END_SRC
+
+** Spaces/tabs
+
+   Use spaces instead of tabs.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq-default indent-tabs-mode nil)
+     (setq-default tab-width 4)
+   #+END_SRC
+
+   Cleanup whitespace on save.
+
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'before-save-hook 'whitespace-cleanup)
+   #+END_SRC
+
+** Recent files
+
+   Enable recentf-mode and save lots of items.
+
+   #+BEGIN_SRC emacs-lisp
+     (recentf-mode 1)
+     (setq recentf-max-menu-items 50)
+     (setq recentf-max-saved-items 1000)
+   #+END_SRC
+
+** World clock
+
+   Configure world clock display.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq display-time-world-time-format "%FT%T%z") ;; ISO 8601
+     (setq display-time-world-timer-second 1)
+     (setq display-time-world-list '(("UTC"     "UTC")
+                                     ("PST8PDT" "Seattle")
+                                     ("CST6CDT" "Chicago")
+                                     ("EST5EDT" "New York")))
+   #+END_SRC
+
+** ad hoc scripts
+
+   Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
+
+   #+BEGIN_SRC emacs-lisp
+     (defun load-directory (dir)
+       "Load all elisp files within DIR."
+       (let ((load-it (lambda (f)
+                        (load-file (concat (file-name-as-directory dir) f)))
+                      ))
+         (mapc load-it (directory-files dir nil "\\.el$"))))
+     (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
+       (when (file-directory-p adhoc-dir)
+         (load-directory adhoc-dir)))
+   #+END_SRC
+
+* OS specific settings
+** macOS
+
+   Bind the command key to meta.
+
+   #+BEGIN_SRC emacs-lisp
+     (when (eq system-type 'darwin)
+         (setq mac-command-modifier 'meta))
+   #+END_SRC
+
+* Modes and packages
+** Ubiquitous modes
+*** General
+
+    Use [[https://github.com/noctuid/general.el][General]] for keybindings.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package general)
+    #+END_SRC
+
+*** Evil mode
+
+    Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil
+        :init
+        (setq evil-ex-complete-emacs-commands nil)
+        (setq evil-vsplit-window-right t)
+        (setq evil-split-window-below t)
+        (setq evil-want-C-u-scroll t)
+        (setq evil-want-keybinding nil)
+        :config
+        (evil-mode))
+    #+END_SRC
+
+    Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode/blob/master/README.org][GitHub]]).
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-org
+        :after (org evil)
+        :config
+        (add-hook 'org-mode-hook 'evil-org-mode)
+        (add-hook 'evil-org-mode-hook
+                  (lambda ()
+                    (evil-org-set-key-theme)))
+        (require 'evil-org-agenda)
+        (evil-org-agenda-set-keys))
+    #+END_SRC
+
+    Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-magit)
+    #+END_SRC
+
+    Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-collection
+        :after evil
+        :config
+        (evil-collection-init))
+    #+END_SRC
+
+    Evil surround support similar to [[https://github.com/tpope/vim-surround][surround.vim]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-surround
+        :after evil
+        :config
+        (global-evil-surround-mode 1))
+    #+END_SRC
+
+    Evil comment support similar to [[https://github.com/tpope/vim-commentary][commentary.vim]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-commentary
+        :after evil
+        :config
+        (evil-commentary-mode))
+    #+END_SRC
+
+*** Helm
+
+    Incremental search/narrowing framework.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm
+        :after helm-icons
+        :if window-system
+        :commands (helm-mode helm-autoresize-mode)
+        :general
+        ("M-x"     'helm-M-x)
+        ("M-y"     'helm-show-kill-ring)
+        ("C-x b"   'helm-mini)
+        ("C-x C-b" 'helm-buffers-list)
+        ("C-x C-f" 'helm-find-files)
+        ("C-c h o" 'helm-occur)
+        ("C-h a"   'helm-apropos)
+        ("C-c g g" 'helm-grep-do-git-grep-with-prefix-arg)
+        (:keymaps 'helm-map "TAB" #'helm-execute-persistent-action)
+        (:keymaps 'helm-map "<tab>" #'helm-execute-persistent-action)
+        (:keymaps 'helm-map "C-z" #'helm-select-action)
+        :init
+        (defun helm-grep-do-git-grep-with-prefix-arg ()
+          "Helper function to call helm-grep-do-git-grep with a prefix argument.
+        This performs the search on the whole repository."
+          (interactive)
+          (setq current-prefix-arg '(4)) ; C-u
+          (call-interactively 'helm-grep-do-git-grep))
+        (require 'helm-config)
+        (setq helm-echo-input-in-header-line     t)
+        (setq helm-move-to-line-cycle-in-source  t)
+        (setq helm-scroll-amount                 8)
+        (setq helm-split-window-inside-p         t)
+        (setq helm-autoresize-max-height         0)
+        (setq helm-autoresize-min-height        30)
+        :config
+        (helm-mode 1)
+        (helm-autoresize-mode 1))
+    #+END_SRC
+
+    Find files in a Git repository.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-ls-git :general ("C-c l g" 'helm-ls-git-ls))
+    #+END_SRC
+
+    Helm integration with [[*Projectile][Projectile]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-projectile)
+    #+END_SRC
+
+    Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-ag
+        :general ("C-c g a" 'helm-do-ag)
+        :config
+        (custom-set-variables
+         '(helm-ag-base-command "rg --no-heading --line-number")))
+    #+END_SRC
+
+    Search lines within buffer.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-swoop :general ("C-c s" 'helm-swoop))
+    #+END_SRC
+
+*** Git
+
+    Git integration.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package magit :defer t)
+      (use-package magit-libgit :defer t)
+    #+END_SRC
+
+    Open files in remote Git portals.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package git-link
+        :defer t
+        :config
+        (setq git-link-open-in-browser t))
+    #+END_SRC
+
+    Travel through Git history.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package git-timemachine)
+    #+END_SRC
+
+    Major modes for Git configuration files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package gitconfig-mode)
+      (use-package gitattributes-mode)
+      (use-package gitignore-mode)
+    #+END_SRC
+
+*** Projectile
+
+    Project (e.g., Git) management and navigation.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package projectile :init (projectile-mode +1))
+    #+END_SRC
+
+*** company-mode
+
+    Text completion framework.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package company
+        :init (global-company-mode)
+        :config
+        (add-to-list 'company-backends 'company-elisp)
+        (add-to-list 'company-backends 'company-capf)
+        (setq company-dabbrev-downcase nil)
+        (setq company-idle-delay 0)
+        :general
+        (:keymaps 'company-active-map "RET" 'company-complete))
+    #+END_SRC
+
+*** Flycheck
+
+    Syntax checker.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package flycheck :init (global-flycheck-mode))
+    #+END_SRC
+
+*** LSP mode
+
+    Install extension that integrates with [[https://langserver.org/][language servers]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package lsp-mode
+        :after yasnippet
+        :hook
+        (python-mode . lsp)
+        (java-mode   . lsp)
+        (csharp-mode . lsp)
+        :commands lsp)
+
+      (use-package lsp-java :after lsp-mode)
+    #+END_SRC
+
+    Enable DAP mode. Currently configured for Python and Java.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package dap-mode
+        :after lsp-mode
+        :config
+        (defun enable-dap-mode-and-ui ()
+          "Enable dap-mode and dap-ui-mode."
+          (dap-mode 1)
+          (dap-ui-mode 1))
+        (require 'dap-python)
+        (require 'dap-java)
+        (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
+        :general
+        (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
+    #+END_SRC
+
+    Add Helm integration for xref-appropos.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-lsp :after (lsp-mode helm))
+    #+END_SRC
+
+*** yasnippet
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package yasnippet
+        :config
+        (require 'yasnippet)
+        (yas-global-mode 1))
+    #+END_SRC
+
+*** ripgrep
+
+    Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rg)
+    #+END_SRC
+
+*** rainbow-delimiters
+
+    Make corresponding delimiters the same color (e.g., {, (, ")
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-delimiters
+        :config
+        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    #+END_SRC
+
+*** doom-modeline
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package all-the-icons)
+
+      (use-package doom-modeline
+        :after all-the-icons
+        :hook (after-init . doom-modeline-mode)
+        :config
+        ;; Don’t compact font caches during GC.
+        (setq inhibit-compacting-font-caches t)
+        (setq doom-modeline-vcs-max-length 25))
+    #+END_SRC
+
+*** Hydra
+
+    Install [[https://github.com/abo-abo/hydra][Hydra]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package hydra
+        :general
+        ("<f2>" 'hydra-zoom/body)
+        :init
+        (defhydra hydra-zoom ()
+          "zoom"
+          ("g" text-scale-increase "in")
+          ("l" text-scale-decrease "out")
+          ("r" (text-scale-set 0)  "reset")))
+    #+END_SRC
+
+    Add =:hydra= keyword to =use-package=.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package use-package-hydra)
+    #+END_SRC
+
+*** exec-path-from-shell
+
+    Inherit environment variables from SHELL.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package exec-path-from-shell
+        :if (memq window-system '(mac ns))
+        :config
+        (exec-path-from-shell-initialize))
+    #+END_SRC
+
+*** which-key
+
+    Display possible keybindings after an incomplete prefix.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package which-key :init (which-key-mode))
+    #+END_SRC
+
+*** ERC
+
+    IRC chat within Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package erc
+        :custom
+        (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+        (erc-autojoin-timing 'ident)
+        (erc-fill-function 'erc-fill-static)
+        (erc-fill-static-center 22)
+        (erc-hide-list '("JOIN" "PART" "QUIT"))
+        (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+        (erc-lurker-threshold-time 43200)
+        (erc-prompt-for-nickserv-password nil)
+        (erc-server-reconnect-attempts 5)
+        (erc-server-reconnect-timeout 3)
+        (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                                   "324" "329" "332" "333" "353" "477"))
+        :config
+        (add-to-list 'erc-modules 'notifications)
+        (add-to-list 'erc-modules 'spelling)
+        (erc-services-mode 1)
+        (erc-update-modules))
+    #+END_SRC
+
+*** eyebrowse
+
+    Window manager.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package eyebrowse
+        :general
+        (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
+        (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
+        (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
+        (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
+        :init
+        (eyebrowse-mode t)
+        (setq eyebrowse-new-workspace t))
+    #+END_SRC
+
+*** Dashboard
+
+    Dashboard shown on startup.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package dashboard
+        :after projectile
+        :config
+        (setq dashboard-items '((recents   . 5)
+                                (bookmarks . 5)
+                                (projects  . 5)
+                                (agenda    . 5)
+                                (registers . 5)))
+        (dashboard-setup-startup-hook))
+    #+END_SRC
+
+*** goto-line-preview
+
+    Preview line before jumping to it.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package goto-line-preview
+        :general
+        ("M-g g" 'goto-line-preview))
+    #+END_SRC
+
+*** smerge
+
+    Git merge tool. Hydra from: https://github.com/alphapapa/unpackaged.el#smerge-mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package smerge-mode
+        :after (hydra use-package-hydra)
+        :hydra (smerge-hydra (:color pink :hint nil :post (smerge-auto-leave))
+                             "
+      ^Move^       ^Keep^               ^Diff^                 ^Other^
+      ^^-----------^^-------------------^^---------------------^^-------
+      _n_ext       _b_ase               _<_: upper/base        _C_ombine
+      _p_rev       _u_pper              _=_: upper/lower       _r_esolve
+      ^^           _l_ower              _>_: base/lower        _k_ill current
+      ^^           _a_ll                _R_efine
+      ^^           _RET_: current       _E_diff
+      "
+                             ("n" smerge-next)
+                             ("p" smerge-prev)
+                             ("b" smerge-keep-base)
+                             ("u" smerge-keep-upper)
+                             ("l" smerge-keep-lower)
+                             ("a" smerge-keep-all)
+                             ("RET" smerge-keep-current)
+                             ("\C-m" smerge-keep-current)
+                             ("<" smerge-diff-base-upper)
+                             ("=" smerge-diff-upper-lower)
+                             (">" smerge-diff-base-lower)
+                             ("R" smerge-refine)
+                             ("E" smerge-ediff)
+                             ("C" smerge-combine-with-next)
+                             ("r" smerge-resolve)
+                             ("k" smerge-kill-current)
+                             ("ZZ" (lambda ()
+                                     (interactive)
+                                     (save-buffer)
+                                     (bury-buffer))
+                              "Save and bury buffer" :color blue)
+                             ("q" nil "cancel" :color blue))
+        :hook (magit-diff-visit-file . (lambda ()
+                                         (when smerge-mode
+                                           (smerge-hydra/body)))))
+    #+END_SRC
+
+*** alert
+
+    Alert system.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package alert
+        :config
+        (when (eq system-type 'darwin)
+          (setq alert-default-style 'osx-notifier)))
+    #+END_SRC
+
+*** ESUP - Emacs Start Up Profiler
+
+    Emacs startup profiler.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package esup)
+    #+END_SRC
+
+*** restclient
+
+    Major mode for debugging REST API calls.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
+    #+END_SRC
+
+*** Lorem Ipsum
+
+    Insert filler (lorem ipsum) text.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package lorem-ipsum)
+    #+END_SRC
+
+*** EditorConfig
+
+    [[https://editorconfig.org/][EditorConfig]] plugin.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package editorconfig
+        :config
+        (editorconfig-mode 1))
+    #+END_SRC
+
+*** persistent-scratch
+
+    Save and backup the \*scratch\* buffer.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package persistent-scratch
+        :config
+        (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
+        (persistent-scratch-autosave-mode))
+    #+END_SRC
+
+*** Treemacs
+
+    Treemacs - a tree layout file explorer for Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs
+        :demand
+        :config
+        (treemacs-git-mode 'simple)
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+        (treemacs-fringe-indicator-mode t)
+        :general
+        ("C-c t" 'treemacs))
+
+      (use-package treemacs-evil
+        :after treemacs evil)
+
+      (use-package treemacs-projectile
+        :after treemacs projectile)
+
+      (use-package treemacs-icons-dired
+        :after treemacs dired
+        :config (treemacs-icons-dired-mode))
+
+      (use-package treemacs-magit
+        :after treemacs magit)
+
+      (use-package treemacs-all-the-icons
+        :after treemacs all-the-icons)
+
+      (use-package helm-icons
+        :after treemacs
+        :init (helm-icons-enable))
+    #+END_SRC
+
+*** libvterm
+
+    Emacs libvterm integration.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package vterm
+        :if (eq system-type 'gnu/linux))
+    #+END_SRC
+
+** File and language specific modes
+*** Org mode extensions
+
+    Use UTF-8 bullet points in org-mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets :hook (org-mode . org-bullets-mode))
+    #+END_SRC
+
+    HTML export.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package htmlize)
+    #+END_SRC
+
+    Enable better mouse support for org mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'org-mouse)
+    #+END_SRC
+
+    Flash cards in org mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-drill)
+    #+END_SRC
+
+    Configure IPython for Org Babel.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ob-ipython
+        :config
+        (org-babel-do-load-languages
+          'org-babel-load-languages
+          '((ipython . t)))
+        (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append))
+    #+END_SRC
+
+*** Markdown
+
+    A major mode for Markdown (.md) files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package markdown-mode :defer t)
+    #+END_SRC
+
+*** C#
+
+    Language support for C#.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package csharp-mode)
+    #+END_SRC
+
+*** TypeScript
+
+    Simple major mode for TypeScript.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package typescript-mode
+        :mode (("\\.ts\\'"  . typescript-mode)
+               ("\\.tsx\\'" . typescript-mode)))
+    #+END_SRC
+
+*** LaTeX
+
+    Utility for writing and exporting TeX files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package auctex
+        :defer t
+        :config
+        (require 'auctex)
+        (setq TeX-parse-self t) ; Enable parse on load.
+        (setq TeX-auto-save t)) ; Enable parse on save.
+    #+END_SRC
+
+*** ledger
+
+    Integration with [[https://www.ledger-cli.org/][ledger]], a text-based accounting system.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ledger-mode
+        :mode ("\\.dat\\'"
+               "\\.ledger\\'")
+        :custom (ledger-clear-whole-transactions t))
+
+      (use-package flycheck-ledger :after ledger-mode)
+    #+END_SRC
+
+*** Hugo
+
+    Org-mode integration with [[https://gohugo.io/][Hugo]], a Markdown-based static web-site generator.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ox-hugo :after ox)
+    #+END_SRC
+
+*** JSON
+
+    Mode for editing JSON files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package json-mode)
+    #+END_SRC
+
+*** Lua
+
+    Mode for editing Lua files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package lua-mode)
+    #+END_SRC
+
+*** Python
+
+    Always use Python 3.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq python-shell-interpreter "python3")
+   #+END_SRC
+
+** Fun
+*** emacs-fireplace
+
+    Fireplace in Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package fireplace)
+    #+END_SRC
+
+*** wttrin.el
+
+    Display the weather.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package wttrin
+        :config
+        (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
+    #+END_SRC
+
+*** XKCD
+
+    View XKCD comics.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package xkcd
+        :general
+        (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
+        (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
+    #+END_SRC
+*** Emoji
+
+    Display emoji.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package emojify)
+    #+END_SRC
+* Adhoc Elisp functions
+
+  Helper function to reload init file.
+
+  #+BEGIN_SRC emacs-lisp
+    (defun reload-init-file ()
+      "Reload init.el."
+      (interactive)
+      (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
+  #+END_SRC
