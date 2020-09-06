@@ -6,12 +6,10 @@
 #+PROPERTY: results silent
 #+STARTUP: inlineimages
 
-* About
+#+ATTR_HTML: :style margin-left: auto; margin-right: auto;
+[[file:photos/emacs-logo.png]]
 
-  #+ATTR_HTML: :style margin-left: auto; margin-right: auto;
-  [[file:photos/emacs-logo.png]]
-
-  This is my Emacs configuration! It is largely based around Evil mode.
+This is my Emacs configuration! It is largely based around Evil mode.
 
 * Configuration
 ** Package management
