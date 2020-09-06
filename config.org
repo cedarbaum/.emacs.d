@@ -979,7 +979,7 @@
      #+BEGIN_SRC emacs-lisp
        (use-package emojify)
      #+END_SRC
-** Adhoc Elisp functions.
+** Adhoc Elisp functions
 
    Helper function to reload init file.
 
