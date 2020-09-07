@@ -253,22 +253,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
                                      ("EST5EDT" "New York")))
    #+END_SRC
 
-** ad hoc scripts
-
-   Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
-
-   #+BEGIN_SRC emacs-lisp
-     (defun load-directory (dir)
-       "Load all elisp files within DIR."
-       (let ((load-it (lambda (f)
-                        (load-file (concat (file-name-as-directory dir) f)))
-                      ))
-         (mapc load-it (directory-files dir nil "\\.el$"))))
-     (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
-       (when (file-directory-p adhoc-dir)
-         (load-directory adhoc-dir)))
-   #+END_SRC
-
 * OS specific settings
 ** macOS
 
@@ -995,4 +979,18 @@ This is my Emacs configuration! It is largely based around Evil mode.
       "Reload init.el."
       (interactive)
       (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
+  #+END_SRC
+
+  Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
+
+  #+BEGIN_SRC emacs-lisp
+     (defun load-directory (dir)
+       "Load all elisp files within DIR."
+       (let ((load-it (lambda (f)
+                        (load-file (concat (file-name-as-directory dir) f)))
+                      ))
+         (mapc load-it (directory-files dir nil "\\.el$"))))
+     (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
+       (when (file-directory-p adhoc-dir)
+         (load-directory adhoc-dir)))
   #+END_SRC
