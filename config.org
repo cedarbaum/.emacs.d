@@ -279,6 +279,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package hydra
+        :demand t
         :general
         ("<f2>" 'hydra-zoom/body)
         :config
@@ -446,6 +447,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package git-link
+        :defer t
         :config
         (setq git-link-open-in-browser t))
     #+END_SRC
@@ -453,20 +455,21 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Travel through Git history.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package git-timemachine)
+      (use-package git-timemachine :defer t)
     #+END_SRC
 
     Major modes for Git configuration files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package gitconfig-mode)
-      (use-package gitattributes-mode)
-      (use-package gitignore-mode)
+      (use-package gitconfig-mode :defer t)
+      (use-package gitattributes-mode :defer t)
+      (use-package gitignore-mode :defer t)
     #+END_SRC
 
     Resolve merge conflicts. From: https://github.com/alphapapa/unpackaged.el#smerge-mode.
 
     #+BEGIN_SRC emacs-lisp
+      (require 'hydra)
       (require 'smerge-mode)
       (defhydra unpackaged/smerge-hydra
         (:color pink :hint nil :post (smerge-auto-leave))
@@ -509,7 +512,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package projectile
-        :demand t
         :general
         ("C-c p" '(:keymap projectile-command-map))
         :config
@@ -591,7 +593,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
 
     #+BEGIN_SRC emacs-lisp
-      (use-package rg)
+      (use-package rg :defer t)
     #+END_SRC
 
 *** rainbow-delimiters
@@ -692,7 +694,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package dashboard
-        :demand t
         :after projectile
         :config
         (setq dashboard-items '((recents   . 5)
@@ -745,7 +746,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Insert filler (lorem ipsum) text.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package lorem-ipsum)
+      (use-package lorem-ipsum :defer t)
     #+END_SRC
 
 *** EditorConfig
@@ -826,7 +827,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     HTML export.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package htmlize)
+      (use-package htmlize :defer t)
     #+END_SRC
 
     Enable better mouse support for org mode.
@@ -838,7 +839,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Flash cards in org mode.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package org-drill)
+      (use-package org-drill :commands org-drill)
     #+END_SRC
 
     Configure IPython for Org Babel.
@@ -857,7 +858,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     A major mode for Markdown (.md) files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package markdown-mode)
+      (use-package markdown-mode :defer t)
     #+END_SRC
 
 *** C#
@@ -865,7 +866,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Language support for C#.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package csharp-mode :mode "\\.cs\\'")
+      (use-package csharp-mode :defer t)
     #+END_SRC
 
 *** TypeScript
@@ -873,9 +874,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Simple major mode for TypeScript.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package typescript-mode
-        :mode ("\\.ts\\'"
-               "\\.tsx\\'"))
+      (use-package typescript-mode :defer t)
     #+END_SRC
 
 *** LaTeX
@@ -883,11 +882,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Utility for writing and exporting TeX files.
 
     #+BEGIN_SRC emacs-lisp
-    (use-package tex
-      :ensure auctex
-      :config
-      (setq TeX-parse-self t) ; Enable parse on load.
-      (setq TeX-auto-save t)) ; Enable parse on save.
+      (use-package tex
+        :ensure auctex
+        :config
+        (setq TeX-parse-self t) ; Enable parse on load.
+        (setq TeX-auto-save t)) ; Enable parse on save.
     #+END_SRC
 
 *** ledger
@@ -896,8 +895,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package ledger-mode
-        :mode ("\\.dat\\'"
-               "\\.ledger\\'")
+        :defer t
         :custom (ledger-clear-whole-transactions t))
 
       (use-package flycheck-ledger :after ledger-mode)
@@ -916,7 +914,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Mode for editing JSON files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package json-mode)
+      (use-package json-mode :defer t)
     #+END_SRC
 
 *** Lua
@@ -924,7 +922,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Mode for editing Lua files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package lua-mode)
+      (use-package lua-mode :defer t)
     #+END_SRC
 
 *** Python
@@ -941,7 +939,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Fireplace in Emacs.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package fireplace)
+      (use-package fireplace :defer t)
     #+END_SRC
 
 *** wttrin.el
@@ -950,6 +948,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package wttrin
+        :defer t
         :config
         (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
     #+END_SRC
@@ -960,6 +959,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package xkcd
+        :defer t
         :general
         (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
         (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
@@ -970,8 +970,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Display emoji.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package emojify)
+      (use-package emojify :defer t)
     #+END_SRC
+
 * Adhoc Elisp functions
 
   Helper function to reload init file.
