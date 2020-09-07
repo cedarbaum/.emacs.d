@@ -674,6 +674,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     #+BEGIN_SRC emacs-lisp
       (use-package eyebrowse
         :demand t
+        :after evil
         :general
         (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
         (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
@@ -681,6 +682,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
         :config
         (eyebrowse-mode t)
+        (eyebrowse-setup-evil-keys)
         (setq eyebrowse-new-workspace t))
     #+END_SRC
 
