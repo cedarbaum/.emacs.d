@@ -322,7 +322,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
 
     #+BEGIN_SRC emacs-lisp
-      (use-package evil-magit)
+      (use-package evil-magit :after (evil magit))
     #+END_SRC
 
     Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
@@ -360,7 +360,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package helm
         :after helm-icons
         :if window-system
-        :commands (helm-mode helm-autoresize-mode)
         :general
         ("M-x"     'helm-M-x)
         ("M-y"     'helm-show-kill-ring)
@@ -370,9 +369,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
         ("C-c h o" 'helm-occur)
         ("C-h a"   'helm-apropos)
         ("C-c g g" 'helm-grep-do-git-grep-with-prefix-arg)
-        (:keymaps 'helm-map "TAB" #'helm-execute-persistent-action)
-        (:keymaps 'helm-map "<tab>" #'helm-execute-persistent-action)
-        (:keymaps 'helm-map "C-z" #'helm-select-action)
+        (:keymaps  'helm-map "TAB" #'helm-execute-persistent-action)
+        (:keymaps  'helm-map "<tab>" #'helm-execute-persistent-action)
+        (:keymaps  'helm-map "C-z" #'helm-select-action)
         :init
         (defun helm-grep-do-git-grep-with-prefix-arg ()
           "Helper function to call helm-grep-do-git-grep with a prefix argument.
@@ -401,7 +400,10 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Helm integration with [[*Projectile][Projectile]].
 
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-projectile)
+      (use-package helm-projectile
+        :after projectile
+        :general
+        (:keymap projectile-command-map "h" 'helm-projectile))
     #+END_SRC
 
     Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
@@ -457,7 +459,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Project (e.g., Git) management and navigation.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package projectile :init (projectile-mode +1))
+      (use-package projectile
+        :general
+        ("C-c p" '(:keymap projectile-command-map))
+        :config
+        (projectile-mode +1))
     #+END_SRC
 
 *** company-mode
