@@ -289,6 +289,28 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package general)
     #+END_SRC
 
+*** Hydra
+
+    Install [[https://github.com/abo-abo/hydra][Hydra]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package hydra
+        :general
+        ("<f2>" 'hydra-zoom/body)
+        :config
+        (defhydra hydra-zoom ()
+          "zoom"
+          ("g" text-scale-increase "in")
+          ("l" text-scale-decrease "out")
+          ("r" (text-scale-set 0)  "reset")))
+    #+END_SRC
+
+    Add =:hydra= keyword to =use-package=.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package use-package-hydra)
+    #+END_SRC
+
 *** Evil mode
 
     Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
@@ -426,7 +448,13 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Git integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package magit :general ("C-x g" 'magit-status))
+      (use-package magit
+        :general ("C-x g" 'magit-status)
+        :config
+        (add-hook 'magit-diff-visit-file-hook  (lambda ()
+                                                 (when smerge-mode
+                                                   (unpackaged/smerge-hydra/body)))))
+
       ;; (use-package magit-libgit) ; Not being actively used yet.
     #+END_SRC
 
@@ -451,6 +479,45 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package gitattributes-mode)
       (use-package gitignore-mode)
     #+END_SRC
+
+    Resolve merge conflicts. From: https://github.com/alphapapa/unpackaged.el#smerge-mode.
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'smerge-mode)
+      (defhydra unpackaged/smerge-hydra
+        (:color pink :hint nil :post (smerge-auto-leave))
+        "
+      ^Move^       ^Keep^               ^Diff^                 ^Other^
+      ^^-----------^^-------------------^^---------------------^^-------
+      _n_ext       _b_ase               _<_: upper/base        _C_ombine
+      _p_rev       _u_pper              _=_: upper/lower       _r_esolve
+      ^^           _l_ower              _>_: base/lower        _k_ill current
+      ^^           _a_ll                _R_efine
+      ^^           _RET_: current       _E_diff
+      "
+        ("n" smerge-next)
+        ("p" smerge-prev)
+        ("b" smerge-keep-base)
+        ("u" smerge-keep-upper)
+        ("l" smerge-keep-lower)
+        ("a" smerge-keep-all)
+        ("RET" smerge-keep-current)
+        ("\C-m" smerge-keep-current)
+        ("<" smerge-diff-base-upper)
+        ("=" smerge-diff-upper-lower)
+        (">" smerge-diff-base-lower)
+        ("R" smerge-refine)
+        ("E" smerge-ediff)
+        ("C" smerge-combine-with-next)
+        ("r" smerge-resolve)
+        ("k" smerge-kill-current)
+        ("ZZ" (lambda ()
+                (interactive)
+                (save-buffer)
+                (bury-buffer))
+         "Save and bury buffer" :color blue)
+        ("q" nil "cancel" :color blue))
+   #+END_SRC
 
 *** Projectile
 
@@ -571,28 +638,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         ;; Don’t compact font caches during GC.
         (setq inhibit-compacting-font-caches t)
         (setq doom-modeline-vcs-max-length 25))
-    #+END_SRC
-
-*** Hydra
-
-    Install [[https://github.com/abo-abo/hydra][Hydra]].
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package hydra
-        :general
-        ("<f2>" 'hydra-zoom/body)
-        :config
-        (defhydra hydra-zoom ()
-          "zoom"
-          ("g" text-scale-increase "in")
-          ("l" text-scale-decrease "out")
-          ("r" (text-scale-set 0)  "reset")))
-    #+END_SRC
-
-    Add =:hydra= keyword to =use-package=.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package use-package-hydra)
     #+END_SRC
 
 *** exec-path-from-shell
