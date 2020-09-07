@@ -372,7 +372,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:keymaps  'helm-map "TAB" #'helm-execute-persistent-action)
         (:keymaps  'helm-map "<tab>" #'helm-execute-persistent-action)
         (:keymaps  'helm-map "C-z" #'helm-select-action)
-        :init
+        :config
         (defun helm-grep-do-git-grep-with-prefix-arg ()
           "Helper function to call helm-grep-do-git-grep with a prefix argument.
         This performs the search on the whole repository."
@@ -386,7 +386,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq helm-split-window-inside-p         t)
         (setq helm-autoresize-max-height         0)
         (setq helm-autoresize-min-height        30)
-        :config
         (helm-mode 1)
         (helm-autoresize-mode 1))
     #+END_SRC
@@ -403,7 +402,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package helm-projectile
         :after projectile
         :general
-        (:keymap projectile-command-map "h" 'helm-projectile))
+        (:keymaps 'projectile-command-map "h" 'helm-projectile))
     #+END_SRC
 
     Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
@@ -427,15 +426,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Git integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package magit :defer t)
-      (use-package magit-libgit :defer t)
+      (use-package magit :general ("C-x g" 'magit-status))
+      ;; (use-package magit-libgit) ; Not being actively used yet.
     #+END_SRC
 
     Open files in remote Git portals.
 
     #+BEGIN_SRC emacs-lisp
       (use-package git-link
-        :defer t
         :config
         (setq git-link-open-in-browser t))
     #+END_SRC
@@ -460,6 +458,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package projectile
+        :demand t
         :general
         ("C-c p" '(:keymap projectile-command-map))
         :config
@@ -472,12 +471,13 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package company
-        :init (global-company-mode)
+        :demand t
         :config
         (add-to-list 'company-backends 'company-elisp)
         (add-to-list 'company-backends 'company-capf)
         (setq company-dabbrev-downcase nil)
         (setq company-idle-delay 0)
+        (global-company-mode)
         :general
         (:keymaps 'company-active-map "RET" 'company-complete))
     #+END_SRC
@@ -487,7 +487,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Syntax checker.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package flycheck :init (global-flycheck-mode))
+      (use-package flycheck :config (global-flycheck-mode))
     #+END_SRC
 
 *** LSP mode
@@ -532,10 +532,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 *** yasnippet
 
     #+BEGIN_SRC emacs-lisp
-      (use-package yasnippet
-        :config
-        (require 'yasnippet)
-        (yas-global-mode 1))
+      (use-package yasnippet :config (yas-global-mode 1))
     #+END_SRC
 
 *** ripgrep
@@ -551,16 +548,22 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Make corresponding delimiters the same color (e.g., {, (, ")
 
     #+BEGIN_SRC emacs-lisp
-      (use-package rainbow-delimiters
-        :config
-        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+      (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
+    #+END_SRC
+
+*** All The Icons
+
+    Additional pretty icons.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package all-the-icons)
     #+END_SRC
 
 *** doom-modeline
 
-    #+BEGIN_SRC emacs-lisp
-      (use-package all-the-icons)
+    Modeline from Doom emacs.
 
+    #+BEGIN_SRC emacs-lisp
       (use-package doom-modeline
         :after all-the-icons
         :hook (after-init . doom-modeline-mode)
@@ -578,7 +581,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package hydra
         :general
         ("<f2>" 'hydra-zoom/body)
-        :init
+        :config
         (defhydra hydra-zoom ()
           "zoom"
           ("g" text-scale-increase "in")
@@ -608,7 +611,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Display possible keybindings after an incomplete prefix.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package which-key :init (which-key-mode))
+      (use-package which-key :config (which-key-mode))
     #+END_SRC
 
 *** ERC
@@ -616,25 +619,23 @@ This is my Emacs configuration! It is largely based around Evil mode.
     IRC chat within Emacs.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package erc
-        :custom
-        (erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-        (erc-autojoin-timing 'ident)
-        (erc-fill-function 'erc-fill-static)
-        (erc-fill-static-center 22)
-        (erc-hide-list '("JOIN" "PART" "QUIT"))
-        (erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-        (erc-lurker-threshold-time 43200)
-        (erc-prompt-for-nickserv-password nil)
-        (erc-server-reconnect-attempts 5)
-        (erc-server-reconnect-timeout 3)
-        (erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
-                                   "324" "329" "332" "333" "353" "477"))
-        :config
-        (add-to-list 'erc-modules 'notifications)
-        (add-to-list 'erc-modules 'spelling)
-        (erc-services-mode 1)
-        (erc-update-modules))
+      (require 'erc)
+      (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+      (setq erc-autojoin-timing 'ident)
+      (setq erc-fill-function 'erc-fill-static)
+      (setq erc-fill-static-center 22)
+      (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+      (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+      (setq erc-lurker-threshold-time 43200)
+      (setq erc-prompt-for-nickserv-password nil)
+      (setq erc-server-reconnect-attempts 5)
+      (setq erc-server-reconnect-timeout 3)
+      (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                                 "324" "329" "332" "333" "353" "477"))
+      (add-to-list 'erc-modules 'notifications)
+      (add-to-list 'erc-modules 'spelling)
+      (erc-services-mode 1)
+      (erc-update-modules)
     #+END_SRC
 
 *** eyebrowse
@@ -643,12 +644,13 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package eyebrowse
+        :demand t
         :general
         (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
         (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
         (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
         (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
-        :init
+        :config
         (eyebrowse-mode t)
         (setq eyebrowse-new-workspace t))
     #+END_SRC
@@ -659,6 +661,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package dashboard
+        :demand t
         :after projectile
         :config
         (setq dashboard-items '((recents   . 5)
@@ -677,50 +680,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package goto-line-preview
         :general
         ("M-g g" 'goto-line-preview))
-    #+END_SRC
-
-*** smerge
-
-    Git merge tool. Hydra from: https://github.com/alphapapa/unpackaged.el#smerge-mode.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package smerge-mode
-        :after (hydra use-package-hydra)
-        :hydra (smerge-hydra (:color pink :hint nil :post (smerge-auto-leave))
-                             "
-      ^Move^       ^Keep^               ^Diff^                 ^Other^
-      ^^-----------^^-------------------^^---------------------^^-------
-      _n_ext       _b_ase               _<_: upper/base        _C_ombine
-      _p_rev       _u_pper              _=_: upper/lower       _r_esolve
-      ^^           _l_ower              _>_: base/lower        _k_ill current
-      ^^           _a_ll                _R_efine
-      ^^           _RET_: current       _E_diff
-      "
-                             ("n" smerge-next)
-                             ("p" smerge-prev)
-                             ("b" smerge-keep-base)
-                             ("u" smerge-keep-upper)
-                             ("l" smerge-keep-lower)
-                             ("a" smerge-keep-all)
-                             ("RET" smerge-keep-current)
-                             ("\C-m" smerge-keep-current)
-                             ("<" smerge-diff-base-upper)
-                             ("=" smerge-diff-upper-lower)
-                             (">" smerge-diff-base-lower)
-                             ("R" smerge-refine)
-                             ("E" smerge-ediff)
-                             ("C" smerge-combine-with-next)
-                             ("r" smerge-resolve)
-                             ("k" smerge-kill-current)
-                             ("ZZ" (lambda ()
-                                     (interactive)
-                                     (save-buffer)
-                                     (bury-buffer))
-                              "Save and bury buffer" :color blue)
-                             ("q" nil "cancel" :color blue))
-        :hook (magit-diff-visit-file . (lambda ()
-                                         (when smerge-mode
-                                           (smerge-hydra/body)))))
     #+END_SRC
 
 *** alert
@@ -785,7 +744,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package treemacs
-        :demand
+        :demand t
         :config
         (treemacs-git-mode 'simple)
         (treemacs-follow-mode t)
@@ -795,20 +754,20 @@ This is my Emacs configuration! It is largely based around Evil mode.
         ("C-c t" 'treemacs))
 
       (use-package treemacs-evil
-        :after treemacs evil)
+        :after (treemacs evil))
 
       (use-package treemacs-projectile
-        :after treemacs projectile)
+        :after (treemacs projectile))
 
       (use-package treemacs-icons-dired
-        :after treemacs dired
+        :after (treemacs dired)
         :config (treemacs-icons-dired-mode))
 
       (use-package treemacs-magit
-        :after treemacs magit)
+        :after (treemacs magit))
 
       (use-package treemacs-all-the-icons
-        :after treemacs all-the-icons)
+        :after (treemacs all-the-icons))
 
       (use-package helm-icons
         :after treemacs
@@ -867,7 +826,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     A major mode for Markdown (.md) files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package markdown-mode :defer t)
+      (use-package markdown-mode)
     #+END_SRC
 
 *** C#
@@ -875,7 +834,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Language support for C#.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package csharp-mode)
+      (use-package csharp-mode :mode "\\.cs\\'")
     #+END_SRC
 
 *** TypeScript
@@ -884,8 +843,8 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package typescript-mode
-        :mode (("\\.ts\\'"  . typescript-mode)
-               ("\\.tsx\\'" . typescript-mode)))
+        :mode ("\\.ts\\'"
+               "\\.tsx\\'"))
     #+END_SRC
 
 *** LaTeX
@@ -893,12 +852,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Utility for writing and exporting TeX files.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package auctex
-        :defer t
-        :config
-        (require 'auctex)
-        (setq TeX-parse-self t) ; Enable parse on load.
-        (setq TeX-auto-save t)) ; Enable parse on save.
+    (use-package tex
+      :ensure auctex
+      :config
+      (setq TeX-parse-self t) ; Enable parse on load.
+      (setq TeX-auto-save t)) ; Enable parse on save.
     #+END_SRC
 
 *** ledger
@@ -975,6 +933,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
         (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
     #+END_SRC
+
 *** Emoji
 
     Display emoji.
