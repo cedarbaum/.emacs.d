@@ -41,6 +41,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
   #+BEGIN_SRC emacs-lisp
     (use-package quelpa)
+    (use-package quelpa-use-package)
   #+END_SRC
 
 * General configuration
