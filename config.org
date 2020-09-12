@@ -369,7 +369,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :general
         ("C-c C-r" 'ivy-resume)
         :config
-        (ivy-mode))
+        (ivy-mode)
+        (setq ivy-on-del-error-function #'ignore)
+        (setq ivy-use-virtual-buffers t))
 
       (use-package counsel
         :after ivy
@@ -387,12 +389,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:keymaps 'counsel-find-file-map "C-l" #'counsel-up-directory)
         (:keymaps 'counsel-find-file-map "TAB" #'ivy-alt-done)
         :config
-        (ivy-mode 1)
         ;; Don't prefix M-x search with '^'.
         (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
         ;; Don't exit when backspace is pressed too many times.
-        (setq ivy-on-del-error-function #'ignore)
-        (setq ivy-use-virtual-buffers t)
         (setq enable-recursive-minibuffers t))
     #+END_SRC
 
