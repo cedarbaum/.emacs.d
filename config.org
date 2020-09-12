@@ -253,6 +253,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
                                      ("EST5EDT" "New York")))
    #+END_SRC
 
+** Kill ring
+
+   Save existing clipboard text into kill ring before replacing it.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq save-interprogram-paste-before-kill t)
+   #+END_SRC
+
 * OS specific settings
 ** macOS
 
