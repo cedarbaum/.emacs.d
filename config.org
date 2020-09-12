@@ -968,6 +968,17 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (load-file (expand-file-name (concat user-emacs-directory "init.el"))))
   #+END_SRC
 
+  Open a file in OS file explorer ([[https://emacs.stackexchange.com/questions/7742/what-is-the-easiest-way-to-open-the-folder-containing-the-current-file-by-the-de][source]]).
+
+  #+BEGIN_SRC emacs-lisp
+    (defun browse-file-directory ()
+      "Open the current file's directory however the OS would."
+      (interactive)
+      (if default-directory
+          (browse-url-of-file (expand-file-name default-directory))
+        (error "No `default-directory' to open")))
+  #+END_SRC
+
   Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
 
   #+BEGIN_SRC emacs-lisp
@@ -977,6 +988,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
                         (load-file (concat (file-name-as-directory dir) f)))
                       ))
          (mapc load-it (directory-files dir nil "\\.el$"))))
+
      (let ((adhoc-dir (concat user-emacs-directory "adhoc")))
        (when (file-directory-p adhoc-dir)
          (load-directory adhoc-dir)))
