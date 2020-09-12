@@ -375,7 +375,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package ivy
         :demand
         :general
-        ("C-c C-r" 'ivy-resume)
+        ("C-c S-r" 'ivy-resume)
         :config
         (ivy-mode)
         (setq ivy-on-del-error-function #'ignore)
