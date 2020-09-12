@@ -359,73 +359,54 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (evil-commentary-mode))
     #+END_SRC
 
-*** Helm
+*** Ivy / Counsel / Swiper
 
     Incremental search/narrowing framework.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package helm
-        :after helm-icons
+      (use-package ivy
+        :demand
+        :general
+        ("C-c C-r" 'ivy-resume)
+        :config
+        (ivy-mode))
+
+      (use-package counsel
+        :after ivy
         :if window-system
         :general
-        ("M-x"     'helm-M-x)
-        ("M-y"     'helm-show-kill-ring)
-        ("C-x b"   'helm-mini)
-        ("C-x C-b" 'helm-buffers-list)
-        ("C-x C-f" 'helm-find-files)
-        ("C-c h o" 'helm-occur)
-        ("C-h a"   'helm-apropos)
-        ("C-c g g" 'helm-grep-do-git-grep-with-prefix-arg)
-        (:keymaps  'helm-map "TAB" #'helm-execute-persistent-action)
-        (:keymaps  'helm-map "<tab>" #'helm-execute-persistent-action)
-        (:keymaps  'helm-map "C-z" #'helm-select-action)
+        ("M-x"     'counsel-M-x)
+        ("M-y"     'counsel-yank-pop)
+        ("C-x C-f" 'counsel-find-file)
+        ("C-x b"   'counsel-switch-buffer)
+        ("C-c g"   'counsel-git)
+        ("C-c j"   'counsel-git-grep)
+        ("C-c r"   'counsel-rg)
+        ("C-h a"   'counsel-apropos)
+        (:keymaps 'counsel-find-file-map "C-l" #'counsel-up-directory)
+        (:keymaps 'counsel-find-file-map "TAB" #'ivy-alt-done)
         :config
-        (defun helm-grep-do-git-grep-with-prefix-arg ()
-          "Helper function to call helm-grep-do-git-grep with a prefix argument.
-        This performs the search on the whole repository."
-          (interactive)
-          (setq current-prefix-arg '(4)) ; C-u
-          (call-interactively 'helm-grep-do-git-grep))
-        (require 'helm-config)
-        (setq helm-echo-input-in-header-line     t)
-        (setq helm-move-to-line-cycle-in-source  t)
-        (setq helm-scroll-amount                 8)
-        (setq helm-split-window-inside-p         t)
-        (setq helm-autoresize-max-height         0)
-        (setq helm-autoresize-min-height        30)
-        (helm-mode 1)
-        (helm-autoresize-mode 1))
+        (ivy-mode 1)
+        (setq ivy-use-virtual-buffers t)
+        (setq enable-recursive-minibuffers t))
     #+END_SRC
 
-    Find files in a Git repository.
+    Swiper is an alternative to isearch that uses Ivy to show an overview of all matches.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-ls-git :general ("C-c l g" 'helm-ls-git-ls))
-    #+END_SRC
-
-    Helm integration with [[*Projectile][Projectile]].
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm-projectile
-        :after projectile
+      (use-package swiper
+        :after ivy
         :general
-        (:keymaps 'projectile-command-map "h" 'helm-projectile))
+        ("C-s" 'swiper))
     #+END_SRC
 
-    Helm integration with [[https://github.com/ggreer/the_silver_searcher][Ag]]. It's configured to use [[https://github.com/BurntSushi/ripgrep][ripgrep]] instead.
+    Add icons to Ivy.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-ag
-        :general ("C-c g a" 'helm-do-ag)
+      (use-package all-the-icons-ivy
+        :after ivy
         :config
-        (custom-set-variables
-         '(helm-ag-base-command "rg --no-heading --line-number")))
-    #+END_SRC
-
-    Search lines within buffer.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm-swoop :general ("C-c s" 'helm-swoop))
+        (all-the-icons-ivy-setup))
     #+END_SRC
 
 *** Git
@@ -574,12 +555,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
         :general
         (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
-    #+END_SRC
-
-    Add Helm integration for xref-appropos.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm-lsp :after (lsp-mode helm))
     #+END_SRC
 
 *** yasnippet
@@ -801,9 +776,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package treemacs-all-the-icons
         :after (treemacs all-the-icons))
 
-      (use-package helm-icons
-        :after treemacs
-        :init (helm-icons-enable))
     #+END_SRC
 
 *** libvterm
