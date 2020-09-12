@@ -800,6 +800,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :if (eq system-type 'gnu/linux))
     #+END_SRC
 
+*** Smex
+
+    Enhanced M-x command. Allows =counsel-M-x= to list commands by recently used.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package smex)
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
