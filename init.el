@@ -1,7 +1,7 @@
 ;;; init.el --- Entry point for Emacs configuration
 
 ;;; Commentary:
-; This file executes all source code blocoks in config.org.
+; This file executes all source code blocks in config.org.
 
 ;;; Code:
 
