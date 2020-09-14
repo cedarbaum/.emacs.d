@@ -377,6 +377,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :demand
         :general
         ("C-c S-r" 'ivy-resume)
+        ("C-x b"   'ivy-switch-buffer)
         :config
         (ivy-mode)
         (setq ivy-on-del-error-function #'ignore)
@@ -389,7 +390,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         ("M-x"     'counsel-M-x)
         ("M-y"     'counsel-yank-pop)
         ("C-x C-f" 'counsel-find-file)
-        ("C-x b"   'counsel-buffer-or-recentf)
         ("C-x d"   'counsel-dired)
         ("C-c g"   'counsel-git)
         ("C-c j"   'counsel-git-grep)
