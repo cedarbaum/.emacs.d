@@ -109,3 +109,6 @@ persist/
 
 # Ignore quelpa files
 quelpa/
+
+# Smex configuration
+smex-items/
