@@ -943,6 +943,16 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package wttrin
         :defer t
         :config
+        ;; Patch for https://github.com/bcbcarl/emacs-wttrin/issues/16
+        (defun wttrin-fetch-raw-string (query)
+          "Get the weather information based on your QUERY."
+          (let ((url-user-agent "curl"))
+            (add-to-list 'url-request-extra-headers wttrin-default-accept-language)
+            (with-current-buffer
+                (url-retrieve-synchronously
+                 (concat "http://wttr.in/" query)
+                 (lambda (status) (switch-to-buffer (current-buffer))))
+              (decode-coding-string (buffer-string) 'utf-8))))
         (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
     #+END_SRC
 
