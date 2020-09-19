@@ -178,7 +178,8 @@ This is my Emacs configuration! It is largely based around Evil mode.
      (setq savehist-additional-variables
            '(kill-ring
              search-ring
-             regexp-search-ring))
+             regexp-search-ring
+             register-alist))
    #+END_SRC
 
    Don't create lock files.
