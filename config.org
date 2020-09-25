@@ -857,6 +857,25 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append))
     #+END_SRC
 
+    GCal integration with org agenda.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-gcal
+        :if (auth-source-search :name "gcal")
+        :config
+        (defconst org-gcal-file "~/Dropbox/org/gcal.org")
+        (when (file-exists-p org-gcal-file)
+          (add-to-list 'org-agenda-files org-gcal-file))
+        ;; (add-to-list 'org-agenda-files "~/Dropbox/org/fake.org")
+        (setq org-gcal-creds (nth 0 (auth-source-search :name "gcal"))
+              org-gcal-client-id (plist-get org-gcal-creds :client_id)
+              org-gcal-client-secret(plist-get org-gcal-creds :client_secret)
+              org-gcal-fetch-file-alist `(("scedarbaum@gmail.com" . ,org-gcal-file)))
+        :hook
+        (org-agenda-mode . org-gcal-sync)
+        (org-capture-after-finalize . org-gcal-sync))
+    #+END_SRC
+
 *** Markdown
 
     A major mode for Markdown (.md) files.
