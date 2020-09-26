@@ -866,7 +866,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (defconst org-gcal-file "~/Dropbox/org/gcal.org")
         (when (file-exists-p org-gcal-file)
           (add-to-list 'org-agenda-files org-gcal-file))
-        ;; (add-to-list 'org-agenda-files "~/Dropbox/org/fake.org")
         (setq org-gcal-creds (nth 0 (auth-source-search :name "gcal"))
               org-gcal-client-id (plist-get org-gcal-creds :client_id)
               org-gcal-client-secret(plist-get org-gcal-creds :client_secret)
@@ -874,6 +873,24 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :hook
         (org-agenda-mode . org-gcal-sync)
         (org-capture-after-finalize . org-gcal-sync))
+    #+END_SRC
+
+    GTasks integration with org files.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-gtasks
+        :quelpa (org-gtasks :fetcher github :repo "cedarbaum/org-gtasks")
+        :ensure nil
+        :if (auth-source-search :name "gtasks")
+        :config
+        (defconst org-gtasks-directory "~/Dropbox/org/tasks/")
+        (when (file-exists-p org-gtasks-directory)
+          (add-to-list 'org-agenda-files org-gtasks-directory))
+        (setq org-gtasks-creds (nth 0 (auth-source-search :name "gtasks")))
+        (org-gtasks-register-account :name "scedarbaum@gmail.com"
+                                     :directory org-gtasks-directory
+                                     :client-id (plist-get org-gtasks-creds :client_id)
+                                     :client-secret (plist-get org-gtasks-creds :client_secret)))
     #+END_SRC
 
 *** Markdown
