@@ -1020,7 +1020,10 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Display emoji.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package emojify :defer t)
+      (use-package emojify
+        :hook
+        (org-mode        . emojify-mode)
+        (org-agenda-mode . emojify-mode))
     #+END_SRC
 
 * Adhoc Elisp functions
