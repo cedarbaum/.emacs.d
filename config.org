@@ -893,6 +893,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
                                      :client-secret (plist-get org-gtasks-creds :client_secret)))
     #+END_SRC
 
+    Edit and export Anki notes.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package anki-editor)
+    #+END_SRC
+
 *** Markdown
 
     A major mode for Markdown (.md) files.
