@@ -535,7 +535,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (add-to-list 'company-backends 'company-capf)
         (setq company-dabbrev-downcase nil)
         (setq company-idle-delay 0)
-        (global-company-mode)
+        (global-company-mode t)
         :general
         (:keymaps 'company-active-map "RET" 'company-complete))
     #+END_SRC
@@ -545,7 +545,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Syntax checker.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package flycheck :config (global-flycheck-mode))
+      (use-package flycheck :config (global-flycheck-mode t))
     #+END_SRC
 
 *** LSP mode
