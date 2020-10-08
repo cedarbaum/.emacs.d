@@ -863,7 +863,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package org-gcal
         :if (auth-source-search :name "gcal")
         :config
-        (defconst org-gcal-file "~/Dropbox/org/google/gcal.org")
+        (defconst org-gcal-file "~/Dropbox/org/google/calendar.org")
         (when (file-exists-p org-gcal-file)
           (add-to-list 'org-agenda-files org-gcal-file))
         (setq org-gcal-creds (nth 0 (auth-source-search :name "gcal"))
@@ -897,6 +897,34 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package anki-editor)
+    #+END_SRC
+
+    Org based replica of [[https://roamresearch.com/][Roam]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-roam
+        :custom
+        (org-roam-directory "~/Dropbox/org/")
+        :general
+        (:keymaps 'org-roam-mode-map "C-c n l" 'org-roam)
+        (:keymaps 'org-roam-mode-map "C-c n f" 'org-roam-find-file)
+        (:keymaps 'org-roam-mode-map "C-c n g" 'org-roam-graph)
+        (:keymaps 'org-mode-map "C-c n i" 'org-roam-insert)
+        (:keymaps 'org-mode-map "C-c n I" 'org-roam-insert-immediate))
+
+      (use-package org-roam-server
+        :config
+        (setq org-roam-server-host "127.0.0.1"
+              org-roam-server-port 8080
+              org-roam-server-authenticate nil
+              org-roam-server-export-inline-images t
+              org-roam-server-serve-files nil
+              org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+              org-roam-server-network-poll t
+              org-roam-server-network-arrows nil
+              org-roam-server-network-label-truncate t
+              org-roam-server-network-label-truncate-length 60
+              org-roam-server-network-label-wrap-length 20))
     #+END_SRC
 
 *** Markdown
