@@ -104,7 +104,7 @@ scratch/
 # Cache for eln files in native compilation branch
 eln-cache/
 
-# Persisted data (used for org-drill).
+# Persisted data (used for org-drill)
 persist/
 
 # Ignore quelpa files
@@ -112,4 +112,6 @@ quelpa/
 
 # Smex configuration
 smex-items
-/org-roam.db
+
+# Ignore org roam DB
+org-roam.db
