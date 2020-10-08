@@ -112,3 +112,4 @@ quelpa/
 
 # Smex configuration
 smex-items
+/org-roam.db

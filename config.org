@@ -863,7 +863,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package org-gcal
         :if (auth-source-search :name "gcal")
         :config
-        (defconst org-gcal-file "~/Dropbox/org/gcal.org")
+        (defconst org-gcal-file "~/Dropbox/org/google/gcal.org")
         (when (file-exists-p org-gcal-file)
           (add-to-list 'org-agenda-files org-gcal-file))
         (setq org-gcal-creds (nth 0 (auth-source-search :name "gcal"))
@@ -883,7 +883,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :ensure nil
         :if (auth-source-search :name "gtasks")
         :config
-        (defconst org-gtasks-directory "~/Dropbox/org/tasks/")
+        (defconst org-gtasks-directory "~/Dropbox/org/google/")
         (when (file-exists-p org-gtasks-directory)
           (add-to-list 'org-agenda-files org-gtasks-directory))
         (setq org-gtasks-creds (nth 0 (auth-source-search :name "gtasks")))
