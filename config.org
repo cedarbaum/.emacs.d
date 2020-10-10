@@ -85,6 +85,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
    This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
 
    #+BEGIN_SRC emacs-lisp
+     (use-package all-the-icons)
      (use-package kaolin-themes)
 
      (defun load-light-theme()
@@ -603,14 +604,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
-    #+END_SRC
-
-*** All The Icons
-
-    Additional pretty icons.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package all-the-icons)
     #+END_SRC
 
 *** doom-modeline
