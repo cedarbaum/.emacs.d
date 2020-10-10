@@ -1073,6 +1073,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     #+BEGIN_SRC emacs-lisp
       (use-package emojify
         :hook
+        (dashboard-mode  . emojify-mode)
         (org-mode        . emojify-mode)
         (org-agenda-mode . emojify-mode))
     #+END_SRC
