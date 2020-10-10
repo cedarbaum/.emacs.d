@@ -819,6 +819,22 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package smex)
     #+END_SRC
 
+*** emacs-tree-sitter
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package tree-sitter
+        :quelpa (tree-sitter :fetcher github
+                             :repo "ubolonton/emacs-tree-sitter"
+                             :files ("lisp/*.el"))
+        :ensure nil)
+
+      (use-package tree-sitter-langs
+        :quelpa (tree-sitter-langs :fetcher github
+                                   :repo "ubolonton/emacs-tree-sitter"
+                                   :files ("langs/*.el" "langs/queries"))
+        :ensure nil)
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
