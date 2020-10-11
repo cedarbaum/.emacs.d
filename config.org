@@ -830,6 +830,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :ensure nil)
     #+END_SRC
 
+*** Emacs IPython Notebook (EIN)
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ein
+        :custom
+        (ein:output-area-inlined-images t))
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
