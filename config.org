@@ -1119,7 +1119,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq spotify-creds (nth 0 (auth-source-search :host "spotify" :user "scedarbaum"))
               spotify-oauth2-client-id (plist-get spotify-creds :client_id)
               spotify-oauth2-client-secret (plist-get spotify-creds :client_secret)
-              spotify-transporn 'connect)
+              spotify-transport 'connect)
         :general
         ("C-c s" 'hydra-spotify/body))
     #+END_SRC
