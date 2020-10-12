@@ -880,12 +880,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package org-gcal
-        :if (auth-source-search :name "gcal")
+        :if (auth-source-search :host "gcal" :user "scedarbaum")
         :config
         (defconst org-gcal-file "~/Dropbox/org/google/calendar.org")
         (when (file-exists-p org-gcal-file)
           (add-to-list 'org-agenda-files org-gcal-file))
-        (setq org-gcal-creds (nth 0 (auth-source-search :name "gcal"))
+        (setq org-gcal-creds (nth 0 (auth-source-search :host "gcal" :user "scedarbaum"))
               org-gcal-client-id (plist-get org-gcal-creds :client_id)
               org-gcal-client-secret(plist-get org-gcal-creds :client_secret)
               org-gcal-fetch-file-alist `(("scedarbaum@gmail.com" . ,org-gcal-file)))
@@ -900,12 +900,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package org-gtasks
         :quelpa (org-gtasks :fetcher github :repo "cedarbaum/org-gtasks")
         :ensure nil
-        :if (auth-source-search :name "gtasks")
+        :if (auth-source-search :host "gtasks" :user "scedarbaum")
         :config
         (defconst org-gtasks-directory "~/Dropbox/org/google/")
         (when (file-exists-p org-gtasks-directory)
           (add-to-list 'org-agenda-files org-gtasks-directory))
-        (setq org-gtasks-creds (nth 0 (auth-source-search :name "gtasks")))
+        (setq org-gtasks-creds (nth 0 (auth-source-search :host "gtasks" :user "scedarbaum")))
         (org-gtasks-register-account :name "scedarbaum@gmail.com"
                                      :directory org-gtasks-directory
                                      :client-id (plist-get org-gtasks-creds :client_id)
