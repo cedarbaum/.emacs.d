@@ -838,6 +838,18 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (ein:output-area-inlined-images t))
     #+END_SRC
 
+*** burnt-toast (notifications on Windows)
+
+    Add support for native notifications on Windows.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package burnt-toast
+        :if (eq system-type 'windows-nt)
+        :config
+        (require 'burnt-toast-alert)
+        (setq alert-default-style 'burnt-toast))
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
