@@ -816,18 +816,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
 *** emacs-tree-sitter
 
-    #+BEGIN_SRC emacs-lisp
-      (use-package tree-sitter
-        :quelpa (tree-sitter :fetcher github
-                             :repo "ubolonton/emacs-tree-sitter"
-                             :files ("lisp/*.el"))
-        :ensure nil)
+    Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
 
-      (use-package tree-sitter-langs
-        :quelpa (tree-sitter-langs :fetcher github
-                                   :repo "ubolonton/emacs-tree-sitter"
-                                   :files ("langs/*.el" "langs/queries"))
-        :ensure nil)
+    #+BEGIN_SRC emacs-lisp
+      (use-package tree-sitter)
+      (use-package tree-sitter-langs)
     #+END_SRC
 
 *** Emacs IPython Notebook (EIN)
