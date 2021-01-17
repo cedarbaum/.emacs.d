@@ -523,7 +523,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :general
         ("C-c p" '(:keymap projectile-command-map))
         :config
-        (projectile-mode +1))
+        (projectile-mode))
     #+END_SRC
 
 *** company-mode
@@ -802,8 +802,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Emacs libvterm integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package vterm
-        :if (eq system-type 'gnu/linux))
+      ;; BUG: Even with :if, some packages still try to autoload vterm
+      ;; on Windows.
+      (when (eq system-type 'gnu/linux)
+        (use-package vterm
+          :if (eq system-type 'gnu/linux)))
     #+END_SRC
 
 *** Smex
