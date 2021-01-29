@@ -587,6 +587,8 @@ This is my Emacs configuration! It is largely based around Evil mode.
           (dap-ui-mode 1))
         (require 'dap-python)
         (require 'dap-java)
+        (require 'dap-chrome)
+        (require 'dap-node)
         (add-hook 'prog-mode-hook 'enable-dap-mode-and-ui)
         :general
         (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
