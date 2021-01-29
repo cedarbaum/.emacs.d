@@ -531,7 +531,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :general
         ("C-c p" '(:keymap projectile-command-map))
         :config
-        (projectile-mode +1))
+        (projectile-mode))
     #+END_SRC
 
 *** company-mode
@@ -812,8 +812,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Emacs libvterm integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package vterm
-        :if (eq system-type 'gnu/linux))
+      ;; BUG: Even with :if, some packages still try to autoload vterm
+      ;; on Windows.
+      (when (eq system-type 'gnu/linux)
+        (use-package vterm
+          :if (eq system-type 'gnu/linux)))
     #+END_SRC
 
 *** Smex
@@ -826,18 +829,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
 *** emacs-tree-sitter
 
-    #+BEGIN_SRC emacs-lisp
-      (use-package tree-sitter
-        :quelpa (tree-sitter :fetcher github
-                             :repo "ubolonton/emacs-tree-sitter"
-                             :files ("lisp/*.el"))
-        :ensure nil)
+    Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
 
-      (use-package tree-sitter-langs
-        :quelpa (tree-sitter-langs :fetcher github
-                                   :repo "ubolonton/emacs-tree-sitter"
-                                   :files ("langs/*.el" "langs/queries"))
-        :ensure nil)
+    #+BEGIN_SRC emacs-lisp
+      (use-package tree-sitter)
+      (use-package tree-sitter-langs)
     #+END_SRC
 
 *** Emacs IPython Notebook (EIN)
