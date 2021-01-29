@@ -418,6 +418,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq enable-recursive-minibuffers t))
     #+END_SRC
 
+    Transient popup for searching with Ag.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package counsel-ag-popup
+        :general
+        ("C-c a" 'counsel-ag-popup))
+    #+END_SRC
+
     Swiper is an alternative to isearch that uses Ivy to show an overview of all matches.
 
     #+BEGIN_SRC emacs-lisp
