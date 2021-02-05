@@ -349,12 +349,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (evil-org-agenda-set-keys))
     #+END_SRC
 
-    Vim-style key-bindings for Magit ([[https://github.com/emacs-evil/evil-magit][GitHub]]).
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package evil-magit :after (evil magit))
-    #+END_SRC
-
     Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
 
     #+BEGIN_SRC emacs-lisp
