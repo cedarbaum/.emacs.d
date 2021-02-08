@@ -707,6 +707,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
                                 (projects  . 5)
                                 (agenda    . 5)
                                 (registers . 5)))
+        (setq dashboard-startup-banner 'logo)
         (dashboard-setup-startup-hook))
     #+END_SRC
 
