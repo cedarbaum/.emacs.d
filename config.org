@@ -283,7 +283,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
    #+BEGIN_SRC emacs-lisp
      (defvar is-unix-like-system
-       (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
+       (member system-type '(gnu gnu/linux gnu/kfreebsd darwin))
        "True if system is Unix-like, false otherwise.")
    #+END_SRC
 
