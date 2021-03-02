@@ -333,14 +333,21 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package evil
+        :after undo-tree
         :init
         (setq evil-ex-complete-emacs-commands nil)
         (setq evil-vsplit-window-right t)
         (setq evil-split-window-below t)
         (setq evil-want-C-u-scroll t)
         (setq evil-want-keybinding nil)
+        (setq evil-undo-system 'undo-tree)
         :config
         (evil-mode))
+
+      ;; Use undo-tree for Evil mode's undo functionality
+      (use-package undo-tree
+        :config
+        (global-undo-tree-mode 1))
     #+END_SRC
 
     Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode/blob/master/README.org][GitHub]]).
