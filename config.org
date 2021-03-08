@@ -975,6 +975,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
               org-roam-server-network-label-wrap-length 20))
     #+END_SRC
 
+    Allow org babel to execute without confirmation.
+
+    #+BEGIN_SRC emacs-lisp
+      (setq org-confirm-babel-evaluate nil)
+    #+END_SRC
+
 *** Markdown
 
     A major mode for Markdown (.md) files.
