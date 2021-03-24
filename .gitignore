@@ -115,3 +115,6 @@ smex-items
 
 # Ignore org roam DB
 org-roam.db
+
+# Ignore site-lisp
+site-lisp/
