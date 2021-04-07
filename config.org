@@ -933,8 +933,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :if (auth-source-search :host "gtasks" :user "scedarbaum")
         :config
         (defconst org-gtasks-directory "~/Dropbox/org/google/")
-        (when (file-exists-p org-gtasks-directory)
-          (add-to-list 'org-agenda-files org-gtasks-directory))
+        (defconst org-gtasks-file "~/Dropbox/org/google/scedarbaum's list.org")
+        (when (file-exists-p org-gtasks-file)
+          (add-to-list 'org-agenda-files org-gtasks-file))
         (setq org-gtasks-creds (nth 0 (auth-source-search :host "gtasks" :user "scedarbaum")))
         (org-gtasks-register-account :name "scedarbaum@gmail.com"
                                      :directory org-gtasks-directory
