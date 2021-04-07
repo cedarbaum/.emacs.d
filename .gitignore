@@ -12,6 +12,7 @@
 
 # Undo-tree save-files
 *.~undo-tree
+undo/
 
 # Org Id locations
 .org-id-locations
