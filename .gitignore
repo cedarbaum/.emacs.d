@@ -119,3 +119,6 @@ org-roam.db
 
 # Ignore site-lisp
 site-lisp/
+
+# TRAMP connection history
+tramp
