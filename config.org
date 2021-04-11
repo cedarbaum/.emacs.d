@@ -1061,6 +1061,20 @@ This is my Emacs configuration! It is largely based around Evil mode.
      (setq python-shell-interpreter "python3")
    #+END_SRC
 
+*** PDF Tools
+
+    Display and edit PDFs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package pdf-tools
+        :mode  ("\\.pdf\\'" . pdf-view-mode)
+        :config
+        (setq-default pdf-view-display-size 'fit-page)
+        (setq pdf-annot-activate-created-annotations t)
+        (pdf-tools-install :no-query)
+        (require 'pdf-occur))
+    #+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
