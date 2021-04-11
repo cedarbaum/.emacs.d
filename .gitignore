@@ -12,6 +12,7 @@
 
 # Undo-tree save-files
 *.~undo-tree
+undo/
 
 # Org Id locations
 .org-id-locations
@@ -115,3 +116,6 @@ smex-items
 
 # Ignore org roam DB
 org-roam.db
+
+# Ignore site-lisp
+site-lisp/
