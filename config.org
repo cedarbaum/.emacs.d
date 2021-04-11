@@ -1088,7 +1088,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
                  (concat "http://wttr.in/" query)
                  (lambda (status) (switch-to-buffer (current-buffer))))
               (decode-coding-string (buffer-string) 'utf-8))))
-        (setq wttrin-default-cities '("Redmond, WA" "Evanston, IL")))
+        (setq wttrin-default-cities '("New York, NY" "Seattle, WA" "Chciago, IL")))
     #+END_SRC
 
 *** XKCD
