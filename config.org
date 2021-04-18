@@ -338,7 +338,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq evil-ex-complete-emacs-commands nil)
         (setq evil-vsplit-window-right t)
         (setq evil-split-window-below t)
-        (setq evil-want-C-u-scroll t)
         (setq evil-want-keybinding nil)
         (setq evil-undo-system 'undo-tree)
         :config
