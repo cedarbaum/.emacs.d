@@ -748,14 +748,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package esup)
     #+END_SRC
 
-*** restclient
-
-    Major mode for debugging REST API calls.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
-    #+END_SRC
-
 *** Lorem Ipsum
 
     Insert filler (lorem ipsum) text.
@@ -845,14 +837,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
     #+BEGIN_SRC emacs-lisp
       (use-package tree-sitter)
       (use-package tree-sitter-langs)
-    #+END_SRC
-
-*** Emacs IPython Notebook (EIN)
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package ein
-        :custom
-        (ein:output-area-inlined-images t))
     #+END_SRC
 
 *** burnt-toast (notifications on Windows)
@@ -1075,6 +1059,22 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq pdf-annot-activate-created-annotations t)
         (pdf-tools-install :no-query)
         (require 'pdf-occur))
+    #+END_SRC
+
+*** restclient
+
+    Major mode for debugging REST API calls.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
+    #+END_SRC
+
+*** Emacs IPython Notebook (EIN)
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package ein
+        :custom
+        (ein:output-area-inlined-images t))
     #+END_SRC
 
 ** Fun
