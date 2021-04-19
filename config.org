@@ -851,6 +851,16 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq alert-default-style 'burnt-toast))
     #+END_SRC
 
+*** pass
+
+    Add package for interacting with [[https://www.passwordstore.org/][pass]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package pass
+        :general
+        (:keymaps 'pass-view-mode-map "C-c C-y" 'pass-view-copy-password))
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
