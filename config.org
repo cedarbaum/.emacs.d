@@ -1203,3 +1203,19 @@ This is my Emacs configuration! It is largely based around Evil mode.
           (browse-url-of-file (expand-file-name default-directory))
         (error "No `default-directory' to open")))
   #+END_SRC
+
+  Load ad hoc script files. These are system specific and not checked in. The =load-directory= snippet is from the [[https://www.emacswiki.org/emacs/LoadingLispFiles][EmacsWiki]].
+
+  #+BEGIN_SRC emacs-lisp
+    (defun load-directory (dir)
+      "Load all elisp files within DIR."
+      (let ((load-it (lambda (f)
+                       (load-file (concat (file-name-as-directory dir) f)))
+                     ))
+        (mapc load-it (directory-files dir nil "\\.el$"))))
+
+    (let ((site-lisp (concat user-emacs-directory "site-lisp")))
+      (when (file-directory-p site-lisp)
+        (load-directory site-lisp)
+        (add-to-list 'load-path site-lisp)))
+  #+END_SRC
