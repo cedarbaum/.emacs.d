@@ -122,3 +122,6 @@ site-lisp/
 
 # TRAMP connection history
 tramp
+
+# Ignore Org generic ID locations
+.org-generic-id-locations
