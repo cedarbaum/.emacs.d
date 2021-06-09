@@ -216,9 +216,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
    Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
 
    #+BEGIN_SRC emacs-lisp
-     (cond ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-12"))
-           ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-12"))
-           ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-12")))
+     (cond ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-13"))
+           ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-13"))
+           ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-13")))
    #+END_SRC
 
 ** Spaces/tabs
