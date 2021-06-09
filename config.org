@@ -86,21 +86,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
    #+BEGIN_SRC emacs-lisp
      (use-package all-the-icons)
-     (use-package kaolin-themes)
-
-     (defun load-light-theme()
-       (interactive)
-       (load-theme 'kaolin-breeze t)
-       (kaolin-treemacs-theme))
-
-     (defun load-dark-theme()
-       (interactive)
-       (load-theme 'kaolin-ocean t)
-       (kaolin-treemacs-theme))
+     (use-package snazzy-theme)
 
      (defun configure-frame (&optional frame)
        "Customize the FRAME and load theme."
-       (load-dark-theme)
+       (load-theme 'snazzy t)
+       (set-face-attribute 'fringe nil :background nil)
        (unless frame
          (setq frame (selected-frame)))
        (when frame
