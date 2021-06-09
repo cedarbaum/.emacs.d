@@ -123,11 +123,11 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
 ** Line numbers
 
-   Enable line numbers in text and prog modes.
+   Enable line numbers in text and prog modes (disabled currently).
 
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'text-mode-hook 'display-line-numbers-mode)
-     (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+     ;; (add-hook 'text-mode-hook 'display-line-numbers-mode)
+     ;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
    #+END_SRC
 
 ** Sounds
