@@ -826,8 +826,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
 
     #+BEGIN_SRC emacs-lisp
-      (use-package tree-sitter)
-      (use-package tree-sitter-langs)
+      ;; BUG: not working on M1 MacBook
+      ;; (use-package tree-sitter)
+      ;; (use-package tree-sitter-langs)
     #+END_SRC
 
 *** burnt-toast (notifications on Windows)
