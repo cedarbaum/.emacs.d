@@ -875,17 +875,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package org-drill :commands org-drill)
     #+END_SRC
 
-    Configure IPython for Org Babel.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package ob-ipython
-        :config
-        (org-babel-do-load-languages
-          'org-babel-load-languages
-          '((ipython . t)))
-        (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append))
-    #+END_SRC
-
     GCal integration with org agenda.
 
     #+BEGIN_SRC emacs-lisp
@@ -1064,14 +1053,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
-    #+END_SRC
-
-*** Emacs IPython Notebook (EIN)
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package ein
-        :custom
-        (ein:output-area-inlined-images t))
     #+END_SRC
 
 ** Fun
