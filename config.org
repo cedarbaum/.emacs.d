@@ -242,6 +242,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
    #+BEGIN_SRC emacs-lisp
      (recentf-mode 1)
+     (setq recentf-auto-cleanup 'never)
      (setq recentf-max-menu-items 50)
      (setq recentf-max-saved-items 1000)
    #+END_SRC
