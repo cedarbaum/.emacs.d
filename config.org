@@ -332,6 +332,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq evil-split-window-below t)
         (setq evil-want-keybinding nil)
         (setq evil-undo-system 'undo-tree)
+        (setq evil-want-minibuffer t)
         :config
         (evil-mode))
 
