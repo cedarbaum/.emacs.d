@@ -346,6 +346,15 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode/blob/master/README.org][GitHub]]).
 
     #+BEGIN_SRC emacs-lisp
+      ;; Temporary patch: https://github.com/Somelauw/evil-org-mode/issues/93#issuecomment-950306532
+      (fset 'evil-redirect-digit-argument 'ignore)
+
+      (add-to-list 'evil-digit-bound-motions 'evil-org-beginning-of-line)
+      (evil-define-key 'motion 'evil-org-mode
+        (kbd "0") 'evil-org-beginning-of-line)
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
       (use-package evil-org
         :after (org evil)
         :config
