@@ -611,6 +611,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
     #+END_SRC
 
+*** rainbow-mode
+
+    Set background color to strings that match color.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-mode)
+    #+END_SRC
+
 *** doom-modeline
 
     Modeline from Doom emacs.
@@ -965,6 +973,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
    #+BEGIN_SRC emacs-lisp
      (setq python-shell-interpreter "python3")
    #+END_SRC
+
+*** Haskell
+
+    Haskell major mode.
+
+    #+BEGIN_SRC emacs-lisp
+     (use-package haskell-mode :defer t)
+    #+END_SRC
 
 *** PDF Tools
 
