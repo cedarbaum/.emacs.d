@@ -568,7 +568,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :after yasnippet
         :commands lsp)
 
-      (use-package lsp-java :after lsp-mode)
+      (use-package lsp-java
+        :after lsp-mode
+        :hook (java-mode . lsp))
     #+END_SRC
 
     Enable DAP mode. Currently configured for Python and Java.
