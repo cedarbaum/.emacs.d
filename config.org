@@ -920,9 +920,9 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package csharp-mode :defer t)
     #+END_SRC
 
-*** TypeScript
+*** JavaScript / TypeScript
 
-    Simple major mode for TypeScript.
+    Modes for TypeScript and JavaScript files.
 
     #+BEGIN_SRC emacs-lisp
       (use-package typescript-mode :defer t)
@@ -935,6 +935,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
         :after (tree-sitter tsi lsp-mode company origami)
         :mode ("\\.tsx\\'" "\\.jsx\\'")
         :ensure nil)
+    #+END_SRC
+
+    Run Jest unit tests.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package jest :defer t)
     #+END_SRC
 
 *** LaTeX
