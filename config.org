@@ -566,7 +566,8 @@ This is my Emacs configuration! It is largely based around Evil mode.
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-mode
         :after yasnippet
-        :commands lsp)
+        :commands lsp
+        :hook (typescript-mode . lsp))
 
       (use-package lsp-java
         :after lsp-mode
@@ -856,6 +857,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:keymaps 'pass-view-mode-map "C-c C-y" 'pass-view-copy-password))
     #+END_SRC
 
+*** origami
+
+    A text folding minor mode for Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package origami :defer t)
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
@@ -917,6 +926,15 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package typescript-mode :defer t)
+      (use-package tsi
+        :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
+        :after tree-sitter
+        :ensure nil)
+      (use-package tsx-mode
+        :quelpa (tsx-mode :fetcher github :repo "orzechowskid/tsx-mode.el")
+        :after (tree-sitter tsi lsp-mode company origami)
+        :mode ("\\.tsx\\'" "\\.jsx\\'")
+        :ensure nil)
     #+END_SRC
 
 *** LaTeX
