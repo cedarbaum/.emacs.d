@@ -999,6 +999,22 @@ This is my Emacs configuration! It is largely based around Evil mode.
      (setq python-shell-interpreter "python3")
    #+END_SRC
 
+   LSP support via pyright.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package lsp-pyright
+       :ensure t
+       :hook (python-mode . (lambda ()
+                              (require 'lsp-pyright)
+                              (lsp))))
+   #+END_SRC
+
+   Python formatting.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package py-yapf)
+   #+END_SRC
+
 *** Haskell
 
     Haskell major mode.
