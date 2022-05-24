@@ -816,6 +816,8 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (when is-unix-like-system
         (use-package vterm
           :if is-unix-like-system))
+
+      (use-package multi-vterm)
     #+END_SRC
 
 *** Smex
