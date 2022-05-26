@@ -271,14 +271,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
 * OS specific settings
 ** macOS
 
-   True if OS is Unix-like.
-
-   #+BEGIN_SRC emacs-lisp
-     (defvar is-unix-like-system
-       (member system-type '(gnu gnu/linux gnu/kfreebsd darwin))
-       "True if system is Unix-like, false otherwise.")
-   #+END_SRC
-
    Bind the command key to meta.
 
    #+BEGIN_SRC emacs-lisp
@@ -811,12 +803,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Emacs libvterm integration.
 
     #+BEGIN_SRC emacs-lisp
-      ;; BUG: Even with :if, some packages still try to autoload vterm
-      ;; on Windows.
-      (when is-unix-like-system
-        (use-package vterm
-          :if is-unix-like-system))
-
+      (use-package vterm :bind ("C-c C-c" . 'vterm--self-ctrl-c))
       (use-package multi-vterm)
     #+END_SRC
 
