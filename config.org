@@ -268,6 +268,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
      (setq save-interprogram-paste-before-kill t)
    #+END_SRC
 
+** Native compliation
+
+    Don't display compilation warnings.
+
+    #+BEGIN_SRC emacs-lisp
+      (setq native-comp-async-report-warnings-errors nil)
+    #+END_SRC
+
 * OS specific settings
 ** macOS
 
