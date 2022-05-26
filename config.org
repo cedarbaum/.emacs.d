@@ -1060,6 +1060,17 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package graphql-mode :defer t)
     #+END_SRC
 
+*** SQL
+
+    SQL formatting.
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package sqlformat
+        :config
+        (setq sqlformat-command 'pgformatter)
+        (setq sqlformat-args '("-s2" "-g")))
+    #+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
