@@ -811,9 +811,7 @@ This is my Emacs configuration! It is largely based around Evil mode.
     Emacs libvterm integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package vterm
-        :general
-        (:keymaps 'vterm-mode-map "C-c C-c" 'vterm--self-ctrl-c))
+      (use-package vterm)
       (use-package multi-vterm)
     #+END_SRC
 
