@@ -940,6 +940,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package jest :defer t)
     #+END_SRC
 
+    Code formatting with Prettier.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package prettier)
+    #+END_SRC
+
 *** LaTeX
 
     Utility for writing and exporting TeX files.
