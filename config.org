@@ -862,6 +862,17 @@ This is my Emacs configuration! It is largely based around Evil mode.
     (use-package origami :defer t)
     #+END_SRC
 
+** Dev Ops
+*** Docker
+
+    Interface to Docker.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package docker
+        :ensure t
+        :general ("C-c o"  'docker))
+    #+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
