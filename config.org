@@ -268,12 +268,30 @@ This is my Emacs configuration! It is largely based around Evil mode.
      (setq save-interprogram-paste-before-kill t)
    #+END_SRC
 
-** Native compliation
+** Native compilation
 
     Don't display compilation warnings.
 
     #+BEGIN_SRC emacs-lisp
       (setq native-comp-async-report-warnings-errors nil)
+    #+END_SRC
+
+** ANSI Color support
+
+    Enable ANSI color support. See:
+    - https://www.emacswiki.org/emacs/AnsiColor
+    - https://emacs.stackexchange.com/a/8137
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'ansi-color)
+
+      (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+      (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+
+      (defun my/ansi-colorize-buffer ()
+        (let ((buffer-read-only nil))
+          (ansi-color-apply-on-region (point-min) (point-max))))
+      (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
     #+END_SRC
 
 * OS specific settings
