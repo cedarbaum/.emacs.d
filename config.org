@@ -1002,14 +1002,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (require 'pdf-occur))
     #+END_SRC
 
-*** restclient
-
-    Major mode for debugging REST API calls.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
-    #+END_SRC
-
 *** YAML
 
     YAML mode.
@@ -1092,6 +1084,14 @@ This is my Emacs configuration! It is largely based around Evil mode.
 
     #+BEGIN_SRC emacs-lisp
       (use-package lorem-ipsum :defer t)
+    #+END_SRC
+
+*** restclient
+
+    Major mode for debugging REST API calls.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
     #+END_SRC
 
 ** Fun
