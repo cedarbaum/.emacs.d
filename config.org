@@ -920,18 +920,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq TeX-auto-save t)) ; Enable parse on save.
     #+END_SRC
 
-*** ledger
-
-    Integration with [[https://www.ledger-cli.org/][ledger]], a text-based accounting system.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package ledger-mode
-        :defer t
-        :custom (ledger-clear-whole-transactions t))
-
-      (use-package flycheck-ledger :after ledger-mode)
-    #+END_SRC
-
 *** JSON
 
     Mode for editing JSON files.
