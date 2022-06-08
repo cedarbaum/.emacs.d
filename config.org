@@ -932,14 +932,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
       (use-package flycheck-ledger :after ledger-mode)
     #+END_SRC
 
-*** Hugo
-
-    Org-mode integration with [[https://gohugo.io/][Hugo]], a Markdown-based static web-site generator.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package ox-hugo :after ox)
-    #+END_SRC
-
 *** JSON
 
     Mode for editing JSON files.
