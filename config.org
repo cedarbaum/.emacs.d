@@ -722,7 +722,8 @@ Install extension that integrates with [[https://langserver.org/][language serve
   (use-package lsp-mode
     :after yasnippet
     :commands lsp
-    :hook (typescript-mode . lsp))
+    :hook (typescript-mode . lsp)
+          (go-mode .lsp))
 
   (use-package lsp-java
     :after lsp-mode
@@ -1007,6 +1008,14 @@ SQL formatting.
     :config
     (setq sqlformat-command 'pgformatter)
     (setq sqlformat-args '("-s2" "-g")))
+#+END_SRC
+
+*** Go
+
+Go major mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package go-mode)
 #+END_SRC
 
 ** Utilities
