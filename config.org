@@ -464,6 +464,180 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (all-the-icons-ivy-setup))
     #+END_SRC
 
+*** company-mode
+
+    Text completion framework.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package company
+        :demand t
+        :config
+        (add-to-list 'company-backends 'company-elisp)
+        (add-to-list 'company-backends 'company-capf)
+        (setq company-dabbrev-downcase nil)
+        (setq company-idle-delay 0)
+        (global-company-mode t)
+        :general
+        (:keymaps 'company-active-map "RET" 'company-complete))
+    #+END_SRC
+
+*** Flycheck
+
+    Syntax checker.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package flycheck :config (global-flycheck-mode t))
+    #+END_SRC
+
+*** ripgrep
+
+    Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rg :defer t)
+    #+END_SRC
+
+*** rainbow-delimiters
+
+    Make corresponding delimiters the same color (e.g., {, (, ")
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
+    #+END_SRC
+
+*** rainbow-mode
+
+    Set background color to strings that match color.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-mode)
+    #+END_SRC
+
+*** doom-modeline
+
+    Modeline from Doom emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package doom-modeline
+        :after all-the-icons
+        :hook (after-init . doom-modeline-mode)
+        :config
+        ;; Don’t compact font caches during GC.
+        (setq inhibit-compacting-font-caches t)
+        (setq doom-modeline-vcs-max-length 25))
+    #+END_SRC
+
+*** eyebrowse
+
+    Window manager.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package eyebrowse
+        :demand t
+        :after evil
+        :general
+        (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
+        (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
+        (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
+        (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
+        :config
+        (eyebrowse-mode t)
+        (eyebrowse-setup-evil-keys)
+        (setq eyebrowse-new-workspace t))
+    #+END_SRC
+
+*** Dashboard
+
+    Dashboard shown on startup.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package dashboard
+        :after projectile
+        :config
+        (setq dashboard-items '((recents   . 5)
+                                (bookmarks . 5)
+                                (projects  . 5)
+                                (agenda    . 5)
+                                (registers . 5)))
+        (setq dashboard-startup-banner 'logo)
+        (dashboard-setup-startup-hook))
+    #+END_SRC
+
+*** goto-line-preview
+
+    Preview line before jumping to it.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package goto-line-preview
+        :general
+        ("M-g g" 'goto-line-preview))
+    #+END_SRC
+
+*** alert
+
+    Alert system.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package alert
+        :config
+        (when (eq system-type 'darwin)
+          (setq alert-default-style 'osx-notifier)))
+    #+END_SRC
+
+*** Treemacs
+
+    Treemacs - a tree layout file explorer for Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs
+        :demand t
+        :config
+        (treemacs-git-mode 'simple)
+        (treemacs-follow-mode t)
+        (treemacs-filewatch-mode t)
+        (treemacs-fringe-indicator-mode t)
+        :general
+        ("C-c t" 'treemacs))
+
+      (use-package treemacs-evil
+        :after (treemacs evil))
+
+      (use-package treemacs-projectile
+        :after (treemacs projectile))
+
+      (use-package treemacs-icons-dired
+        :after (treemacs dired)
+        :config (treemacs-icons-dired-mode))
+
+      (use-package treemacs-magit
+        :after (treemacs magit))
+
+      (use-package treemacs-all-the-icons
+        :after (treemacs all-the-icons))
+
+    #+END_SRC
+
+*** Smex
+
+    Enhanced M-x command. Allows =counsel-M-x= to list commands by recently used.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package smex)
+    #+END_SRC
+
+*** burnt-toast (notifications on Windows)
+
+    Add support for native notifications on Windows.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package burnt-toast
+        :if (eq system-type 'windows-nt)
+        :config
+        (require 'burnt-toast-alert)
+        (setq alert-default-style 'burnt-toast))
+    #+END_SRC
+
+** Coding and Dev Ops
 *** Git
 
     Git integration.
@@ -540,43 +714,6 @@ This is my Emacs configuration! It is largely based around Evil mode.
         ("q" nil "cancel" :color blue))
    #+END_SRC
 
-*** Projectile
-
-    Project (e.g., Git) management and navigation.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package projectile
-        :general
-        ("C-c p" '(:keymap projectile-command-map))
-        :config
-        (projectile-mode))
-    #+END_SRC
-
-*** company-mode
-
-    Text completion framework.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package company
-        :demand t
-        :config
-        (add-to-list 'company-backends 'company-elisp)
-        (add-to-list 'company-backends 'company-capf)
-        (setq company-dabbrev-downcase nil)
-        (setq company-idle-delay 0)
-        (global-company-mode t)
-        :general
-        (:keymaps 'company-active-map "RET" 'company-complete))
-    #+END_SRC
-
-*** Flycheck
-
-    Syntax checker.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package flycheck :config (global-flycheck-mode t))
-    #+END_SRC
-
 *** LSP mode
 
     Install extension that integrates with [[https://langserver.org/][language servers]].
@@ -610,164 +747,50 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
     #+END_SRC
 
+*** emacs-tree-sitter
+
+    Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package tree-sitter)
+      (use-package tree-sitter-langs)
+    #+END_SRC
+
+*** Projectile
+
+    Project (e.g., Git) management and navigation.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package projectile
+        :general
+        ("C-c p" '(:keymap projectile-command-map))
+        :config
+        (projectile-mode))
+    #+END_SRC
+
 *** yasnippet
 
     #+BEGIN_SRC emacs-lisp
       (use-package yasnippet :config (yas-global-mode 1))
     #+END_SRC
 
-*** ripgrep
+*** libvterm
 
-    Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
+    Emacs libvterm integration.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package rg :defer t)
+      (use-package vterm)
+      (use-package multi-vterm)
     #+END_SRC
 
-*** rainbow-delimiters
+*** Docker
 
-    Make corresponding delimiters the same color (e.g., {, (, ")
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
-    #+END_SRC
-
-*** rainbow-mode
-
-    Set background color to strings that match color.
+    Interface to Docker.
 
     #+BEGIN_SRC emacs-lisp
-      (use-package rainbow-mode)
-    #+END_SRC
-
-*** doom-modeline
-
-    Modeline from Doom emacs.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package doom-modeline
-        :after all-the-icons
-        :hook (after-init . doom-modeline-mode)
-        :config
-        ;; Don’t compact font caches during GC.
-        (setq inhibit-compacting-font-caches t)
-        (setq doom-modeline-vcs-max-length 25))
-    #+END_SRC
-
-*** exec-path-from-shell
-
-    Inherit environment variables from SHELL.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package exec-path-from-shell
-        :if (memq window-system '(mac ns x))
-        :config
-        (exec-path-from-shell-initialize))
-    #+END_SRC
-
-*** which-key
-
-    Display possible keybindings after an incomplete prefix.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package which-key :config (which-key-mode))
-    #+END_SRC
-
-*** ERC
-
-    IRC chat within Emacs.
-
-    #+BEGIN_SRC emacs-lisp
-      (require 'erc)
-      (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-      (setq erc-autojoin-timing 'ident)
-      (setq erc-fill-function 'erc-fill-static)
-      (setq erc-fill-static-center 22)
-      (setq erc-hide-list '("JOIN" "PART" "QUIT"))
-      (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-      (setq erc-lurker-threshold-time 43200)
-      (setq erc-prompt-for-nickserv-password nil)
-      (setq erc-server-reconnect-attempts 5)
-      (setq erc-server-reconnect-timeout 3)
-      (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
-                                 "324" "329" "332" "333" "353" "477"))
-      (add-to-list 'erc-modules 'notifications)
-      (add-to-list 'erc-modules 'spelling)
-      (erc-services-mode 1)
-      (erc-update-modules)
-    #+END_SRC
-
-*** eyebrowse
-
-    Window manager.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package eyebrowse
-        :demand t
-        :after evil
-        :general
-        (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
-        (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
-        (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
-        (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
-        :config
-        (eyebrowse-mode t)
-        (eyebrowse-setup-evil-keys)
-        (setq eyebrowse-new-workspace t))
-    #+END_SRC
-
-*** Dashboard
-
-    Dashboard shown on startup.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package dashboard
-        :after projectile
-        :config
-        (setq dashboard-items '((recents   . 5)
-                                (bookmarks . 5)
-                                (projects  . 5)
-                                (agenda    . 5)
-                                (registers . 5)))
-        (setq dashboard-startup-banner 'logo)
-        (dashboard-setup-startup-hook))
-    #+END_SRC
-
-*** goto-line-preview
-
-    Preview line before jumping to it.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package goto-line-preview
-        :general
-        ("M-g g" 'goto-line-preview))
-    #+END_SRC
-
-*** alert
-
-    Alert system.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package alert
-        :config
-        (when (eq system-type 'darwin)
-          (setq alert-default-style 'osx-notifier)))
-    #+END_SRC
-
-*** ESUP - Emacs Start Up Profiler
-
-    Emacs startup profiler.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package esup)
-    #+END_SRC
-
-*** Lorem Ipsum
-
-    Insert filler (lorem ipsum) text.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package lorem-ipsum :defer t)
+      (use-package docker
+        :ensure t
+        :general ("C-c o"  'docker))
     #+END_SRC
 
 *** EditorConfig
@@ -780,115 +803,12 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (editorconfig-mode 1))
     #+END_SRC
 
-*** persistent-scratch
-
-    Save and backup the \*scratch\* buffer.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package persistent-scratch
-        :config
-        (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
-        (persistent-scratch-autosave-mode))
-    #+END_SRC
-
-*** Treemacs
-
-    Treemacs - a tree layout file explorer for Emacs.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package treemacs
-        :demand t
-        :config
-        (treemacs-git-mode 'simple)
-        (treemacs-follow-mode t)
-        (treemacs-filewatch-mode t)
-        (treemacs-fringe-indicator-mode t)
-        :general
-        ("C-c t" 'treemacs))
-
-      (use-package treemacs-evil
-        :after (treemacs evil))
-
-      (use-package treemacs-projectile
-        :after (treemacs projectile))
-
-      (use-package treemacs-icons-dired
-        :after (treemacs dired)
-        :config (treemacs-icons-dired-mode))
-
-      (use-package treemacs-magit
-        :after (treemacs magit))
-
-      (use-package treemacs-all-the-icons
-        :after (treemacs all-the-icons))
-
-    #+END_SRC
-
-*** libvterm
-
-    Emacs libvterm integration.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package vterm)
-      (use-package multi-vterm)
-    #+END_SRC
-
-*** Smex
-
-    Enhanced M-x command. Allows =counsel-M-x= to list commands by recently used.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package smex)
-    #+END_SRC
-
-*** emacs-tree-sitter
-
-    Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package tree-sitter)
-      (use-package tree-sitter-langs)
-    #+END_SRC
-
-*** burnt-toast (notifications on Windows)
-
-    Add support for native notifications on Windows.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package burnt-toast
-        :if (eq system-type 'windows-nt)
-        :config
-        (require 'burnt-toast-alert)
-        (setq alert-default-style 'burnt-toast))
-    #+END_SRC
-
-*** pass
-
-    Add package for interacting with [[https://www.passwordstore.org/][pass]].
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package pass
-        :general
-        (:keymaps 'pass-view-mode-map "C-c C-y" 'pass-view-copy-password))
-    #+END_SRC
-
 *** origami
 
     A text folding minor mode for Emacs.
 
     #+BEGIN_SRC emacs-lisp
     (use-package origami :defer t)
-    #+END_SRC
-
-** Dev Ops
-*** Docker
-
-    Interface to Docker.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package docker
-        :ensure t
-        :general ("C-c o"  'docker))
     #+END_SRC
 
 ** File and language specific modes
@@ -1104,6 +1024,63 @@ This is my Emacs configuration! It is largely based around Evil mode.
         (setq sqlformat-args '("-s2" "-g")))
     #+END_SRC
 
+** Utilities
+*** ESUP - Emacs Start Up Profiler
+
+    Emacs startup profiler.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package esup)
+    #+END_SRC
+
+*** persistent-scratch
+
+    Save and backup the \*scratch\* buffer.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package persistent-scratch
+        :config
+        (setq persistent-scratch-backup-directory (concat user-emacs-directory "scratch"))
+        (persistent-scratch-autosave-mode))
+    #+END_SRC
+
+*** exec-path-from-shell
+
+    Inherit environment variables from SHELL.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package exec-path-from-shell
+        :if (memq window-system '(mac ns x))
+        :config
+        (exec-path-from-shell-initialize))
+    #+END_SRC
+
+*** which-key
+
+    Display possible keybindings after an incomplete prefix.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package which-key :config (which-key-mode))
+    #+END_SRC
+
+*** pass
+
+    Add package for interacting with [[https://www.passwordstore.org/][pass]].
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package pass
+        :general
+        (:keymaps 'pass-view-mode-map "C-c C-y" 'pass-view-copy-password))
+    #+END_SRC
+
+*** Lorem Ipsum
+
+    Insert filler (lorem ipsum) text.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package lorem-ipsum :defer t)
+    #+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
@@ -1197,6 +1174,30 @@ This is my Emacs configuration! It is largely based around Evil mode.
               smudge-transport 'connect)
         :general
         ("C-c s" 'hydra-spotify/body))
+    #+END_SRC
+
+*** ERC
+
+    IRC chat within Emacs.
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'erc)
+      (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
+      (setq erc-autojoin-timing 'ident)
+      (setq erc-fill-function 'erc-fill-static)
+      (setq erc-fill-static-center 22)
+      (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+      (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
+      (setq erc-lurker-threshold-time 43200)
+      (setq erc-prompt-for-nickserv-password nil)
+      (setq erc-server-reconnect-attempts 5)
+      (setq erc-server-reconnect-timeout 3)
+      (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                                 "324" "329" "332" "333" "353" "477"))
+      (add-to-list 'erc-modules 'notifications)
+      (add-to-list 'erc-modules 'spelling)
+      (erc-services-mode 1)
+      (erc-update-modules)
     #+END_SRC
 
 * Adhoc Elisp functions
