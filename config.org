@@ -625,18 +625,6 @@ Enhanced M-x command. Allows =counsel-M-x= to list commands by recently used.
   (use-package smex)
 #+END_SRC
 
-*** burnt-toast (notifications on Windows)
-
-Add support for native notifications on Windows.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package burnt-toast
-    :if (eq system-type 'windows-nt)
-    :config
-    (require 'burnt-toast-alert)
-    (setq alert-default-style 'burnt-toast))
-#+END_SRC
-
 ** Coding and Dev Ops
 *** Git
 
@@ -1171,30 +1159,6 @@ Control Spotify via connect API.
           smudge-transport 'connect)
     :general
     ("C-c s" 'hydra-spotify/body))
-#+END_SRC
-
-*** ERC
-
-IRC chat within Emacs.
-
-#+BEGIN_SRC emacs-lisp
-  (require 'erc)
-  (setq erc-autojoin-channels-alist '(("freenode.net" "#emacs")))
-  (setq erc-autojoin-timing 'ident)
-  (setq erc-fill-function 'erc-fill-static)
-  (setq erc-fill-static-center 22)
-  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
-  (setq erc-lurker-threshold-time 43200)
-  (setq erc-prompt-for-nickserv-password nil)
-  (setq erc-server-reconnect-attempts 5)
-  (setq erc-server-reconnect-timeout 3)
-  (setq erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
-                                  "324" "329" "332" "333" "353" "477"))
-  (add-to-list 'erc-modules 'notifications)
-  (add-to-list 'erc-modules 'spelling)
-  (erc-services-mode 1)
-  (erc-update-modules)
 #+END_SRC
 
 * Adhoc Elisp functions
