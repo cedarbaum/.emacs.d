@@ -255,9 +255,9 @@ Configure world clock display.
   (setq display-time-world-time-format "%FT%T%z") ;; ISO 8601
   (setq display-time-world-timer-second 1)
   (setq display-time-world-list '(("UTC"     "UTC")
-                                  ("PST8PDT" "Seattle")
+                                  ("EST5EDT" "New York")
                                   ("CST6CDT" "Chicago")
-                                  ("EST5EDT" "New York")))
+                                  ("PST8PDT" "Los Angeles")))
 #+END_SRC
 
 ** Kill ring
