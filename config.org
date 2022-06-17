@@ -320,7 +320,6 @@ Install [[https://github.com/abo-abo/hydra][Hydra]].
 
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
-    :demand t
     :general
     ("<f2>" 'hydra-zoom/body)
     :config
@@ -343,7 +342,6 @@ Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    :after undo-tree
     :init
     (setq evil-ex-complete-emacs-commands nil)
     (setq evil-vsplit-window-right t)
@@ -365,7 +363,6 @@ Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil-org
-    :after (org evil)
     :config
     (add-hook 'org-mode-hook 'evil-org-mode)
     (add-hook 'evil-org-mode-hook
@@ -378,28 +375,19 @@ Vim-style key-bindings for Org mode ([[https://github.com/Somelauw/evil-org-mode
 Vim-style key-bindings for many common Emacs modes ([[https://github.com/emacs-evil/evil-collection][GitHub]]).
 
 #+BEGIN_SRC emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+  (use-package evil-collection :config (evil-collection-init))
 #+END_SRC
 
 Evil surround support similar to [[https://github.com/tpope/vim-surround][surround.vim]].
 
 #+BEGIN_SRC emacs-lisp
-  (use-package evil-surround
-    :after evil
-    :config
-    (global-evil-surround-mode 1))
+  (use-package evil-surround :config (global-evil-surround-mode 1))
 #+END_SRC
 
 Evil comment support similar to [[https://github.com/tpope/vim-commentary][commentary.vim]].
 
 #+BEGIN_SRC emacs-lisp
-  (use-package evil-commentary
-    :after evil
-    :config
-    (evil-commentary-mode))
+  (use-package evil-commentary :config (evil-commentary-mode))
 #+END_SRC
 
 *** Ivy / Counsel / Swiper
@@ -408,7 +396,6 @@ Incremental search/narrowing framework.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :demand
     :general
     ("C-c S-r" 'ivy-resume)
     ("C-x b"   'ivy-switch-buffer)
@@ -418,7 +405,6 @@ Incremental search/narrowing framework.
     (setq ivy-use-virtual-buffers t))
 
   (use-package counsel
-    :after ivy
     :if window-system
     :general
     ("M-x"     'counsel-M-x)
@@ -449,17 +435,13 @@ Transient popup for searching with Ag.
 Swiper is an alternative to isearch that uses Ivy to show an overview of all matches.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package swiper
-    :after ivy
-    :general
-    ("C-s" 'swiper))
+  (use-package swiper :general ("C-s" 'swiper))
 #+END_SRC
 
 Add icons to Ivy.
 
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-ivy
-    :after ivy
     :config
     (all-the-icons-ivy-setup))
 #+END_SRC
@@ -470,7 +452,6 @@ Text completion framework.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :demand t
     :config
     (add-to-list 'company-backends 'company-elisp)
     (add-to-list 'company-backends 'company-capf)
@@ -519,7 +500,6 @@ Modeline from Doom emacs.
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
-    :after all-the-icons
     :hook (after-init . doom-modeline-mode)
     :config
     ;; Don’t compact font caches during GC.
@@ -534,7 +514,6 @@ Window manager.
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
     :demand t
-    :after evil
     :general
     (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
     (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
@@ -552,7 +531,6 @@ Dashboard shown on startup.
 
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-    :after projectile
     :config
     (setq dashboard-items '((recents   . 5)
                             (bookmarks . 5)
@@ -590,7 +568,6 @@ Treemacs - a tree layout file explorer for Emacs.
 
 #+BEGIN_SRC emacs-lisp
   (use-package treemacs
-    :demand t
     :config
     (treemacs-git-mode 'simple)
     (treemacs-follow-mode t)
@@ -599,21 +576,16 @@ Treemacs - a tree layout file explorer for Emacs.
     :general
     ("C-c t" 'treemacs))
 
-  (use-package treemacs-evil
-    :after (treemacs evil))
+  (use-package treemacs-evil)
 
-  (use-package treemacs-projectile
-    :after (treemacs projectile))
+  (use-package treemacs-projectile)
 
   (use-package treemacs-icons-dired
-    :after (treemacs dired)
     :config (treemacs-icons-dired-mode))
 
-  (use-package treemacs-magit
-    :after (treemacs magit))
+  (use-package treemacs-magit)
 
-  (use-package treemacs-all-the-icons
-    :after (treemacs all-the-icons))
+  (use-package treemacs-all-the-icons)
 
 #+END_SRC
 
@@ -707,13 +679,11 @@ Install extension that integrates with [[https://langserver.org/][language serve
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
-    :after yasnippet
     :commands lsp
     :hook (typescript-mode . lsp)
-          (go-mode .lsp))
+    (go-mode .lsp))
 
   (use-package lsp-java
-    :after lsp-mode
     :hook (java-mode . lsp))
 
   (use-package lsp-ivy)
@@ -723,7 +693,6 @@ Enable DAP mode. Currently configured for Python and Java.
 
 #+BEGIN_SRC emacs-lisp
   (use-package dap-mode
-    :after lsp-mode
     :config
     (defun enable-dap-mode-and-ui ()
       "Enable dap-mode and dap-ui-mode."
@@ -874,11 +843,9 @@ Modes for TypeScript and JavaScript files.
   (use-package typescript-mode)
   (use-package tsi
     :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
-    :after tree-sitter
     :ensure nil)
   (use-package tsx-mode
     :quelpa (tsx-mode :fetcher github :repo "orzechowskid/tsx-mode.el")
-    :after (tree-sitter tsi lsp-mode company origami)
     :mode ("\\.tsx\\'" "\\.jsx\\'")
     :ensure nil)
 #+END_SRC
