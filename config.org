@@ -587,6 +587,9 @@ Treemacs - a tree layout file explorer for Emacs.
 
   (use-package treemacs-all-the-icons)
 
+  (use-package lsp-treemacs
+    :config
+    (lsp-treemacs-sync-mode 1))
 #+END_SRC
 
 *** Smex
