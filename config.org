@@ -790,9 +790,7 @@ Emacs libvterm integration.
 Interface to Docker.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package docker
-    :ensure t
-    :general ("C-c o"  'docker))
+  (use-package docker :general ("C-c o"  'docker))
 #+END_SRC
 
 *** Kubernetes
@@ -801,7 +799,6 @@ Interface to Kubernetes.
 
 #+BEGIN_SRC emacs-lisp
   (use-package kubernetes
-    :ensure t
     :commands (kubernetes-overview)
     :config
     (setq kubernetes-poll-frequency 3600
@@ -950,7 +947,6 @@ LSP support via pyright.
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-pyright
-    :ensure t
     :hook (python-mode . (lambda ()
                            (require 'lsp-pyright)
                            (lsp))))
