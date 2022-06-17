@@ -494,7 +494,7 @@ Syntax checker.
 Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
 
 #+BEGIN_SRC emacs-lisp
-  (use-package rg :defer t)
+  (use-package rg)
 #+END_SRC
 
 *** rainbow-delimiters
@@ -657,7 +657,6 @@ Open files in remote Git portals.
 
 #+BEGIN_SRC emacs-lisp
   (use-package git-link
-    :defer t
     :config
     (setq git-link-open-in-browser t))
 #+END_SRC
@@ -665,13 +664,13 @@ Open files in remote Git portals.
 Travel through Git history.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package git-timemachine :defer t)
+  (use-package git-timemachine)
 #+END_SRC
 
 Major modes for Git configuration files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package git-modes :defer t)
+  (use-package git-modes)
 #+END_SRC
 
 Resolve merge conflicts. From: https://github.com/alphapapa/unpackaged.el#smerge-mode.
@@ -824,7 +823,7 @@ Interface to Kubernetes.
 A text folding minor mode for Emacs.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package origami :defer t)
+  (use-package origami)
 #+END_SRC
 
 ** File and language specific modes
@@ -839,7 +838,7 @@ Use UTF-8 bullet points in org-mode.
 HTML export.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package htmlize :defer t)
+  (use-package htmlize)
 #+END_SRC
 
 Enable better mouse support for org mode.
@@ -871,7 +870,7 @@ Allow org babel to execute without confirmation.
 A major mode for Markdown (.md) files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode :defer t)
+  (use-package markdown-mode)
 #+END_SRC
 
 *** C#
@@ -879,7 +878,7 @@ A major mode for Markdown (.md) files.
 Language support for C#.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package csharp-mode :defer t)
+  (use-package csharp-mode)
 #+END_SRC
 
 *** JavaScript / TypeScript
@@ -887,7 +886,7 @@ Language support for C#.
 Modes for TypeScript and JavaScript files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package typescript-mode :defer t)
+  (use-package typescript-mode)
   (use-package tsi
     :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
     :after tree-sitter
@@ -902,7 +901,7 @@ Modes for TypeScript and JavaScript files.
 Run Jest unit tests.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package jest :defer t)
+  (use-package jest)
 #+END_SRC
 
 Code formatting with Prettier.
@@ -928,7 +927,7 @@ Utility for writing and exporting TeX files.
 Mode for editing JSON files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package json-mode :defer t)
+  (use-package json-mode)
 #+END_SRC
 
 *** Lua
@@ -936,7 +935,7 @@ Mode for editing JSON files.
 Mode for editing Lua files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package lua-mode :defer t)
+  (use-package lua-mode)
 #+END_SRC
 
 *** Python
@@ -968,7 +967,7 @@ Python formatting.
 Haskell major mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package haskell-mode :defer t)
+  (use-package haskell-mode)
 #+END_SRC
 
 *** PDF Tools
@@ -990,7 +989,7 @@ Display and edit PDFs.
 YAML mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode :defer t)
+  (use-package yaml-mode)
 #+END_SRC
 
 *** GraphQL
@@ -998,7 +997,7 @@ YAML mode.
 GraphQL files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package graphql-mode :defer t)
+  (use-package graphql-mode)
 #+END_SRC
 
 *** SQL
@@ -1074,7 +1073,7 @@ Add package for interacting with [[https://www.passwordstore.org/][pass]].
 Insert filler (lorem ipsum) text.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package lorem-ipsum :defer t)
+  (use-package lorem-ipsum)
 #+END_SRC
 
 *** restclient
@@ -1091,7 +1090,7 @@ Major mode for debugging REST API calls.
 Fireplace in Emacs.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package fireplace :defer t)
+  (use-package fireplace)
 #+END_SRC
 
 *** wttrin.el
@@ -1100,7 +1099,6 @@ Display the weather.
 
 #+BEGIN_SRC emacs-lisp
   (use-package wttrin
-    :defer t
     :config
     ;; Patch for https://github.com/bcbcarl/emacs-wttrin/issues/16
     (defun wttrin-fetch-raw-string (query)
@@ -1121,7 +1119,6 @@ View XKCD comics.
 
 #+BEGIN_SRC emacs-lisp
   (use-package xkcd
-    :defer t
     :general
     (:states '(normal visual) :keymaps 'xkcd-mode-map "j" #'xkcd-next)
     (:states '(normal visual) :keymaps 'xkcd-mode-map "k" #'xkcd-prev))
