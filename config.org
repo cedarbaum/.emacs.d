@@ -728,6 +728,8 @@ Install extension that integrates with [[https://langserver.org/][language serve
   (use-package lsp-java
     :after lsp-mode
     :hook (java-mode . lsp))
+
+  (use-package lsp-ivy)
 #+END_SRC
 
 Enable DAP mode. Currently configured for Python and Java.
