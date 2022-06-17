@@ -680,7 +680,10 @@ Install extension that integrates with [[https://langserver.org/][language serve
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     :commands lsp
-    :hook (typescript-mode . lsp)
+    :init (setq lsp-keymap-prefix "C-c l")
+    :config (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+    :hook
+    (typescript-mode . lsp)
     (go-mode .lsp))
 
   (use-package lsp-java
