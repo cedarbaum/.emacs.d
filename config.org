@@ -43,7 +43,9 @@ Install packages directly from source (e.g., from GitHub repositories).
 
 #+BEGIN_SRC emacs-lisp
   (use-package quelpa)
-  (use-package quelpa-use-package)
+  (use-package quelpa-use-package
+    :config
+    (quelpa-use-package-activate-advice))
 #+END_SRC
 
 * General configuration
@@ -844,12 +846,10 @@ Modes for TypeScript and JavaScript files.
 #+BEGIN_SRC emacs-lisp
   (use-package typescript-mode)
   (use-package tsi
-    :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el")
-    :ensure nil)
+    :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el"))
   (use-package tsx-mode
     :quelpa (tsx-mode :fetcher github :repo "orzechowskid/tsx-mode.el")
-    :mode ("\\.tsx\\'" "\\.jsx\\'")
-    :ensure nil)
+    :mode ("\\.tsx\\'" "\\.jsx\\'"))
 #+END_SRC
 
 Run Jest unit tests.
