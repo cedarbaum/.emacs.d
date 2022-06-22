@@ -1063,7 +1063,7 @@ Display the weather.
              (concat "http://wttr.in/" query)
              (lambda (status) (switch-to-buffer (current-buffer))))
           (decode-coding-string (buffer-string) 'utf-8))))
-    (setq wttrin-default-cities '("New York, NY" "Seattle, WA" "Chciago, IL")))
+    (setq wttrin-default-cities '("New York, NY" "Chciago, IL")))
 #+END_SRC
 
 *** XKCD
