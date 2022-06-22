@@ -685,7 +685,8 @@ Install extension that integrates with [[https://langserver.org/][language serve
     :config (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
     :hook
     (typescript-mode . lsp)
-    (go-mode . lsp))
+    (go-mode . lsp)
+    (rust-mode . lsp))
 
   (use-package lsp-java
     :hook (java-mode . lsp))
@@ -706,6 +707,7 @@ Enable DAP mode. Currently configured for Python and Java.
     (require 'dap-java)
     (require 'dap-chrome)
     (require 'dap-node)
+    (require 'dap-cpptools)
     :general
     (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
 #+END_SRC
@@ -975,6 +977,14 @@ Go major mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode)
+#+END_SRC
+
+*** Rust
+
+Rust major mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode)
 #+END_SRC
 
 ** Utilities
