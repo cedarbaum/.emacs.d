@@ -715,7 +715,12 @@ Enable DAP mode. Currently configured for Python and Java.
 Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
 
 #+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter)
+  (use-package tree-sitter
+    :after tree-sitter-langs
+    :config
+    (require 'tree-sitter-langs)
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
   (use-package tree-sitter-langs)
 #+END_SRC
 
