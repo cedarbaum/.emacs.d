@@ -685,7 +685,7 @@ Install extension that integrates with [[https://langserver.org/][language serve
     :config (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
     :hook
     (typescript-mode . lsp)
-    (go-mode .lsp))
+    (go-mode . lsp))
 
   (use-package lsp-java
     :hook (java-mode . lsp))
