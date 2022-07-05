@@ -987,6 +987,14 @@ Rust major mode.
   (use-package rust-mode)
 #+END_SRC
 
+*** Protocol Buffers
+
+Protocol Buffers support.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package protobuf-mode)
+#+END_SRC
+
 ** Utilities
 *** ESUP - Emacs Start Up Profiler
 
