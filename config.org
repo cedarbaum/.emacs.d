@@ -486,6 +486,11 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
 
     (setq consult-narrow-key "<"))
 
+  (use-package consult-ls-git
+    :general
+    ("C-c g f"  #'consult-ls-git)
+    ("C-c g F"  #'consult-ls-git-other-window))
+
   (use-package marginalia
     :init
     (marginalia-mode))
