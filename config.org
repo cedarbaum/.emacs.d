@@ -491,6 +491,8 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
     ("C-c g f"  #'consult-ls-git)
     ("C-c g F"  #'consult-ls-git-other-window))
 
+  (use-package consult-lsp)
+
   (use-package marginalia
     :init
     (marginalia-mode))
