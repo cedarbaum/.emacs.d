@@ -540,14 +540,6 @@ Syntax checker.
   (use-package flycheck :config (global-flycheck-mode t))
 #+END_SRC
 
-*** ripgrep
-
-Integration with [[https://github.com/BurntSushi/ripgrep][ripgrep]].
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rg)
-#+END_SRC
-
 *** rainbow-delimiters
 
 Make corresponding delimiters the same color (e.g., {, (, ")
