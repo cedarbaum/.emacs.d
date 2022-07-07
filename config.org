@@ -392,7 +392,7 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
   (use-package evil-commentary :config (evil-commentary-mode))
 #+END_SRC
 
-*** Vertico
+*** Completion
 
 Vertical completion UI.
 
