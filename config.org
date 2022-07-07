@@ -394,19 +394,29 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
 
 *** Vertico
 
+Vertical completion UI.
+
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
     :init
     (vertico-mode)
     (setq vertico-resize t)
     (setq vertico-cycle t))
+#+END_SRC
 
+More flexible completion engine: https://github.com/oantolin/orderless.
+
+#+BEGIN_SRC emacs-lisp
   (use-package orderless
     :init
     (setq completion-styles '(orderless basic)
           completion-category-defaults nil
           completion-category-overrides '((file (styles partial-completion)))))
+#+END_SRC
 
+Completing reads for common commands.
+
+#+BEGIN_SRC emacs-lisp
   (use-package consult
     :general
     ;; C-c bindings (mode-specific-map)
@@ -492,11 +502,19 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
     ("C-c g F"  #'consult-ls-git-other-window))
 
   (use-package consult-lsp)
+#+END_SRC
 
+Add marginalia to minibuffer completions.
+
+#+BEGIN_SRC emacs-lisp
   (use-package marginalia
     :init
     (marginalia-mode))
+#+END_SRC
 
+Action dispatch from minibuffer.
+
+#+BEGIN_SRC emacs-lisp
   (use-package embark
     :general
     ("C-."   'embark-act)
@@ -515,7 +533,11 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
     :demand t
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
+#+END_SRC
 
+Add icons to minibuffer.
+
+#+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-completion
     :after (marginalia all-the-icons)
     :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
