@@ -392,60 +392,128 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
   (use-package evil-commentary :config (evil-commentary-mode))
 #+END_SRC
 
-*** Ivy / Counsel / Swiper
-
-Incremental search/narrowing framework.
+*** Vertico
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ivy
+  (use-package vertico
+    :init
+    (vertico-mode)
+    (setq vertico-resize t)
+    (setq vertico-cycle t))
+
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
+
+  (use-package consult
     :general
-    ("C-c S-r" 'ivy-resume)
-    ("C-x b"   'ivy-switch-buffer)
-    :config
-    (ivy-mode)
-    (setq ivy-on-del-error-function #'ignore)
-    (setq ivy-use-virtual-buffers t))
+    ;; C-c bindings (mode-specific-map)
+    ("C-c h" 'consult-history)
+    ("C-c m" 'consult-mode-command)
+    ("C-c k" 'consult-kmacro)
+    ;; C-x bindings (ctl-x-map)
+    ("C-x M-:" 'consult-complex-command)
+    ("C-x b"   'consult-buffer)
+    ("C-x 4 b" 'consult-buffer-other-window)
+    ("C-x 5 b" 'consult-buffer-other-frame)
+    ("C-x r b" 'consult-bookmark)
+    ("C-x p b" 'consult-project-buffer)
+    ;; Custom M-# bindings for fast register access
+    ("M-#"   'consult-register-load)
+    ("M-'"   'consult-register-store)
+    ("C-M-#" 'consult-register)
+    ;; Other custom bindings
+    ("M-y"      'consult-yank-pop)
+    ("<help> a" 'consult-apropos)
+    ;; M-g bindings (goto-map)
+    ("M-g e"   'consult-compile-error)
+    ("M-g f"   'consult-flymake)
+    ("M-g g"   'consult-goto-line)
+    ("M-g M-g" 'consult-goto-line)
+    ("M-g o"   'consult-outline)
+    ("M-g m"   'consult-mark)
+    ("M-g k"   'consult-global-mark)
+    ("M-g i"   'consult-imenu)
+    ("M-g I"   'consult-imenu-multi)
+    ;; M-s bindings (search-map)
+    ("M-s d" 'consult-find)
+    ("M-s D" 'consult-locate)
+    ("M-s g" 'consult-grep)
+    ("M-s G" 'consult-git-grep)
+    ("M-s r" 'consult-ripgrep)
+    ("M-s l" 'consult-line)
+    ("M-s L" 'consult-line-multi)
+    ("M-s m" 'consult-multi-occur)
+    ("M-s k" 'consult-keep-lines)
+    ("M-s u" 'consult-focus-lines)
+    ;; Isearch integration
+    (:keymaps 'isearch-mode-map
+              "M-s e" 'consult-isearch-history
+              "M-e"   'consult-isearch-history
+              "M-s e" 'consult-isearch-history
+              "M-s l" 'consult-line
+              "M-s L" 'consult-line-multi)
+    ;; Minibuffer history
+    (:keymaps 'minibuffer-local-map
+              "M-s" 'consult-history
+              "M-r" 'consult-history)
+    ;; Enable automatic preview at point in the *Completions* buffer. This is
+    ;; relevant when you use the default completion UI.
+    :hook (completion-list-mode . consult-preview-at-point-mode)
+    :init
+    ;; This improves the register preview for `consult-register',
+    ;; `consult-register-load',`consult-register-store' and the Emacs built-ins.
+    (setq register-preview-delay 0.5
+          register-preview-function #'consult-register-format)
 
-  (use-package counsel
-    :if window-system
+    ;; This adds thin lines, sorting and hides the mode line of the window.
+    (advice-add #'register-preview :override #'consult-register-window)
+
+    ;; Use Consult to select xref locations with preview
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)
+    :config
+    (consult-customize
+     consult-theme
+     :preview-key '(:debounce 0.2 any)
+     consult-ripgrep consult-git-grep consult-grep
+     consult-bookmark consult-recent-file consult-xref
+     consult--source-bookmark consult--source-recent-file
+     consult--source-project-recent-file
+     :preview-key (kbd "M-."))
+
+    (setq consult-narrow-key "<"))
+
+  (use-package marginalia
+    :init
+    (marginalia-mode))
+
+  (use-package embark
     :general
-    ("M-x"     'counsel-M-x)
-    ("M-y"     'counsel-yank-pop)
-    ("C-x C-f" 'counsel-find-file)
-    ("C-x d"   'counsel-dired)
-    ("C-c g"   'counsel-git)
-    ("C-c j"   'counsel-git-grep)
-    ("C-c r"   'counsel-rg)
-    ("C-h a"   'counsel-apropos)
-    (:keymaps 'counsel-find-file-map "C-l" #'counsel-up-directory)
-    (:keymaps 'counsel-find-file-map "TAB" #'ivy-alt-done)
+    ("C-."   'embark-act)
+    ("C-;"   'embark-dwim)
+    ("C-h B" 'embark-bindings)
+    :init
+    (setq prefix-help-command #'embark-prefix-help-command)
     :config
-    ;; Don't prefix M-x search with '^'.
-    (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
-    ;; Don't exit when backspace is pressed too many times.
-    (setq enable-recursive-minibuffers t))
-#+END_SRC
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none)))))
 
-Transient popup for searching with Ag.
+  (use-package embark-consult
+    :after (embark consult)
+    :demand t
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
 
-#+BEGIN_SRC emacs-lisp
-  (use-package counsel-ag-popup
-    :general
-    ("C-c a" 'counsel-ag-popup))
-#+END_SRC
-
-Swiper is an alternative to isearch that uses Ivy to show an overview of all matches.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package swiper :general ("C-s" 'swiper))
-#+END_SRC
-
-Add icons to Ivy.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons-ivy
-    :config
-    (all-the-icons-ivy-setup))
+  (use-package all-the-icons-completion
+    :after (marginalia all-the-icons)
+    :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+    :init
+    (all-the-icons-completion-mode))
 #+END_SRC
 
 *** company-mode
@@ -690,8 +758,6 @@ Install extension that integrates with [[https://langserver.org/][language serve
 
   (use-package lsp-java
     :hook (java-mode . lsp))
-
-  (use-package lsp-ivy)
 #+END_SRC
 
 Enable DAP mode. Currently configured for Python and Java.
