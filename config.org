@@ -1147,6 +1147,14 @@ Major mode for debugging REST API calls.
   (use-package restclient :mode (("\\.http\\'" . restclient-mode)))
 #+END_SRC
 
+*** wgrep
+
+wgrep allows you to edit a grep buffer and apply those changes to the file buffer like sed interactively.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package wgrep)
+#+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
