@@ -402,6 +402,14 @@ Vertical completion UI.
     (vertico-mode)
     (setq vertico-resize t)
     (setq vertico-cycle t))
+
+  ;; Configure directory extension.
+  (use-package vertico-directory
+    :after vertico
+    :ensure nil
+    :general
+    (:keymaps 'vertico-map "C-l" 'vertico-directory-up)
+    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 #+END_SRC
 
 More flexible completion engine: https://github.com/oantolin/orderless.
