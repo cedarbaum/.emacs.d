@@ -1074,6 +1074,12 @@ Rust major mode.
   (use-package rust-mode)
 #+END_SRC
 
+Transient interface for Cargo.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cargo-transient)
+#+END_SRC
+
 *** Protocol Buffers
 
 Protocol Buffers support.
