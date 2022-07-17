@@ -1096,6 +1096,15 @@ Protocol Buffers support.
   (use-package protobuf-mode)
 #+END_SRC
 
+*** Vimscript
+
+Vimrc mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vimrc-mode
+    :mode ("\\.vim\\(rc\\)?\\'"))
+#+END_SRC
+
 ** Utilities
 *** ESUP - Emacs Start Up Profiler
 
