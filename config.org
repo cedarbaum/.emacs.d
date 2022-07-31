@@ -401,6 +401,25 @@ Add visual hints when editing with evil.
     (evil-goggles-use-diff-faces))
 #+END_SRC
 
+Preview registers and marks before using them.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-owl
+    :config
+    (if window-system
+        (setq evil-owl-display-method 'posframe
+              evil-owl-extra-posframe-args '(:width 50 :height 20)
+              evil-owl-max-string-length 50)
+      (progn
+        (setq evil-owl-max-string-length 500)
+        (add-to-list 'display-buffer-alist
+                     '("*evil-owl*"
+                       (display-buffer-in-side-window)
+                       (side . bottom)
+                       (window-height . 0.3)))))
+    (evil-owl-mode))
+#+END_SRC
+
 *** Vertico / Orderless / Consult / Marginalia / Embark
 
 Vertical completion UI.
