@@ -629,7 +629,8 @@ Window manager.
     (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
     :config
     (eyebrowse-mode t)
-    (eyebrowse-setup-evil-keys)
+    ;; Conflicts with evil-commentary.
+    ;; (eyebrowse-setup-evil-keys)
     (setq eyebrowse-new-workspace t))
 #+END_SRC
 
