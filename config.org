@@ -392,6 +392,15 @@ Evil comment support similar to [[https://github.com/tpope/vim-commentary][comme
   (use-package evil-commentary :config (evil-commentary-mode))
 #+END_SRC
 
+Add visual hints when editing with evil.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-goggles
+    :config
+    (evil-goggles-mode)
+    (evil-goggles-use-diff-faces))
+#+END_SRC
+
 *** Vertico / Orderless / Consult / Marginalia / Embark
 
 Vertical completion UI.
