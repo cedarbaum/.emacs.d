@@ -536,8 +536,6 @@ Completing reads for common commands.
     :general
     ("M-s G f"  #'consult-ls-git)
     ("M-s G F"  #'consult-ls-git-other-window))
-
-  (use-package consult-lsp)
 #+END_SRC
 
 Add marginalia to minibuffer completions.
@@ -800,56 +798,6 @@ Resolve merge conflicts. From: https://github.com/alphapapa/unpackaged.el#smerge
     ("q" nil "cancel" :color blue))
 #+END_SRC
 
-*** LSP mode
-
-Install extension that integrates with [[https://langserver.org/][language servers]].
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :commands lsp
-    :init (setq lsp-keymap-prefix "C-c l")
-    :config (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
-    :hook
-    (typescript-mode . lsp)
-    (go-mode . lsp)
-    (rust-mode . lsp))
-
-  (use-package lsp-java
-    :hook (java-mode . lsp))
-#+END_SRC
-
-Enable DAP mode. Currently configured for Python and Java.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package dap-mode
-    :config
-    (defun enable-dap-mode-and-ui ()
-      "Enable dap-mode and dap-ui-mode."
-      (dap-mode 1)
-      (dap-ui-mode 1))
-    (require 'dap-python)
-    (require 'dap-java)
-    (require 'dap-chrome)
-    (require 'dap-node)
-    (require 'dap-cpptools)
-    :general
-    (:keymaps 'dap-mode-map "C-c d" 'dap-hydra))
-#+END_SRC
-
-*** emacs-tree-sitter
-
-Integration with [[https://tree-sitter.github.io/tree-sitter/][Tree-sitter]].
-
-#+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter
-    :after tree-sitter-langs
-    :config
-    (require 'tree-sitter-langs)
-    (global-tree-sitter-mode)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-  (use-package tree-sitter-langs)
-#+END_SRC
-
 *** Projectile
 
 Project (e.g., Git) management and navigation.
@@ -975,12 +923,11 @@ Language support for C#.
 Modes for TypeScript and JavaScript files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package typescript-mode)
-  (use-package tsi
-    :quelpa (tsi :fetcher github :repo "orzechowskid/tsi.el"))
-  (use-package tsx-mode
-    :quelpa (tsx-mode :fetcher github :repo "orzechowskid/tsx-mode.el")
-    :mode ("\\.tsx\\'" "\\.jsx\\'"))
+  (use-package typescript-mode
+    :config
+    (define-derived-mode typescriptreact-mode typescript-mode
+      "TypeScript TSX")
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode)))
 #+END_SRC
 
 Run Jest unit tests.
@@ -1029,15 +976,6 @@ Always use Python 3.
 
 #+BEGIN_SRC emacs-lisp
   (setq python-shell-interpreter "python3")
-#+END_SRC
-
-LSP support via pyright.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-pyright
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                           (lsp))))
 #+END_SRC
 
 Python formatting.
