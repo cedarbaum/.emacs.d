@@ -920,16 +920,6 @@ Language support for C#.
 
 *** JavaScript / TypeScript
 
-Modes for TypeScript and JavaScript files.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package typescript-mode
-    :config
-    (define-derived-mode typescriptreact-mode typescript-mode
-      "TypeScript TSX")
-    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode)))
-#+END_SRC
-
 Run Jest unit tests.
 
 #+BEGIN_SRC emacs-lisp
