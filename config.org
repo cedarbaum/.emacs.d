@@ -585,6 +585,7 @@ Text completion framework.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
+    :demand
     :config
     (add-to-list 'company-backends 'company-elisp)
     (add-to-list 'company-backends 'company-capf)
