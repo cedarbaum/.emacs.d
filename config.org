@@ -579,21 +579,18 @@ Add icons to minibuffer.
     (all-the-icons-completion-mode))
 #+END_SRC
 
-*** company-mode
+*** corfu
 
 Text completion framework.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package company
+  (use-package corfu
     :demand
-    :config
-    (add-to-list 'company-backends 'company-elisp)
-    (add-to-list 'company-backends 'company-capf)
-    (setq company-dabbrev-downcase nil)
-    (setq company-idle-delay 0)
-    (global-company-mode t)
-    :general
-    (:keymaps 'company-active-map "RET" 'company-complete))
+    :custom
+    (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)  ;; Enable auto completion
+    :init
+    (global-corfu-mode))
 #+END_SRC
 
 *** Flycheck
