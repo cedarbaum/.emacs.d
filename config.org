@@ -861,6 +861,22 @@ A text folding minor mode for Emacs.
   (use-package origami)
 #+END_SRC
 
+*** Copilot.el
+
+Unofficial integration with GitHub Copilot.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package copilot
+    :quelpa (copilot.el :fetcher github
+                        :repo "zerolfx/copilot.el"
+                        :branch "main"
+                        :files ("dist" "copilot.el"))
+    :config
+    (add-hook 'prog-mode-hook 'copilot-mode)
+    :general
+    ("C-<tab>" 'copilot-accept-completion))
+#+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
