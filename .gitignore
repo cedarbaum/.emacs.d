@@ -129,3 +129,4 @@ tramp
 
 # Ignore session files
 session*
+/multisession/
