@@ -877,6 +877,14 @@ Unofficial integration with GitHub Copilot.
     ("C-<tab>" 'copilot-accept-completion))
 #+END_SRC
 
+*** eglot
+
+Built-in LSP integration.
+
+#+BEGIN_SRC emacs-lisp
+  (setq eglot-confirm-server-initiated-edits nil)
+#+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
