@@ -954,6 +954,12 @@ Language support for C#.
 
 *** JavaScript / TypeScript
 
+Load TypeScript mode with tree-sitter support.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'typescript-ts-mode)
+#+END_SRC
+
 Run Jest unit tests.
 
 #+BEGIN_SRC emacs-lisp
