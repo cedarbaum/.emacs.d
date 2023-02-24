@@ -885,6 +885,19 @@ Built-in LSP integration.
   (setq eglot-confirm-server-initiated-edits nil)
 #+END_SRC
 
+*** tree-sitter
+
+Intelligently use tree-sitter major modes when possible.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package treesit-auto
+    :demand t
+    :config
+    (add-to-list 'treesit-auto-fallback-alist '(bash-ts-mode . sh-mode))
+    (setq treesit-auto-install 'prompt)
+    (global-treesit-auto-mode))
+#+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 

@@ -130,3 +130,6 @@ tramp
 # Ignore session files
 session*
 /multisession/
+
+# Ignore tree-sitter files
+/tree-sitter/
