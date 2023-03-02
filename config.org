@@ -1011,7 +1011,10 @@ Always use Python 3.
 Python formatting.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package py-yapf)
+  (use-package python-black
+    :demand t
+    :after python
+    :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+END_SRC
 
 *** Haskell
