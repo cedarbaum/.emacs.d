@@ -613,7 +613,8 @@ Make corresponding delimiters the same color (e.g., {, (, ")
 Set background color to strings that match color.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-mode)
+  (use-package rainbow-mode
+    :hook (prog-mode))
 #+END_SRC
 
 *** doom-modeline
