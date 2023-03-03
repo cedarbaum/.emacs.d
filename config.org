@@ -67,6 +67,7 @@ Enable pin entry within the Emacs minibuffer.
 Look for JSON files when searching auth sources.
 
 #+BEGIN_SRC emacs-lisp
+  (require 'auth-source)
   (dolist (file '("~/.authinfo.json" "~/.authinfo.json.gpg"))
     ((lambda ()
        (when (file-exists-p file) (add-to-list 'auth-sources file)))))
