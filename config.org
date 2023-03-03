@@ -870,7 +870,7 @@ Unofficial integration with GitHub Copilot.
     :quelpa (copilot.el :fetcher github
                         :repo "zerolfx/copilot.el"
                         :branch "main"
-                        :files ("dist" "copilot.el"))
+                        :files ("dist" "*.el"))
     :config
     (add-hook 'prog-mode-hook 'copilot-mode)
     :general
