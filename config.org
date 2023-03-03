@@ -22,39 +22,28 @@ This config is written for Emacs 29+. It assumes that =eglot= (LSP integration) 
 
 * Package management
 
-Initialize package manager.
+Initialize =straight.el= package manager.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package)
-  (add-to-list 'package-archives '("org"          . "https://orgmode.org/elpa/"))
-  (add-to-list 'package-archives '("melpa"        . "https://melpa.org/packages/"))
-  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-  (setq package-enable-at-startup nil)
-  (package-initialize)
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
 #+END_SRC
 
-Bootstrap use-package.
+Install =use-package= and always use =straight.el= to install missing packages.
 
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-#+END_SRC
-
-Always ensure packages are installed.
-
-#+BEGIN_SRC emacs-lisp
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
-#+END_SRC
-
-Install packages directly from source (e.g., from GitHub repositories).
-
-#+BEGIN_SRC emacs-lisp
-  (use-package quelpa)
-  (use-package quelpa-use-package
-    :config
-    (quelpa-use-package-activate-advice))
+  (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
 #+END_SRC
 
 * General configuration
@@ -322,7 +311,8 @@ Bind the command key to meta.
 Use [[https://github.com/noctuid/general.el][General]] for keybindings.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package general)
+  (use-package general
+    :demand t)
 #+END_SRC
 
 *** Hydra
@@ -435,6 +425,15 @@ Vertical completion UI.
 
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
+    :straight (vertico :files (:defaults "extensions/*")
+                       :includes (vertico-buffer
+                                  vertico-directory
+                                  vertico-flat
+                                  vertico-indexed
+                                  vertico-mouse
+                                  vertico-quick
+                                  vertico-repeat
+                                  vertico-reverse))
     :init
     (vertico-mode)
     (setq vertico-resize t)
@@ -443,7 +442,7 @@ Vertical completion UI.
   ;; Configure directory extension.
   (use-package vertico-directory
     :after vertico
-    :ensure nil
+    :straight nil
     :general
     (:keymaps 'vertico-map "C-l" 'vertico-directory-up)
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
@@ -882,10 +881,7 @@ Unofficial integration with GitHub Copilot.
 
 #+BEGIN_SRC emacs-lisp
   (use-package copilot
-    :quelpa (copilot.el :fetcher github
-                        :repo "zerolfx/copilot.el"
-                        :branch "main"
-                        :files ("dist" "*.el"))
+    :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
     :config
     (add-hook 'prog-mode-hook 'copilot-mode)
     :general
@@ -960,14 +956,6 @@ A major mode for Markdown (.md) files.
   (use-package markdown-mode)
 #+END_SRC
 
-*** C#
-
-Language support for C#.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package csharp-mode)
-#+END_SRC
-
 *** JavaScript / TypeScript
 
 Load TypeScript mode with tree-sitter support.
@@ -994,7 +982,8 @@ Utility for writing and exporting TeX files.
 
 #+BEGIN_SRC emacs-lisp
   (use-package tex
-    :ensure auctex
+    :straight auctex
+    :defer t
     :config
     (setq TeX-parse-self t) ; Enable parse on load.
     (setq TeX-auto-save t)) ; Enable parse on save.

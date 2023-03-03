@@ -133,3 +133,6 @@ session*
 
 # Ignore tree-sitter files
 /tree-sitter/
+
+# Ignore straight package directory
+/straight/
