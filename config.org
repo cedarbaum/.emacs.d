@@ -1060,7 +1060,8 @@ Display and edit PDFs.
 YAML mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode)
+  (use-package yaml-mode
+    :mode ("\\.yml\\'" . yaml-mode))
 #+END_SRC
 
 *** GraphQL
