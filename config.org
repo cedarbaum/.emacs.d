@@ -11,6 +11,15 @@
 
 This is my Emacs configuration! It is largely based around Evil mode.
 
+* Compatibility
+
+This config is written for Emacs 29+. It assumes that =eglot= (LSP integration) and Tree-sitter are available.
+
+#+BEGIN_SRC emacs-lisp
+  (if (version< emacs-version "29.0")
+      (display-warning 'config "Configuration is designed for Emacs 29+"))
+#+END_SRC
+
 * Package management
 
 Initialize package manager.
