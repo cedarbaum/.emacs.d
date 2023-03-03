@@ -831,6 +831,12 @@ Interface to Docker.
   (use-package docker :general ("C-c o"  'docker))
 #+END_SRC
 
+Use Dockerfile tree-sitter mode.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'dockerfile-ts-mode)
+#+END_SRC
+
 *** Kubernetes
 
 Interface to Kubernetes.
