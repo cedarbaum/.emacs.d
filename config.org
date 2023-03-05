@@ -895,6 +895,17 @@ Unofficial integration with GitHub Copilot.
     ("C-<tab>" 'copilot-accept-completion))
 #+END_SRC
 
+*** codespaces.el
+
+Provides support for connecting to GitHub Codespaces in Emacs via TRAMP.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package codespaces
+    :ensure-system-package gh
+    :config (codespaces-setup)
+    :bind ("C-c S" . #'codespaces-connect))
+#+END_SRC
+
 *** eglot
 
 Built-in LSP integration.
