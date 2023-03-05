@@ -46,6 +46,12 @@ Install =use-package= and always use =straight.el= to install missing packages.
   (setq straight-use-package-by-default t)
 #+END_SRC
 
+Add =:ensure-system-package= extension.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-ensure-system-package)
+#+END_SRC
+
 * General configuration
 ** Personal information
 
