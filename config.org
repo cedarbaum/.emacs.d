@@ -927,6 +927,15 @@ Intelligently use tree-sitter major modes when possible.
     (global-treesit-auto-mode))
 #+END_SRC
 
+*** dotenv-mode
+
+Major mode for editing .env files.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dotenv-mode
+    :mode ("\\.env\\..*\\'" . dotenv-mode))
+#+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
