@@ -1211,6 +1211,17 @@ wgrep allows you to edit a grep buffer and apply those changes to the file buffe
   (use-package wgrep)
 #+END_SRC
 
+*** gptel
+
+A simple, no-frills ChatGPT client for Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package gptel
+    :config
+    (let* ((open-ai-auth (car (auth-source-search :host "OpenAI"))))
+      (setq gptel-api-key (plist-get open-ai-auth :api_key))))
+#+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
