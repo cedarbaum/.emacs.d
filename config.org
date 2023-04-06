@@ -20,38 +20,6 @@ This config is written for Emacs 29+. It assumes that =eglot= (LSP integration) 
       (display-warning 'config "Configuration is designed for Emacs 29+"))
 #+END_SRC
 
-* Package management
-
-Initialize =straight.el= package manager.
-
-#+BEGIN_SRC emacs-lisp
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 6))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-#+END_SRC
-
-Install =use-package= and always use =straight.el= to install missing packages.
-
-#+BEGIN_SRC emacs-lisp
-  (straight-use-package 'use-package)
-  (setq straight-use-package-by-default t)
-#+END_SRC
-
-Add =:ensure-system-package= extension.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package use-package-ensure-system-package)
-#+END_SRC
-
 * General configuration
 ** Personal information
 
