@@ -904,6 +904,14 @@ Major mode for editing .env files.
     :mode ("\\.env\\..*\\'" . dotenv-mode))
 #+END_SRC
 
+*** format-all
+
+Formatting for many languages.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package format-all)
+#+END_SRC
+
 ** File and language specific modes
 *** Org mode extensions
 
@@ -965,12 +973,6 @@ Run Jest unit tests.
   (use-package jest)
 #+END_SRC
 
-Code formatting with Prettier.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package prettier)
-#+END_SRC
-
 *** LaTeX
 
 Utility for writing and exporting TeX files.
@@ -1006,15 +1008,6 @@ Always use Python 3.
 
 #+BEGIN_SRC emacs-lisp
   (setq python-shell-interpreter "python3")
-#+END_SRC
-
-Python formatting.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package python-black
-    :demand t
-    :after python
-    :hook (python-mode . python-black-on-save-mode-enable-dwim))
 #+END_SRC
 
 *** Haskell
@@ -1054,17 +1047,6 @@ GraphQL files.
 
 #+BEGIN_SRC emacs-lisp
   (use-package graphql-mode)
-#+END_SRC
-
-*** SQL
-
-SQL formatting.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sqlformat
-    :config
-    (setq sqlformat-command 'pgformatter)
-    (setq sqlformat-args '("-s2" "-g")))
 #+END_SRC
 
 *** Go
