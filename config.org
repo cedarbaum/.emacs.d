@@ -1108,6 +1108,14 @@ Save and backup the \*scratch\* buffer.
     (persistent-scratch-autosave-mode))
 #+END_SRC
 
+*** scratch
+
+Create new scratch buffers with same major mode as current buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package scratch)
+#+END_SRC
+
 *** exec-path-from-shell
 
 Inherit environment variables from SHELL.
