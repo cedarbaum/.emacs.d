@@ -703,6 +703,16 @@ Enhanced M-x command. Allows =counsel-M-x= to list commands by recently used.
   (use-package smex)
 #+END_SRC
 
+*** ElDoc box
+
+Displays ElDoc documentations in a childframe.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package eldoc-box
+    :hook ((eldoc-mode . eldoc-box-hover-mode)
+           (eldoc-mode . eldoc-box-help-at-point)))
+#+END_SRC
+
 ** Coding and Dev Ops
 *** Git
 
