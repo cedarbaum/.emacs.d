@@ -191,9 +191,10 @@ Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
 Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
 
 #+BEGIN_SRC emacs-lisp
-  (cond ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-13"))
-        ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-13"))
-        ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-13")))
+  (cond ((member "Berkeley Mono" (font-family-list)) (set-face-attribute 'default nil :font "Berkeley Mono-14"))
+        ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-14"))
+        ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-14"))
+        ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-14")))
 #+END_SRC
 
 ** Spaces/tabs
