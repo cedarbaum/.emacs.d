@@ -709,8 +709,7 @@ Displays ElDoc documentations in a childframe.
 
 #+BEGIN_SRC emacs-lisp
   (use-package eldoc-box
-    :hook ((eldoc-mode . eldoc-box-hover-mode)
-           (eldoc-mode . eldoc-box-help-at-point)))
+    :hook ((eldoc-mode . eldoc-box-hover-mode)))
 #+END_SRC
 
 ** Coding and Dev Ops
