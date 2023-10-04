@@ -67,6 +67,8 @@ This section is for themes and GUI configuration. Below code will reload the con
     "Customize the FRAME and load theme."
     (load-theme 'snazzy t)
     (set-face-attribute 'fringe nil :background nil)
+    (custom-set-faces
+    '(tooltip ((t :foreground "white"))))
     (unless frame
       (setq frame (selected-frame)))
     (when frame
