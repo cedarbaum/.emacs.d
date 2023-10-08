@@ -1100,6 +1100,19 @@ Vimrc mode.
     :mode ("\\.vim\\(rc\\)?\\'"))
 #+END_SRC
 
+*** Swift
+
+Swift mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swift-mode
+    :config
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '(swift-mode . ("xcrun" "sourcekit-lsp"))))
+    )
+#+END_SRC
+
 ** Utilities
 *** ESUP - Emacs Start Up Profiler
 
