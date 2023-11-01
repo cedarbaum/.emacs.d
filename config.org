@@ -979,6 +979,32 @@ Load TypeScript mode with tree-sitter support.
   (require 'typescript-ts-mode)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (defun deno-project-p ()
+    "Determine if the current project is a Deno project."
+    (or
+     (locate-dominating-file default-directory "deno.json")
+     (locate-dominating-file default-directory "import_map.json")))
+
+  (defun node-project-p ()
+    "Determine if the current project is a Node project."
+    (locate-dominating-file default-directory "package.json"))
+
+  ;; Based on https://github.com/guilhermecomum/emacs.d/blob/main/readme.org#eglot
+  (defun ecma-server-program (_)
+    "Decide which server to use for ECMA Script based on project characteristics."
+    (cond ((node-project-p) '("typescript-language-server" "--stdio"))
+          ((deno-project-p) '("deno" "lsp" :initializationOptions (:enable t :lint t)))
+          (t                nil)))
+
+  (with-eval-after-load 'eglot
+    ;; See: https://github.com/joaotavora/eglot/issues/525
+    (put 'typescript-ts-mode 'eglot-language-id "typescript")
+    (put 'js-ts-mode 'eglot-language-id "javascript")
+    (add-to-list 'eglot-server-programs
+                 '((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode typescript-mode) . ecma-server-program)))
+#+END_SRC
+
 Run Jest unit tests.
 
 #+BEGIN_SRC emacs-lisp
