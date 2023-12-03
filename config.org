@@ -1139,6 +1139,18 @@ Swift mode.
     )
 #+END_SRC
 
+*** Bash / Shell
+
+Bash / Shell highlighting.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'sh-script)
+  ;; Load for .zsh, .zshrc, zshrc
+  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . bash-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.zshrc\\'" . bash-ts-mode))
+  (add-to-list 'auto-mode-alist '("/zshrc\\'" . bash-ts-mode))
+#+END_SRC
+
 ** Utilities
 *** ESUP - Emacs Start Up Profiler
 
