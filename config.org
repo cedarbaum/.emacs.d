@@ -1011,6 +1011,15 @@ Run Jest unit tests.
   (use-package jest)
 #+END_SRC
 
+Manage node versions through nvm
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nvm
+    :straight (:host github :repo "rejeep/nvm.el")
+    :config
+    (nvm-use "18"))
+#+END_SRC
+
 *** LaTeX
 
 Utility for writing and exporting TeX files.
