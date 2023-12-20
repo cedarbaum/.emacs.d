@@ -1101,7 +1101,7 @@ GraphQL files.
 Go major mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package go-mode)
+  (require 'go-ts-mode)
 #+END_SRC
 
 *** Rust
@@ -1109,7 +1109,7 @@ Go major mode.
 Rust major mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package rust-mode)
+  (require 'rust-ts-mode)
 #+END_SRC
 
 Transient interface for Cargo.
