@@ -1252,6 +1252,15 @@ A simple, no-frills ChatGPT client for Emacs.
       (setq gptel-api-key (plist-get open-ai-auth :api_key))))
 #+END_SRC
 
+*** Bear
+
+Integration with Bear notes app.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package bear
+    :straight (:host github :repo "cedarbaum/bear.el"))
+#+END_SRC
+
 ** Fun
 *** emacs-fireplace
 
