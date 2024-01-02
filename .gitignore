@@ -136,3 +136,6 @@ session*
 
 # Ignore straight package directory
 /straight/
+
+# Ignore projects
+projects
