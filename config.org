@@ -414,6 +414,7 @@ Vertical completion UI.
                                   vertico-reverse))
     :init
     (vertico-mode)
+    (setq vertico-count 20)
     (setq vertico-resize t)
     (setq vertico-cycle t))
 
