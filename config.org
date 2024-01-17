@@ -595,17 +595,20 @@ Set background color to strings that match color.
     :hook (prog-mode))
 #+END_SRC
 
-*** doom-modeline
+*** Moody and minions (mode line)
 
-Modeline from Doom emacs.
+Modeline setup.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-modeline
-    :hook (after-init . doom-modeline-mode)
+  (use-package moody
     :config
-    ;; Don’t compact font caches during GC.
-    (setq inhibit-compacting-font-caches t)
-    (setq doom-modeline-vcs-max-length 25))
+    (setq x-underline-at-descent-line t)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode)
+    (moody-replace-eldoc-minibuffer-message-function))
+
+  (use-package minions
+    :config (minions-mode 1))
 #+END_SRC
 
 *** eyebrowse
