@@ -62,10 +62,11 @@ Mode line configuration.
 #+BEGIN_SRC emacs-lisp
   ;; Format
   (setq-default mode-line-position nil)
+  (setq-default flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
   (setq-default mode-line-format '("%e" mode-line-front-space
                                    mode-line-frame-identification mode-line-buffer-identification " " mode-line-position evil-mode-line-tag " "
                                    (vc-mode vc-mode)
-                                   "  " minions-mode-line-modes mode-line-misc-info mode-line-end-spaces))
+                                   "  " minions-mode-line-modes mode-line-misc-info mode-line-end-spaces flymake-mode-line-format))
 
   ;; Increase height
   (custom-set-faces
