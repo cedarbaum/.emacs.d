@@ -318,6 +318,16 @@ Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
     (setq evil-split-window-below t)
     (setq evil-want-keybinding nil)
     (setq evil-undo-system 'undo-tree)
+
+    ;; Mode line
+    (setq evil-normal-state-tag   (propertize " NORMAL " 'face '((:background "#5af78e" :foreground "black")))
+          evil-emacs-state-tag    (propertize " EMACS  " 'face '((:background "#ff6ac1" :foreground "black")))
+          evil-insert-state-tag   (propertize " INSERT " 'face '((:background "#ff9f43" :foreground "black")))
+          evil-replace-state-tag  (propertize " REPLACE " 'face '((:background "#ff9f43" :foreground "black")))
+          evil-motion-state-tag   (propertize " MOTION " 'face '((:background "#f3f99d" :foreground "black")))
+          evil-visual-state-tag   (propertize " VISUAL " 'face '((:background "#9aedfe" :foreground "black")))
+          evil-operator-state-tag (propertize " OPERATE " 'face '((:background "#57c7ff" :foreground "black"))))
+
     :config
     (evil-mode))
 
@@ -595,9 +605,9 @@ Set background color to strings that match color.
     :hook (prog-mode))
 #+END_SRC
 
-*** Moody and minions (mode line)
+*** Moody and minions
 
-Modeline setup.
+Minimal mode line.
 
 #+BEGIN_SRC emacs-lisp
   (use-package moody
