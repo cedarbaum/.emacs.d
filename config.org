@@ -55,6 +55,41 @@ Disable startup screen.
   (setq inhibit-startup-screen t)
 #+END_SRC
 
+** Mode line
+
+Mode line configuration.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Format
+  (setq-default mode-line-position nil)
+  (setq-default mode-line-format '("%e" mode-line-front-space
+                                   mode-line-frame-identification mode-line-buffer-identification " " mode-line-position evil-mode-line-tag " "
+                                   (vc-mode vc-mode)
+                                   "  " minions-mode-line-modes mode-line-misc-info mode-line-end-spaces))
+
+  ;; Increase height
+  (custom-set-faces
+   '(mode-line ((t (:height 150))))
+   '(mode-line-inactive ((t (:height 150)))))
+
+  ;; Change buffer font color if it is modified
+  (defun update-buffer-name-color ()
+    "Update buffer name color based on buffer status."
+    (let ((color (cond
+                  ((or buffer-read-only (string-match-p "\\`\\*" (buffer-name))) "#ff6ac1") ; Color for read-only or ephemeral buffers
+                  ((buffer-modified-p) "#ff9f43") ; Color for modified buffers
+                  (t "#5af78e")))) ; Default color
+      (set-face-attribute 'mode-line-buffer-id nil :foreground color)))
+
+  (add-hook 'after-save-hook 'update-buffer-name-color)
+  (add-hook 'post-command-hook 'update-buffer-name-color)
+
+  ;; Initial color update for already opened buffers
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (update-buffer-name-color)))
+#+END_SRC
+
 ** GUI configuration
 
 This section is for themes and GUI configuration. Below code will reload the configuration each time a new frame is created. This is useful when using Emacs server/client.
@@ -605,18 +640,11 @@ Set background color to strings that match color.
     :hook (prog-mode))
 #+END_SRC
 
-*** Moody and minions
+*** Minions
 
 Minimal mode line.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package moody
-    :config
-    (setq x-underline-at-descent-line t)
-    (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode)
-    (moody-replace-eldoc-minibuffer-message-function))
-
   (use-package minions
     :config (minions-mode 1))
 #+END_SRC
