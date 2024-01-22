@@ -97,6 +97,8 @@ This section is for themes and GUI configuration. Below code will reload the con
 #+BEGIN_SRC emacs-lisp
   (use-package nerd-icons)
   (use-package snazzy-theme)
+  ;; Wait for theme install before calling configure-frame
+  (elpaca-wait)
 
   (defun configure-frame (&optional frame)
     "Customize the FRAME and load theme."
@@ -315,8 +317,9 @@ Bind the command key to meta.
 Use [[https://github.com/noctuid/general.el][General]] for keybindings.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package general
-    :demand t)
+  (use-package general :demand t)
+  ;; Wait for :general macro to be available for other packages
+  (elpaca-wait)
 #+END_SRC
 
 *** Hydra
@@ -339,6 +342,8 @@ Add =:hydra= keyword to =use-package=.
 
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-hydra)
+  ;; Wait for :hydra macro to be available to other packages
+  (elpaca-wait)
 #+END_SRC
 
 *** Evil mode
@@ -439,15 +444,15 @@ Vertical completion UI.
 
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
-    :straight (vertico :files (:defaults "extensions/*")
-                       :includes (vertico-buffer
-                                  vertico-directory
-                                  vertico-flat
-                                  vertico-indexed
-                                  vertico-mouse
-                                  vertico-quick
-                                  vertico-repeat
-                                  vertico-reverse))
+    :elpaca (vertico :files (:defaults "extensions/*")
+                     :includes (vertico-buffer
+                                vertico-directory
+                                vertico-flat
+                                vertico-indexed
+                                vertico-mouse
+                                vertico-quick
+                                vertico-repeat
+                                vertico-reverse))
     :init
     (vertico-mode)
     (setq vertico-count 20)
@@ -457,7 +462,7 @@ Vertical completion UI.
   ;; Configure directory extension.
   (use-package vertico-directory
     :after vertico
-    :straight nil
+    :elpaca nil
     :general
     (:keymaps 'vertico-map "C-l" 'vertico-directory-up)
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
@@ -900,8 +905,10 @@ A text folding minor mode for Emacs.
 Unofficial integration with GitHub Copilot.
 
 #+BEGIN_SRC emacs-lisp
+  ;; Force latest jsonrpc version to be used in case built-in is out-of-date
+  (use-package jsonrpc)
   (use-package copilot
-    :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+    :elpaca (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
     :config
     (add-hook 'prog-mode-hook 'copilot-mode)
     :general
@@ -1048,7 +1055,7 @@ Manage node versions through nvm
 
 #+BEGIN_SRC emacs-lisp
   (use-package nvm
-    :straight (:host github :repo "rejeep/nvm.el")
+    :elpaca (:host github :repo "rejeep/nvm.el")
     :config
     (nvm-use "18"))
 #+END_SRC
@@ -1058,9 +1065,17 @@ Manage node versions through nvm
 Utility for writing and exporting TeX files.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package tex
-    :straight auctex
-    :defer t
+  (use-package auctex
+    ;; :elpaca nil
+    :elpaca  (auctex :pre-build (("./autogen.sh")
+                                 ("./configure"
+                                  "--without-texmf-dir"
+                                  "--with-packagelispdir=./"
+                                  "--with-packagedatadir=./")
+                                 ("make"))
+                     :build (:not elpaca--compile-info) ;; Make will take care of this step
+                     :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
+                     :version (lambda (_) (require 'tex-site) AUCTeX-version))
     :config
     (setq TeX-parse-self t) ; Enable parse on load.
     (setq TeX-auto-save t)) ; Enable parse on save.
@@ -1238,16 +1253,6 @@ Display possible keybindings after an incomplete prefix.
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key :config (which-key-mode))
-#+END_SRC
-
-*** pass
-
-Add package for interacting with [[https://www.passwordstore.org/][pass]].
-
-#+BEGIN_SRC emacs-lisp
-  (use-package pass
-    :general
-    (:keymaps 'pass-view-mode-map "C-c C-y" 'pass-view-copy-password))
 #+END_SRC
 
 *** Lorem Ipsum
