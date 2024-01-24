@@ -63,10 +63,11 @@ Mode line configuration.
   ;; Format
   (setq-default mode-line-position nil)
   (setq-default flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
-  (setq-default mode-line-format '("%e" mode-line-front-space
-                                   mode-line-frame-identification mode-line-buffer-identification " " mode-line-position evil-mode-line-tag " "
-                                   (vc-mode vc-mode)
-                                   "  " minions-mode-line-modes mode-line-misc-info mode-line-end-spaces flymake-mode-line-format))
+  ;; (setq-default mode-line-format '("%e" mode-line-front-space
+  ;;                                  mode-line-frame-identification mode-line-buffer-identification " " mode-line-position evil-mode-line-tag " "
+  ;;                                  (vc-mode vc-mode)
+  ;;                                  "  " minions-mode-line-modes mode-line-misc-info mode-line-end-spaces flymake-mode-line-format))
+
 
   ;; Increase height
   (custom-set-faces
@@ -359,16 +360,6 @@ Vim emulation for Emacs ([[https://github.com/emacs-evil/evil][GitHub]]).
     (setq evil-split-window-below t)
     (setq evil-want-keybinding nil)
     (setq evil-undo-system 'undo-tree)
-
-    ;; Mode line
-    (setq evil-normal-state-tag   (propertize " NORMAL " 'face '((:background "#5af78e" :foreground "black")))
-          evil-emacs-state-tag    (propertize " EMACS  " 'face '((:background "#ff6ac1" :foreground "black")))
-          evil-insert-state-tag   (propertize " INSERT " 'face '((:background "#ff9f43" :foreground "black")))
-          evil-replace-state-tag  (propertize " REPLACE " 'face '((:background "#ff9f43" :foreground "black")))
-          evil-motion-state-tag   (propertize " MOTION " 'face '((:background "#f3f99d" :foreground "black")))
-          evil-visual-state-tag   (propertize " VISUAL " 'face '((:background "#9aedfe" :foreground "black")))
-          evil-operator-state-tag (propertize " OPERATE " 'face '((:background "#57c7ff" :foreground "black"))))
-
     :config
     (evil-mode))
 
@@ -644,6 +635,45 @@ Set background color to strings that match color.
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-mode
     :hook (prog-mode))
+#+END_SRC
+
+*** Spaceline
+
+Spaceline mode line.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :if window-system
+    :after minions
+    :ensure t
+    :defer t
+    :preface
+    (defun spacemacs/compute-powerline-height ()
+      "Return an adjusted powerline height."
+      (let ((scale (if (and (boundp 'powerline-scale) powerline-scale)
+                       powerline-scale 1)))
+        (truncate (* scale (frame-char-height)))))
+    :init
+    (setq-default powerline-image-apple-rgb nil)
+    (setq-default powerline-default-separator "bar")
+    (setq-default powerline-scale 1.5)
+    (setq-default powerline-height (spacemacs/compute-powerline-height))
+    (setq-default spaceline-window-numbers-unicode t)
+    (setq-default spaceline-minor-modes-separator " ")
+    (require 'spaceline-config)
+    :config
+    (spaceline-spacemacs-theme)
+    (spaceline-toggle-buffer-size-off)
+    (spaceline-toggle-hud-off)
+    ;; Customization for minions mode
+    (spaceline-toggle-major-mode-off)
+    (spaceline-define-segment minor-modes
+      (if (bound-and-true-p minions-mode)
+          (format-mode-line minions-mode-line-modes)
+        (spaceline-minor-modes-default)
+        ))
+    ;; Customization for minions mode
+    (spaceline-compile))
 #+END_SRC
 
 *** Minions
