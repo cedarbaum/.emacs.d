@@ -183,7 +183,7 @@ Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
 
 ** Font
 
-Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
+Try to use either Berkeley Mono, [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
 
 #+BEGIN_SRC emacs-lisp
   (defun get-font (font-list)
@@ -191,10 +191,12 @@ Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://w
                 (member font (font-family-list)))
               font-list))
 
-  (defun get-preferred-font (size)
+  (defun get-preferred-font (&optional size)
     (let ((font-name (get-font '("Berkeley Mono" "Fira Code" "JetBrains Mono" "Hack"))))
       (when font-name
-        (format "%s-%s" font-name size))))
+        (if size
+            (format "%s-%s" font-name size)
+          font-name))))
 
   (when-let ((font (get-preferred-font 14)))
     (set-face-attribute 'default nil :font font))
