@@ -401,6 +401,14 @@ Preview registers and marks before using them.
     (evil-owl-mode))
 #+END_SRC
 
+Better searching.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-anzu
+    :config
+    (global-anzu-mode +1))
+#+END_SRC
+
 *** Vertico / Orderless / Consult / Marginalia / Embark
 
 Vertical completion UI.
@@ -627,6 +635,7 @@ doom-modeline mode line.
     :ensure t
     :init (doom-modeline-mode 1)
     :config
+    (setq doom-modeline-minor-modes t)
     (setq doom-modeline-modal-modern-icon nil))
 #+END_SRC
 
