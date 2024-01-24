@@ -186,10 +186,18 @@ Prefer [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] Encoding.
 Try to use either [[https://github.com/tonsky/FiraCode][Fira Code]], [[https://www.jetbrains.com/lp/mono/][JetBrains Mono]], or [[https://sourcefoundry.org/hack/][Hack]] font.
 
 #+BEGIN_SRC emacs-lisp
-  (cond ((member "Berkeley Mono" (font-family-list)) (set-face-attribute 'default nil :font "Berkeley Mono-14"))
-        ((member "Fira Code" (font-family-list)) (set-face-attribute 'default nil :font "Fira Code-14"))
-        ((member "JetBrains Mono" (font-family-list)) (set-face-attribute 'default nil :font "JetBrains Mono-14"))
-        ((member "Hack" (font-family-list)) (set-face-attribute 'default nil :font "Hack-14")))
+  (defun get-font (font-list)
+    (seq-find (lambda (font)
+                (member font (font-family-list)))
+              font-list))
+
+  (defun get-preferred-font (size)
+    (let ((font-name (get-font '("Berkeley Mono" "Fira Code" "JetBrains Mono" "Hack"))))
+      (when font-name
+        (format "%s-%s" font-name size))))
+
+  (when-let ((font (get-preferred-font 14)))
+    (set-face-attribute 'default nil :font font))
 #+END_SRC
 
 ** Spaces/tabs
@@ -610,43 +618,16 @@ Set background color to strings that match color.
     :hook (prog-mode))
 #+END_SRC
 
-*** Spaceline
+*** doom-modeline
 
-Spaceline mode line.
+doom-modeline mode line.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package spaceline
-    :if window-system
-    :after minions
+  (use-package doom-modeline
     :ensure t
-    :defer t
-    :preface
-    (defun spacemacs/compute-powerline-height ()
-      "Return an adjusted powerline height."
-      (let ((scale (if (and (boundp 'powerline-scale) powerline-scale)
-                       powerline-scale 1)))
-        (truncate (* scale (frame-char-height)))))
-    :init
-    (setq-default powerline-image-apple-rgb nil)
-    (setq-default powerline-default-separator "bar")
-    (setq-default powerline-scale 1.5)
-    (setq-default powerline-height (spacemacs/compute-powerline-height))
-    (setq-default spaceline-window-numbers-unicode t)
-    (setq-default spaceline-minor-modes-separator " ")
-    (require 'spaceline-config)
+    :init (doom-modeline-mode 1)
     :config
-    (spaceline-spacemacs-theme)
-    (spaceline-toggle-buffer-size-off)
-    (spaceline-toggle-hud-off)
-    ;; Customization for minions mode
-    (spaceline-toggle-major-mode-off)
-    (spaceline-define-segment minor-modes
-      (if (bound-and-true-p minions-mode)
-          (format-mode-line minions-mode-line-modes)
-        (spaceline-minor-modes-default)
-        ))
-    ;; Customization for minions mode
-    (spaceline-compile))
+    (setq doom-modeline-modal-modern-icon nil))
 #+END_SRC
 
 *** Minions
