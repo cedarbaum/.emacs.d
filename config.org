@@ -1439,6 +1439,17 @@ Display emoji.
     (org-agenda-mode . emojify-mode))
 #+END_SRC
 
+* Post init
+
+Code to be run after initialization.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'emacs-startup-hook (lambda ()
+                                  ;; Force dashboard refresh after init.
+                                  ;; This ensures all agenda files are ready.
+                                  (dashboard-open)))
+#+END_SRC
+
 * Adhoc Elisp functions
 
 Helper function to reload init file.
