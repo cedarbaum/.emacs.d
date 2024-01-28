@@ -36,12 +36,11 @@ Enable pin entry within the Emacs minibuffer.
   (setq epa-pinentry-mode 'loopback)
 #+END_SRC
 
-** plstore
-
-Cache symmetric encryption keys.
+Use GPG for plstore encryption.
 
 #+BEGIN_SRC emacs-lisp
-  (setq plstore-cache-passphrase-for-symmetric-encryption t)
+  (require 'plstore)
+  (add-to-list 'plstore-encrypt-to "232BDBED16AEC393")
 #+END_SRC
 
 ** auth-sources
