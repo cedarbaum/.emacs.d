@@ -1344,7 +1344,7 @@ GCal integration with org agenda.
   (use-package org-gcal
     :if (auth-source-search :host "org-gcal" :user "scedarbaum")
     :init
-    (defconst org-gcal-file "~/Dropbox/Org/google/calendar.org")
+    (defconst org-gcal-file "~/Dropbox/Documents/Org/google/calendar.org")
     (when (file-exists-p org-gcal-file)
       (add-to-list 'org-agenda-files org-gcal-file))
     (setq org-gcal-creds (nth 0 (auth-source-search :host "org-gcal" :user "scedarbaum"))
