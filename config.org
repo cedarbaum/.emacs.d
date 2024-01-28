@@ -1364,7 +1364,7 @@ GTasks integration with org files.
     :if (auth-source-search :host "org-gtasks" :user "scedarbaum")
     :config
     (defconst org-gtasks-directory "~/Dropbox/Documents/Org/google/")
-    (defconst org-gtasks-file "~/Dropbox/Documents/Org/google/scedarbaum's list.org")
+    (defconst org-gtasks-file "~/Dropbox/Documents/Org/google/Tasks.org")
     (when (file-exists-p org-gtasks-file)
       (add-to-list 'org-agenda-files org-gtasks-file))
     (setq org-gtasks-creds (nth 0 (auth-source-search :host "org-gtasks" :user "scedarbaum")))
