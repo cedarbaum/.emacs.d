@@ -36,6 +36,14 @@ Enable pin entry within the Emacs minibuffer.
   (setq epa-pinentry-mode 'loopback)
 #+END_SRC
 
+** plstore
+
+Cache symmetric encryption keys.
+
+#+BEGIN_SRC emacs-lisp
+  (setq plstore-cache-passphrase-for-symmetric-encryption t)
+#+END_SRC
+
 ** auth-sources
 
 Look for JSON files when searching auth sources.
