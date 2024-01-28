@@ -142,3 +142,6 @@ projects
 
 # Ignore smudge (Spotify) files
 smudge/
+
+# Ignore oauth2 data
+/oauth2-auto.plist

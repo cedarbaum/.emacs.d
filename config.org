@@ -1288,10 +1288,21 @@ A simple, no-frills ChatGPT client for Emacs.
 
 ** External services
 
-Control Spotify via connect API.
+Common OAuth requirements.
 
 #+BEGIN_SRC emacs-lisp
   (use-package oauth2)
+  (use-package deferred)
+  (use-package request-deferred)
+  (use-package elnode)
+  (use-package oauth2-auto
+    :elpaca (:host github :repo "telotortium/emacs-oauth2-auto"))
+  (elpaca-wait)
+#+END_SRC
+
+Control Spotify via connect API.
+
+#+BEGIN_SRC emacs-lisp
   (use-package smudge
     :if (auth-source-search :host "spotify" :user "scedarbaum")
     :hydra (hydra-spotify (:hint nil)
@@ -1327,6 +1338,41 @@ Control Spotify via connect API.
     ("C-c s" 'hydra-spotify/body))
 #+END_SRC
 
+GCal integration with org agenda.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gcal
+    :if (auth-source-search :host "org-gcal" :user "scedarbaum")
+    :init
+    (defconst org-gcal-file "~/Dropbox/Org/google/calendar.org")
+    (when (file-exists-p org-gcal-file)
+      (add-to-list 'org-agenda-files org-gcal-file))
+    (setq org-gcal-creds (nth 0 (auth-source-search :host "org-gcal" :user "scedarbaum"))
+          org-gcal-client-id (plist-get org-gcal-creds :client_id)
+          org-gcal-client-secret(plist-get org-gcal-creds :client_secret)
+          org-gcal-fetch-file-alist `(("scedarbaum@gmail.com" . ,org-gcal-file)))
+    :hook
+    (org-agenda-mode . org-gcal-sync)
+    (org-capture-after-finalize . org-gcal-sync))
+#+END_SRC
+
+GTasks integration with org files.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gtasks
+    :elpaca (:host sourcehut :repo "jmasson/org-gtasks")
+    :if (auth-source-search :host "org-gtasks" :user "scedarbaum")
+    :config
+    (defconst org-gtasks-directory "~/Dropbox/Documents/Org/google/")
+    (defconst org-gtasks-file "~/Dropbox/Documents/Org/google/scedarbaum's list.org")
+    (when (file-exists-p org-gtasks-file)
+      (add-to-list 'org-agenda-files org-gtasks-file))
+    (setq org-gtasks-creds (nth 0 (auth-source-search :host "org-gtasks" :user "scedarbaum")))
+    (org-gtasks-register-account :name "scedarbaum@gmail.com"
+                                 :directory org-gtasks-directory
+                                 :client-id (plist-get org-gtasks-creds :client_id)
+                                 :client-secret (plist-get org-gtasks-creds :client_secret)))
+#+END_SRC
 
 ** Fun
 *** emacs-fireplace
