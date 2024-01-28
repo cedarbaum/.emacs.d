@@ -169,6 +169,12 @@ Don't create lock files.
   (setq create-lockfiles nil)
 #+END_SRC
 
+Enable auto revert mode.
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode 1)
+#+END_SRC
+
 ** Customize
 
 Put all automatic configurations in a separate file.
