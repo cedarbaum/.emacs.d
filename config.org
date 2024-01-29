@@ -289,6 +289,14 @@ Enable ANSI color support. See:
     (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
   #+END_SRC
 
+** Vesion control
+
+Don't warn about following symlinks.
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
 * OS specific settings
 ** macOS
 
