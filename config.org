@@ -40,7 +40,7 @@ Use GPG for plstore encryption.
 
 #+BEGIN_SRC emacs-lisp
   (require 'plstore)
-  (add-to-list 'plstore-encrypt-to "232BDBED16AEC393")
+  (add-to-list 'plstore-encrypt-to (getenv "GPG_ENCRYPTION_KEY_ID"))
 #+END_SRC
 
 ** auth-sources
@@ -1253,6 +1253,8 @@ Inherit environment variables from SHELL.
   (use-package exec-path-from-shell
     :if (memq window-system '(mac ns x))
     :config
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "GPG_ENCRYPTION_KEY_ID"))
+      (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize))
 #+END_SRC
 
