@@ -40,7 +40,8 @@ Use GPG for plstore encryption.
 
 #+BEGIN_SRC emacs-lisp
   (require 'plstore)
-  (add-to-list 'plstore-encrypt-to (getenv "GPG_ENCRYPTION_KEY_ID"))
+  (when-let ((gpg-encryption-key-id (getenv "GPG_ENCRYPTION_KEY_ID")))
+    (add-to-list 'plstore-encrypt-to gpg-encryption-key-id))
 #+END_SRC
 
 ** auth-sources
@@ -1299,6 +1300,16 @@ A simple, no-frills ChatGPT client for Emacs.
     :config
     (let* ((open-ai-auth (car (auth-source-search :host "OpenAI"))))
       (setq gptel-api-key (plist-get open-ai-auth :api_key))))
+#+END_SRC
+
+*** emacs-calfw
+
+Calendar UI.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package calfw)
+  (use-package calfw-cal)
+  (use-package calfw-org)
 #+END_SRC
 
 ** External services
