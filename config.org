@@ -1320,7 +1320,24 @@ Calendar UI.
   (use-package calfw-org)
 #+END_SRC
 
+*** Khoj
+
+#+BEGIN_SRC emacs-lisp
+  (use-package khoj
+    :pin melpa-stable
+    :bind ("C-c k" . 'khoj)
+    :config
+    (let* ((khoj-auth (car (auth-source-search :host "Khoj"))))
+      (setq khoj-api-key  (plist-get khoj-auth :api_key)))
+    ;;(setq khoj-org-directories '("~/Dropbox/Documents/Org"))
+    )
+#+END_SRC
+
+#+RESULTS:
+
 ** External services
+
+*** OAuth
 
 Common OAuth requirements.
 
@@ -1333,6 +1350,8 @@ Common OAuth requirements.
     :elpaca (:host github :repo "telotortium/emacs-oauth2-auto"))
   (elpaca-wait)
 #+END_SRC
+
+*** Spotify
 
 Control Spotify via connect API.
 
@@ -1371,6 +1390,8 @@ Control Spotify via connect API.
     :general
     ("C-c s" 'hydra-spotify/body))
 #+END_SRC
+
+*** Google
 
 GCal integration with org agenda.
 
