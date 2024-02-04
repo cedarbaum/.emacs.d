@@ -983,7 +983,13 @@ Formatting for many languages.
 #+END_SRC
 
 ** File and language specific modes
-*** Org mode extensions
+*** Org mode
+
+Setup agenda files.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (directory-files-recursively "~/Dropbox/Documents/Org" "\\.org$"))
+#+END_SRC
 
 Use UTF-8 bullet points in org-mode.
 
@@ -1320,21 +1326,6 @@ Calendar UI.
   (use-package calfw-org)
 #+END_SRC
 
-*** Khoj
-
-#+BEGIN_SRC emacs-lisp
-  (use-package khoj
-    :pin melpa-stable
-    :bind ("C-c k" . 'khoj)
-    :config
-    (let* ((khoj-auth (car (auth-source-search :host "Khoj"))))
-      (setq khoj-api-key  (plist-get khoj-auth :api_key)))
-    ;;(setq khoj-org-directories '("~/Dropbox/Documents/Org"))
-    )
-#+END_SRC
-
-#+RESULTS:
-
 ** External services
 
 *** OAuth
@@ -1400,15 +1391,10 @@ GCal integration with org agenda.
     :if (auth-source-search :host "org-gcal" :user "scedarbaum")
     :init
     (defconst org-gcal-file "~/Dropbox/Documents/Org/google/calendar.org")
-    (when (file-exists-p org-gcal-file)
-      (add-to-list 'org-agenda-files org-gcal-file))
     (setq org-gcal-creds (nth 0 (auth-source-search :host "org-gcal" :user "scedarbaum"))
           org-gcal-client-id (plist-get org-gcal-creds :client_id)
           org-gcal-client-secret(plist-get org-gcal-creds :client_secret)
-          org-gcal-fetch-file-alist `(("scedarbaum@gmail.com" . ,org-gcal-file)))
-    :hook
-    (org-agenda-mode . org-gcal-sync)
-    (org-capture-after-finalize . org-gcal-sync))
+          org-gcal-fetch-file-alist `(("scedarbaum@gmail.com" . ,org-gcal-file))))
 #+END_SRC
 
 GTasks integration with org files.
@@ -1420,8 +1406,6 @@ GTasks integration with org files.
     :config
     (defconst org-gtasks-directory "~/Dropbox/Documents/Org/google/")
     (defconst org-gtasks-file "~/Dropbox/Documents/Org/google/Tasks.org")
-    (when (file-exists-p org-gtasks-file)
-      (add-to-list 'org-agenda-files org-gtasks-file))
     (setq org-gtasks-creds (nth 0 (auth-source-search :host "org-gtasks" :user "scedarbaum")))
     (org-gtasks-register-account :name "scedarbaum@gmail.com"
                                  :directory org-gtasks-directory
