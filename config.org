@@ -985,12 +985,6 @@ Formatting for many languages.
 ** File and language specific modes
 *** Org mode
 
-Setup agenda files.
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files (directory-files-recursively "~/Dropbox/Documents/Org" "\\.org$"))
-#+END_SRC
-
 Use UTF-8 bullet points in org-mode.
 
 #+BEGIN_SRC emacs-lisp
