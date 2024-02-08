@@ -933,17 +933,6 @@ Unofficial integration with GitHub Copilot.
     ("C-<tab>" 'copilot-accept-completion))
 #+END_SRC
 
-*** codespaces.el
-
-Provides support for connecting to GitHub Codespaces in Emacs via TRAMP.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package codespaces
-    :ensure-system-package gh
-    :config (codespaces-setup)
-    :bind ("C-c S" . #'codespaces-connect))
-#+END_SRC
-
 *** eglot
 
 Built-in LSP integration.
@@ -1067,15 +1056,6 @@ Run Jest unit tests.
 
 #+BEGIN_SRC emacs-lisp
   (use-package jest)
-#+END_SRC
-
-Manage node versions through nvm
-
-#+BEGIN_SRC emacs-lisp
-  (use-package nvm
-    :elpaca (:host github :repo "rejeep/nvm.el")
-    :config
-    (nvm-use "18"))
 #+END_SRC
 
 *** LaTeX
