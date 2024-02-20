@@ -633,6 +633,14 @@ Use flycheck for Eglot.
     (global-flycheck-eglot-mode 1))
 #+END_SRC
 
+*** Flyspell
+
+Use ==aspell== for spell checking.
+
+#+BEGIN_SRC emacs-lisp
+  (setq ispell-program-name "aspell")
+#+END_SRC
+
 *** rainbow-delimiters
 
 Make corresponding delimiters the same color (e.g., {, (, ")
