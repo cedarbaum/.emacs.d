@@ -931,8 +931,6 @@ A text folding minor mode for Emacs.
 Unofficial integration with GitHub Copilot.
 
 #+BEGIN_SRC emacs-lisp
-  ;; Force latest jsonrpc version to be used in case built-in is out-of-date
-  (use-package jsonrpc)
   (use-package copilot
     :elpaca (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
     :config
