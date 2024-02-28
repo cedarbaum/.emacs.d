@@ -439,7 +439,7 @@ Vertical completion UI.
 
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
-    :elpaca (vertico :files (:defaults "extensions/*")
+    :ensure (vertico :files (:defaults "extensions/*")
                      :includes (vertico-buffer
                                 vertico-directory
                                 vertico-flat
@@ -457,7 +457,7 @@ Vertical completion UI.
   ;; Configure directory extension.
   (use-package vertico-directory
     :after vertico
-    :elpaca nil
+    :ensure nil
     :general
     (:keymaps 'vertico-map "C-l" 'vertico-directory-up)
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
@@ -932,7 +932,7 @@ Unofficial integration with GitHub Copilot.
 
 #+BEGIN_SRC emacs-lisp
   (use-package copilot
-    :elpaca (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+    :ensure (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
     :config
     (add-hook 'prog-mode-hook 'copilot-mode)
     :general
@@ -1070,8 +1070,8 @@ Utility for writing and exporting TeX files.
 
 #+BEGIN_SRC emacs-lisp
   (use-package auctex
-    ;; :elpaca nil
-    :elpaca  (auctex :pre-build (("./autogen.sh")
+    ;; :ensure nil
+    :ensure  (auctex :pre-build (("./autogen.sh")
                                  ("./configure"
                                   "--without-texmf-dir"
                                   "--with-packagelispdir=./"
