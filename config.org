@@ -867,12 +867,6 @@ Project (e.g., Git) management and navigation.
     (projectile-mode))
 #+END_SRC
 
-*** yasnippet
-
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet :config (yas-global-mode 1))
-#+END_SRC
-
 *** libvterm
 
 Emacs libvterm integration.
