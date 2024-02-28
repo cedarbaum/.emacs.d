@@ -1290,16 +1290,6 @@ A simple, no-frills ChatGPT client for Emacs.
       (setq gptel-api-key (plist-get open-ai-auth :api_key))))
 #+END_SRC
 
-*** emacs-calfw
-
-Calendar UI.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package calfw)
-  (use-package calfw-cal)
-  (use-package calfw-org)
-#+END_SRC
-
 ** Fun
 *** emacs-fireplace
 
