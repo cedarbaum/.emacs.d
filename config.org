@@ -297,12 +297,18 @@ Don't warn about following symlinks.
   (setq vc-follow-symlinks t)
 #+END_SRC
 
-** Garbage collection
+** Performance
 
 Increase GC threshold to 100MB.
 
 #+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 100000000)
+  (setq gc-cons-threshold 100000000) ;; 100MB
+#+END_SRC
+
+Read more data from process output (e.g., LSPs).
+
+#+BEGIN_SRC emacs-lisp
+  (setq read-process-output-max (* 1024 1024)) ;; 1MB
 #+END_SRC
 
 * OS specific settings
