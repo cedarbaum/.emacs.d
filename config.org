@@ -297,6 +297,14 @@ Don't warn about following symlinks.
   (setq vc-follow-symlinks t)
 #+END_SRC
 
+** Garbage collection
+
+Increase GC threshold to 100MB.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 100000000)
+#+END_SRC
+
 * OS specific settings
 ** macOS
 
