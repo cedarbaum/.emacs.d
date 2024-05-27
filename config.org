@@ -799,6 +799,7 @@ Displays ElDoc documentations in a childframe.
 Git integration.
 
 #+BEGIN_SRC emacs-lisp
+  (use-package transient :ensure (:fetcher github :repo "magit/transient"))
   (use-package magit
     :general ("C-x g" 'magit-status)
     :config
