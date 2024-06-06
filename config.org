@@ -702,10 +702,10 @@ Window manager.
   (use-package eyebrowse
     :demand t
     :general
-    (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1)
-    (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2)
-    (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3)
-    (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4)
+    (:keymaps 'eyebrowse-mode-map "C-w 1" 'eyebrowse-switch-to-window-config-1 :states '(normal visual emacs))
+    (:keymaps 'eyebrowse-mode-map "C-w 2" 'eyebrowse-switch-to-window-config-2 :states '(normal visual emacs))
+    (:keymaps 'eyebrowse-mode-map "C-w 3" 'eyebrowse-switch-to-window-config-3 :states '(normal visual emacs))
+    (:keymaps 'eyebrowse-mode-map "C-w 4" 'eyebrowse-switch-to-window-config-4 :states '(normal visual emacs))
     :config
     (eyebrowse-mode t)
     ;; Conflicts with evil-commentary.
