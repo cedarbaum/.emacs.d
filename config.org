@@ -1,6 +1,6 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Sam Cedarbaum
-#+EMAIL: scedarbaum@gmail.com
+#+EMAIL: sam.cedarbaum@icloud.com
 #+DESCRIPTION: An org-babel based Emacs configuration
 #+LANGUAGE: en
 #+PROPERTY: results silent
@@ -25,7 +25,7 @@ This config is written for Emacs 29+. It assumes that =eglot= (LSP integration) 
 
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Sam Cedarbaum"
-        user-mail-address "scedarbaum@gmail.com")
+        user-mail-address "sam.cedarbaum@icloud.com")
 #+END_SRC
 
 ** GPG
