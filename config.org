@@ -1221,6 +1221,16 @@ Bash / Shell highlighting.
   (add-to-list 'auto-mode-alist '("/zshrc\\'" . bash-ts-mode))
 #+END_SRC
 
+*** .NET
+
+Setup C# LSP support.
+
+#+BEGIN_SRC emacs-lisp
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '(csharp-mode . ("csharp-ls"))))
+#+END_SRC
+
 ** Utilities
 *** ESUP - Emacs Start Up Profiler
 
