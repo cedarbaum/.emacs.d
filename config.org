@@ -11,6 +11,28 @@
 
 This is my Emacs configuration! It is largely based around Evil mode.
 
+* Quick start (macOS)
+
+Install Emacs via [[https://github.com/d12frosted/homebrew-emacs-plus][emacs-plus]]:
+
+#+BEGIN_SRC shell :tangle no
+  brew tap d12frosted/emacs-plus
+  brew install emacs-plus@30 --with-xwidgets --with-mailutils --with-imagemagick
+#+END_SRC
+
+Copy =Emacs.app= to =/Applications= so it works with Spotlight, Dock, and cmd-tab. Re-run this after =brew upgrade emacs-plus@30=.
+
+#+BEGIN_SRC shell :tangle no
+  cp -r /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications/
+#+END_SRC
+
+Optionally, run as a background daemon:
+
+#+BEGIN_SRC shell :tangle no
+  brew services start emacs-plus@30
+  emacsclient -c
+#+END_SRC
+
 * Compatibility
 
 This config is written for Emacs 29+. It assumes that =eglot= (LSP integration) and Tree-sitter are available.
@@ -70,8 +92,6 @@ This section is for themes and GUI configuration. Below code will reload the con
 #+BEGIN_SRC emacs-lisp
   (use-package nerd-icons)
   (use-package snazzy-theme)
-  ;; Wait for theme install before calling configure-frame
-  (elpaca-wait)
 
   (defun configure-frame (&optional frame)
     "Customize the FRAME and load theme."
@@ -170,10 +190,11 @@ Don't create lock files.
   (setq create-lockfiles nil)
 #+END_SRC
 
-Enable auto revert mode.
+Enable auto revert mode. Disable vc-info re-checking on revert since magit handles git status.
 
 #+BEGIN_SRC emacs-lisp
   (global-auto-revert-mode 1)
+  (setq auto-revert-check-vc-info nil)
 #+END_SRC
 
 ** Customize
@@ -212,7 +233,7 @@ Try to use either Berkeley Mono, [[https://github.com/tonsky/FiraCode][Fira Code
             (format "%s-%s" font-name size)
           font-name))))
 
-  (when-let ((font (get-preferred-font 14)))
+  (when-let ((font (get-preferred-font 18)))
     (set-face-attribute 'default nil :font font))
 #+END_SRC
 
@@ -265,10 +286,11 @@ Save existing clipboard text into kill ring before replacing it.
 
 ** Native compilation
 
-Don't display compilation warnings.
+Log native compilation warnings to =*Warnings*= but don't pop up the buffer.
 
 #+BEGIN_SRC emacs-lisp
-  (setq native-comp-async-report-warnings-errors nil)
+  (setq native-comp-async-report-warnings-errors 'silent)
+  (setq native-comp-jit-compilation t)
 #+END_SRC
 
 ** ANSI Color support
@@ -299,16 +321,43 @@ Don't warn about following symlinks.
 
 ** Performance
 
-Increase GC threshold to 100MB.
+Use [[https://github.com/emacsmirror/gcmh][gcmh]] (Garbage Collection Magic Hack) to defer GC to idle time. The =early-init.el= sets =gc-cons-threshold= to =most-positive-fixnum= during startup; gcmh takes over afterward, using a high threshold while typing and triggering GC when idle.
 
 #+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 100000000) ;; 100MB
+  (use-package gcmh
+    :demand t
+    :config
+    (setq gcmh-idle-delay 'auto
+          gcmh-auto-idle-delay-factor 10
+          gcmh-high-cons-threshold (* 16 1024 1024)) ;; 16MB
+    (gcmh-mode 1))
 #+END_SRC
 
 Read more data from process output (e.g., LSPs).
 
 #+BEGIN_SRC emacs-lisp
   (setq read-process-output-max (* 1024 1024)) ;; 1MB
+#+END_SRC
+
+Optimize bidirectional text rendering. If you only use left-to-right languages, this avoids unnecessary reordering computation on every line.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default bidi-paragraph-direction 'left-to-right)
+  (setq bidi-inhibit-bpa t)
+#+END_SRC
+
+Automatically handle files with very long lines (e.g., minified JS/CSS) by disabling expensive features.
+
+#+BEGIN_SRC emacs-lisp
+  (global-so-long-mode 1)
+#+END_SRC
+
+Reduce UI updates for smoother editing.
+
+#+BEGIN_SRC emacs-lisp
+  (setq idle-update-delay 1.0)                    ;; update screen less aggressively
+  (setq fast-but-imprecise-scrolling t)            ;; skip fontification while scrolling fast
+  (setq-default cursor-in-non-selected-windows nil) ;; don't render cursor in unfocused windows
 #+END_SRC
 
 * OS specific settings
@@ -329,8 +378,6 @@ Use [[https://github.com/noctuid/general.el][General]] for keybindings.
 
 #+BEGIN_SRC emacs-lisp
   (use-package general :demand t)
-  ;; Wait for :general macro to be available for other packages
-  (elpaca-wait)
 #+END_SRC
 
 *** Hydra
@@ -353,8 +400,6 @@ Add =:hydra= keyword to =use-package=.
 
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-hydra)
-  ;; Wait for :hydra macro to be available to other packages
-  (elpaca-wait)
 #+END_SRC
 
 *** Evil mode
@@ -453,15 +498,6 @@ Vertical completion UI.
 
 #+BEGIN_SRC emacs-lisp
   (use-package vertico
-    :ensure (vertico :files (:defaults "extensions/*")
-                     :includes (vertico-buffer
-                                vertico-directory
-                                vertico-flat
-                                vertico-indexed
-                                vertico-mouse
-                                vertico-quick
-                                vertico-repeat
-                                vertico-reverse))
     :init
     (vertico-mode)
     (setq vertico-count 20)
@@ -562,8 +598,8 @@ Completing reads for common commands.
      :preview-key '(:debounce 0.2 any)
      consult-ripgrep consult-git-grep consult-grep
      consult-bookmark consult-recent-file consult-xref
-     consult--source-bookmark consult--source-recent-file
-     consult--source-project-recent-file
+     consult-source-bookmark consult-source-recent-file
+     consult-source-project-recent-file
      :preview-key "M-.")
 
     (setq consult-narrow-key "<"))
@@ -764,16 +800,16 @@ Treemacs - a tree layout file explorer for Emacs.
     :general
     ("C-c t" 'treemacs))
 
-  (use-package treemacs-evil)
+  (use-package treemacs-evil :after treemacs)
 
-  (use-package treemacs-projectile)
+  (use-package treemacs-projectile :after (treemacs projectile))
 
   (use-package treemacs-icons-dired
-    :config (treemacs-icons-dired-mode))
+    :hook (dired-mode . treemacs-icons-dired-mode))
 
-  (use-package treemacs-magit)
+  (use-package treemacs-magit :after (treemacs magit))
 
-  (use-package treemacs-all-the-icons)
+  (use-package treemacs-all-the-icons :after treemacs)
 #+END_SRC
 
 *** Smex
@@ -799,7 +835,7 @@ Displays ElDoc documentations in a childframe.
 Git integration.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package transient :ensure (:fetcher github :repo "magit/transient"))
+  (use-package transient)
   (use-package magit
     :general ("C-x g" 'magit-status)
     :config
@@ -910,11 +946,8 @@ Use Dockerfile tree-sitter mode.
 Interface to Kubernetes.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package kubernetes
-    :commands (kubernetes-overview)
-    :config
-    (setq kubernetes-poll-frequency 3600
-          kubernetes-redraw-frequency 3600))
+  (use-package kubed
+    :commands (kubed-transient))
 #+END_SRC
 
 *** EditorConfig
@@ -935,25 +968,28 @@ A text folding minor mode for Emacs.
   (use-package origami)
 #+END_SRC
 
-*** Copilot.el
-
-Unofficial integration with GitHub Copilot.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package copilot
-    :ensure (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-    :config
-    (add-hook 'prog-mode-hook 'copilot-mode)
-    :general
-    ("C-<tab>" 'copilot-accept-completion))
-#+END_SRC
-
 *** eglot
 
-Built-in LSP integration.
+Built-in LSP integration. Disable event logging for performance and auto-shutdown idle servers.
 
 #+BEGIN_SRC emacs-lisp
   (setq eglot-confirm-server-initiated-edits nil)
+  (setq eglot-events-buffer-size 0)
+  (setq eglot-autoshutdown t)
+  (setq eglot-send-changes-idle-time 0.5)
+#+END_SRC
+
+*** Claude Code IDE
+
+[[https://github.com/manzaltu/claude-code-ide.el][claude-code-ide.el]] provides deep integration with Claude Code CLI via MCP. Claude can query LSP, tree-sitter, and project state. Code suggestions are reviewed via ediff.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package claude-code-ide
+    :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+    :general
+    ("C-c C-'" 'claude-code-ide-menu)
+    :config
+    (claude-code-ide-emacs-tools-setup))
 #+END_SRC
 
 *** tree-sitter
@@ -1011,12 +1047,6 @@ Flash cards in org mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-drill :commands org-drill)
-#+END_SRC
-
-Edit and export Anki notes.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package anki-editor)
 #+END_SRC
 
 Allow org babel to execute without confirmation.
@@ -1079,16 +1109,6 @@ Utility for writing and exporting TeX files.
 
 #+BEGIN_SRC emacs-lisp
   (use-package auctex
-    ;; :ensure nil
-    :ensure  (auctex :pre-build (("./autogen.sh")
-                                 ("./configure"
-                                  "--without-texmf-dir"
-                                  "--with-packagelispdir=./"
-                                  "--with-packagedatadir=./")
-                                 ("make"))
-                     :build (:not elpaca--compile-info) ;; Make will take care of this step
-                     :files ("*.el" "doc/*.info*" "etc" "images" "latex" "style")
-                     :version (lambda (_) (require 'tex-site) AUCTeX-version))
     :config
     (setq TeX-parse-self t) ; Enable parse on load.
     (setq TeX-auto-save t)) ; Enable parse on save.
@@ -1267,6 +1287,8 @@ Inherit environment variables from SHELL.
   (use-package exec-path-from-shell
     :if (memq window-system '(mac ns x))
     :config
+    ;; Use login shell only (not interactive) for faster startup
+    (setq exec-path-from-shell-arguments '("-l"))
     (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "GPG_ENCRYPTION_KEY_ID"))
       (add-to-list 'exec-path-from-shell-variables var))
     (exec-path-from-shell-initialize))
@@ -1274,10 +1296,10 @@ Inherit environment variables from SHELL.
 
 *** which-key
 
-Display possible keybindings after an incomplete prefix.
+Display possible keybindings after an incomplete prefix. Built-in as of Emacs 30.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package which-key :config (which-key-mode))
+  (which-key-mode)
 #+END_SRC
 
 *** Lorem Ipsum

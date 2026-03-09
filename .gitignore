@@ -134,8 +134,8 @@ session*
 # Ignore tree-sitter files
 /tree-sitter/
 
-# Ignore elpaca package directory
-/elpaca/
+# Ignore package.el package directory
+/elpa/
 
 # Ignore projects
 projects
