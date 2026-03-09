@@ -70,6 +70,23 @@ Use GPG for plstore encryption.
 
 Look for JSON files when searching auth sources.
 
+The file =~/.authinfo.json= (or its GPG-encrypted variant =~/.authinfo.json.gpg=)
+stores secrets as a JSON array of objects. Each object is matched by =auth-source-search=
+using standard keys like =:host=. Custom keys (e.g. =:api_key=) are extracted with =plist-get=.
+
+Expected structure:
+
+#+BEGIN_EXAMPLE
+[
+  {
+    "host": "OpenAI",
+    "api_key": "<your-openai-api-key>"
+  }
+]
+#+END_EXAMPLE
+
+A skeleton file is provided at =~/.authinfo.json= -- replace placeholder values with real secrets.
+
 #+BEGIN_SRC emacs-lisp
   (require 'auth-source)
   (dolist (file '("~/.authinfo.json" "~/.authinfo.json.gpg"))
@@ -841,7 +858,9 @@ Git integration.
     :config
     (add-hook 'magit-diff-visit-file-hook  (lambda ()
                                              (when smerge-mode
-                                               (unpackaged/smerge-hydra/body)))))
+                                               (unpackaged/smerge-hydra/body))))
+    :bind (:map smerge-mode-map
+                ("C-c m" . unpackaged/smerge-hydra/body)))
 
   ;; (use-package magit-libgit) ; Not being actively used yet.
 #+END_SRC
