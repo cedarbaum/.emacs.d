@@ -643,6 +643,7 @@ Action dispatch from minibuffer.
     ("C-."   'embark-act)
     ("C-;"   'embark-dwim)
     ("C-h B" 'embark-bindings)
+    ("C-c C-e" 'embark-export)
     :init
     (setq prefix-help-command #'embark-prefix-help-command)
     :config
@@ -1372,17 +1373,7 @@ Display the weather.
 #+BEGIN_SRC emacs-lisp
   (use-package wttrin
     :config
-    ;; Patch for https://github.com/bcbcarl/emacs-wttrin/issues/16
-    (defun wttrin-fetch-raw-string (query)
-      "Get the weather information based on your QUERY."
-      (let ((url-user-agent "curl"))
-        (add-to-list 'url-request-extra-headers wttrin-default-accept-language)
-        (with-current-buffer
-            (url-retrieve-synchronously
-             (concat "http://wttr.in/" query)
-             (lambda (status) (switch-to-buffer (current-buffer))))
-          (decode-coding-string (buffer-string) 'utf-8))))
-    (setq wttrin-default-cities '("New York, NY" "Chicago, IL")))
+    (setq wttrin-default-locations '("New York, NY" "Chicago, IL")))
 #+END_SRC
 
 *** XKCD
